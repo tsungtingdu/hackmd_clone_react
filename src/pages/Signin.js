@@ -1,4 +1,7 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useForm } from "react-hook-form"
+import { Link } from 'react-router-dom'
 import Navbar from '../conponents/Navbar'
 import { Button } from '@material-ui/core'
 import styled from 'styled-components'
@@ -33,6 +36,10 @@ const StyledContainer = styled.div`
       color: #ffffff;
       font-weight: 400;
       font-size: 18px;
+
+      &__link {
+        color: #ffffff;
+      }
     }
   }
 
@@ -58,34 +65,94 @@ const Form = styled.form`
     font-size: 18px;
     padding: 6px 12px;
     border-radius: 4px;
-    margin-bottom: 15px;
   }
 `
-
+const HelperText = styled.p`
+  color: #ff6363;
+  font-size: 12px;
+  text-align: left;
+  margin: 5px 0;
+`
 
 const Signin = () => {
+  const dispatch = useDispatch()
+  const { register, handleSubmit, errors } = useForm()
+  const [input, setInput] = useState({
+    email: '',
+    password: ''
+  })
+
+  const onSubmit = (data) => {
+    dispatch({
+      type: 'SIGN_IN',
+      data,
+    });
+    clearInput()
+  }
+
+  const onChange = e => {
+    let { name, value } = e.target
+    let data = {
+      ...input,
+      [name]: value
+    }
+    setInput(data)
+  }
+
+  const clearInput = () => {
+    setInput({ email: '', password: '' })
+  }
+
   return (
     <Fragment>
       <Navbar />
       <StyledContainer >
         <div className="wrapper">
           <div className="title">Sign in</div>
-          <Form action="">
+          <Form action=""
+            onSubmit={handleSubmit(onSubmit)} >
             <label htmlFor="">Email</label>
             <input
               type="text"
               placeholder="Your email"
-              name="email" />
+              name="email"
+              value={input.email}
+              onChange={onChange}
+              ref={register({
+                required: 'Please fill in this field.',
+                pattern: {
+                  value: /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/,
+                  message: "Invalid email",
+                }
+              })} />
+            {errors.email && (
+              <HelperText>
+                {errors.email.message}
+              </HelperText>
+            )}
             <label htmlFor="">Password</label>
             <input
-              type="text"
+              type="password"
               placeholder="Your password"
-              name="password" />
-
-            <Button variant="contained" color="primary">Sign in</Button>
+              name="password"
+              value={input.password}
+              onChange={onChange}
+              ref={register({
+                required: 'Please fill in this field.',
+                minLength: {
+                  value: 8,
+                  message: "Minimum length of password is 8",
+                },
+              })} />
+            {errors.password && (
+              <HelperText>
+                {errors.password.message}
+              </HelperText>
+            )}
+            <Button type="submit" variant="contained" color="primary">Sign in</Button>
 
           </Form>
-          <div className="foot-text">New to HeyMD? <span>Sign up</span></div>
+          <div className="foot-text">New to HeyMD? <Link to="/signup" className="foot-text__link">Sign up</Link></div>
         </div>
       </StyledContainer>
     </Fragment>

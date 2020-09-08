@@ -3,16 +3,19 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import App from './pages/App'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
+import { Provider } from 'react-redux'
 
-const Router = () => {
+const Router = ({ store }) => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path='/signin' ><Signin /></Route>
-        <Route path='/signup'><Signup /></Route>
-        <Route path="/" ><App /></Route>
-      </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route path='/signin' ><Signin /></Route>
+          <Route path='/signup'><Signup /></Route>
+          <Route path="/" ><App /></Route>
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   )
 }
 
