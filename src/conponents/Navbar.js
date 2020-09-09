@@ -13,7 +13,7 @@ const Nav = styled.div`
     margin: auto 1rem;
     height: 20px;
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 900;
 
     &_title {
       font-size: 20px;
