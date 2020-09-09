@@ -60,6 +60,8 @@ const Form = styled.form`
     font-size: 18px;
     font-weight: 400;
     margin: 15px 0 5px 0;
+    display: flex;
+    justify-content: space-between;
   }
 
   input {
