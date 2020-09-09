@@ -87,9 +87,9 @@ const Signup = () => {
   })
   const onSubmit = (data) => {
     dispatch({
-      type: 'SIGN_UP',
+      type: 'SIGN_UP_REQUEST',
       data,
-    });
+    })
     clearInput()
   }
   const onChange = e => {

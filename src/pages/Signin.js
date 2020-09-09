@@ -84,9 +84,9 @@ const Signin = () => {
 
   const onSubmit = (data) => {
     dispatch({
-      type: 'SIGN_IN',
+      type: 'SIGN_IN_REQUEST',
       data,
-    });
+    })
     clearInput()
   }
 
