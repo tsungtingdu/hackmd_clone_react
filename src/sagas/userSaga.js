@@ -1,10 +1,10 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
-import userApi from '../apis/userApi'
-const { signInApi, signUpApi } = userApi
+import { signInApi, signUpApi, setToken } from '../apis/userApi'
 
 export function* handleSignIn(action) {
   try {
     const data = yield call(signInApi, action.data)
+    yield call(setToken, data.data)
     yield put({ type: "SIGN_IN_SUCCESS", data })
   } catch (err) {
     yield put({ type: "SIGN_IN_ERROR" })
