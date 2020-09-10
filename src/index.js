@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from "./Router";
-import './index.css';
+import './css/index.scss';
 import configStore from './store'
 const store = configStore()
 
