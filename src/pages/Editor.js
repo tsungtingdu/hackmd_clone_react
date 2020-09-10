@@ -1,5 +1,7 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Navbar from '../conponents/Navbar'
+import { saveToLocal } from '../apis/postApi'
 import Editor from 'for-editor'
 import '../css/editor.scss'
 
@@ -15,31 +17,49 @@ const toolbar = {
   expand: false,
   undo: true,
   redo: true,
-  save: false,
+  save: true,
   subfield: true,
 }
 
-const styledEditor = {
+const placeholder = "# Put your note title here"
 
-}
+const EditorPage = (props) => {
+  const dispatch = useDispatch()
+  const post = useSelector(state => state.post.data)
+  const [input, setInput] = useState()
 
-const EditorPage = () => {
-  const [content, setContent] = useState('')
   const handleChange = (e) => {
-    setContent(e)
+    setInput(e)
+    saveToLocal({ id: post.id, title: '', content: input })
   }
+
+  const handleSave = () => {
+    const data = { id: post.id, title: '', content: input }
+    dispatch({
+      type: "SAVE_POST_REQUEST",
+      data
+    })
+  }
+
+  useEffect(() => {
+    if (post) {
+      setInput(post.content)
+      saveToLocal({ id: post.id, title: '', content: input })
+    }
+  }, [post]);
+
   return (
     <Fragment>
       <Navbar></Navbar>
       <Editor
-        value={content}
+        value={input}
         height="calc(100vh - 50px)"
         onChange={handleChange}
+        onSave={handleSave}
         subfield={true}
         preview={true}
-        style={styledEditor}
         toolbar={toolbar}
-        placeholder="# Put your note title here"
+        placeholder={placeholder}
         language="en" />
     </Fragment>
   )
