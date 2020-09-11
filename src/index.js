@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Router from "./Router";
 import './index.css';
-import App from './App';
+import configStore from './store'
+const store = configStore()
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+ReactDOM.render(<Router store={store} />, document.getElementById('root')
 );
