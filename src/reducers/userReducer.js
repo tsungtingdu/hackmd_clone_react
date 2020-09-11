@@ -9,6 +9,8 @@ const userReducer = (state = {}, action) => {
       }
     case 'SIGN_UP_SUCCESS':
       return state
+    case 'SIGN_OUT_SUCCESS':
+      return {}
     default:
       return state
   }

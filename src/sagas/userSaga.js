@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
-import { signInApi, signUpApi, setToken } from '../apis/userApi'
+import { signInApi, signUpApi, setToken, signOutApi } from '../apis/userApi'
 
 export function* handleSignIn(action) {
   try {
@@ -20,7 +20,17 @@ export function* handleSignUp(action) {
   }
 }
 
+export function* handleSignOut() {
+  try {
+    yield call(signOutApi)
+    yield put({ type: 'SIGN_OUT_SUCCESS'})
+  } catch (err) {
+    yield put({ type: 'SIGN_OUT_ERROR' })
+  }
+}
+
 export default function* watchUserReq() {
   yield takeLatest('SIGN_IN_REQUEST', handleSignIn)
   yield takeLatest('SIGN_UP_REQUEST', handleSignUp)
+  yield takeLatest('SIGN_OUT_REQUEST', handleSignOut)
 }
