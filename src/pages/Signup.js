@@ -245,8 +245,7 @@ const Signup = () => {
             </Button>
           </Form>
           <div className="foot-text">
-            Have an account?
-            <Link to="/signin" className="foot-text__link">
+            Have an account? <Link to="/signin" className="foot-text__link">
               Sign in
             </Link>
           </div>
