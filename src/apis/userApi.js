@@ -1,14 +1,19 @@
 import axios from 'axios'
+
 const ENDPOINT = 'https://hackmd-clone.herokuapp.com/api'
 
 const signInApi = async (data) => {
   try {
     const { email, password } = data
-    const res = await axios.post(`${ENDPOINT}/user/signin`, { email, password }, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    const res = await axios.post(
+      `${ENDPOINT}/user/signin`,
+      { email, password },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
     return res.data
   } catch (err) {
     return {}
@@ -17,11 +22,15 @@ const signInApi = async (data) => {
 
 const signUpApi = async (data) => {
   try {
-    const { name, email, password, passwordCheck } = data
-    const res = await axios.post(`${ENDPOINT}/user/signup`, { name, email, password, passwordCheck }, {
+    const {
+      name, email, password, passwordCheck,
+    } = data
+    const res = await axios.post(`${ENDPOINT}/user/signup`, {
+      name, email, password, passwordCheck,
+    }, {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
     return res.data
   } catch (err) {
@@ -33,7 +42,7 @@ const setToken = async (data) => {
   try {
     return localStorage.setItem('HEYMD_TOKEN', data.token)
   } catch (err) {
-    return
+
   }
 }
 
@@ -41,7 +50,7 @@ const getToken = async () => {
   try {
     return localStorage.getItem('HEYMD_TOKEN')
   } catch (err) {
-    return
+
   }
 }
 
@@ -50,9 +59,5 @@ const removeToken = async () => {
 }
 
 export {
-  signInApi,
-  signUpApi,
-  setToken,
-  getToken,
-  removeToken
+  signInApi, signUpApi, setToken, getToken, removeToken,
 }

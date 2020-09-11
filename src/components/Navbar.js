@@ -8,7 +8,6 @@ const Nav = styled.div`
   display: flex;
   justify-content: flex-start;
   align-content: center;
-  
   .nav_content {
     margin: auto 1rem;
     height: 20px;
@@ -22,14 +21,12 @@ const Nav = styled.div`
   }
 `
 
-const Navbar = () => {
-  return (
-    <Nav>
-      <div className="nav_content">
-        <div className="nav_content_title">HeyMD</div>
-      </div>
-    </Nav>
-  )
-}
+const Navbar = () => (
+  <Nav>
+    <div className="nav_content">
+      <div className="nav_content_title">HeyMD</div>
+    </div>
+  </Nav>
+)
 
 export default Navbar

@@ -3,12 +3,12 @@ const userReducer = (state = {}, action) => {
     case 'SIGN_IN_SUCCESS':
       return {
         ...state,
-        ...action.data
+        ...action.data,
       }
     case 'SIGN_UP_SUCCESS':
       return {
         ...state,
-        ...action.data
+        ...action.data,
       }
     default:
       return state

@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useForm } from "react-hook-form"
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'
+import Navbar from '../components/Navbar'
 
 const StyledContainer = styled.div`
   width: 100vw;
@@ -54,7 +54,6 @@ const Form = styled.form`
   display: flex;
   flex-flow: column;
   width: 440px;
-  
   label {
     color: #ffffff;
     font-size: 18px;
@@ -72,7 +71,6 @@ const Form = styled.form`
     border: 1px solid  #4f4f4f;
     border-radius: 2px;
     background-color: transparent;
-    
     &::-webkit-input-placeholder, 
     &::-moz-placeholder,
     &:-ms-input-placeholder,
@@ -101,18 +99,22 @@ const useStyles = makeStyles({
     borderColor: '#4cae4c',
     color: '#ffffff',
     border: '1px solid transparent',
-    borderRadius: '4px'
-  }
+    borderRadius: '4px',
+  },
 })
 
-const Signin = (props) => {
+const Signin = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const { register, handleSubmit, errors } = useForm()
   const [input, setInput] = useState({
     email: '',
-    password: ''
+    password: '',
   })
+
+  const clearInput = () => {
+    setInput({ email: '', password: '' })
+  }
 
   const onSubmit = (data) => {
     dispatch({
@@ -122,27 +124,25 @@ const Signin = (props) => {
     clearInput()
   }
 
-  const onChange = e => {
-    let { name, value } = e.target
-    let data = {
+  const onChange = (e) => {
+    const { name, value } = e.target
+    const data = {
       ...input,
-      [name]: value
+      [name]: value,
     }
     setInput(data)
   }
 
-  const clearInput = () => {
-    setInput({ email: '', password: '' })
-  }
-
   return (
-    <Fragment>
+    <>
       <Navbar />
-      <StyledContainer >
+      <StyledContainer>
         <div className="wrapper">
           <div className="title">Sign in</div>
-          <Form action=""
-            onSubmit={handleSubmit(onSubmit)} >
+          <Form
+            action=""
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <label htmlFor="">
               <span>Email</span>
               {errors.email && (
@@ -161,9 +161,10 @@ const Signin = (props) => {
                 required: 'Please fill in this field.',
                 pattern: {
                   value: /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/,
-                  message: "Invalid email",
-                }
-              })} />
+                  message: 'Invalid email',
+                },
+              })}
+            />
             <label htmlFor="">
               <span>Password</span>
               {errors.password && (
@@ -182,19 +183,28 @@ const Signin = (props) => {
                 required: 'Please fill in this field.',
                 minLength: {
                   value: 8,
-                  message: "Minimum length of password is 8",
+                  message: 'Minimum length of password is 8',
                 },
-              })} />
+              })}
+            />
 
             <Button
               classes={{ root: classes.styledBtn }}
-              type="submit" variant="contained">Sign in</Button>
-
+              type="submit"
+              variant="contained"
+            >
+              Sign in
+            </Button>
           </Form>
-          <div className="foot-text">New to HeyMD? <Link to="/signup" className="foot-text__link">Sign up</Link></div>
+          <div className="foot-text">
+            New to HeyMD?
+            <Link to="/signup" className="foot-text__link">
+              Sign up
+            </Link>
+          </div>
         </div>
       </StyledContainer>
-    </Fragment>
+    </>
   )
 }
 

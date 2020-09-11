@@ -10,11 +10,13 @@ const App = () => {
     })
   }
   return (
-    <Fragment>
+    <>
       <div>Hello world!</div>
-      <Link to="/editor" onClick={handleClick}>Create a new post</Link>
-    </Fragment>
+      <Link to="/editor" onClick={handleClick}>
+        Create a new post
+      </Link>
+    </>
   )
 }
 
-export default App;
+export default App

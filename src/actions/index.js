@@ -1,31 +1,31 @@
-const signInReq = data => ({
+const signInReq = (data) => ({
   type: 'SIGN_IN_REQUEST',
-  data
+  data,
 })
 
-const signInSuccess = data => ({
+const signInSuccess = (data) => ({
   type: 'SIGN_IN_SUCCESS',
-  data
+  data,
 })
 
-const signInError = data => ({
+const signInError = (data) => ({
   type: 'SIGN_IN_ERROR',
-  data
+  data,
 })
 
-const signUpReq = data => ({
+const signUpReq = (data) => ({
   type: 'SIGN_IN_REQUEST',
-  data
+  data,
 })
 
-const signUpSuccess = data => ({
+const signUpSuccess = (data) => ({
   type: 'SIGN_IN_SUCCESS',
-  data
+  data,
 })
 
-const signUpError = data => ({
+const signUpError = (data) => ({
   type: 'SIGN_IN_ERROR',
-  data
+  data,
 })
 
 export {

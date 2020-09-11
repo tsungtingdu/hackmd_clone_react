@@ -3,12 +3,12 @@ const postReducer = (state = {}, action) => {
     case 'CREATE_POST_SUCCESS':
       return {
         ...state,
-        ...action.data
+        ...action.data,
       }
     case 'SAVE_POST_SUCCESS':
       return {
         ...state,
-        ...action.data
+        ...action.data,
       }
     default:
       return state

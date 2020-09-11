@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useForm } from "react-hook-form"
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'
+import Navbar from '../components/Navbar'
 
 const StyledContainer = styled.div`
   width: 100vw;
@@ -54,7 +54,6 @@ const Form = styled.form`
   display: flex;
   flex-flow: column;
   width: 440px;
-  
   label {
     color: #ffffff;
     font-size: 18px;
@@ -69,11 +68,11 @@ const Form = styled.form`
     font-size: 18px;
     padding: 6px 12px;
     color: #ffffff;
-    border: 1px solid  #4f4f4f;
+    border: 1px solid #4f4f4f;
     border-radius: 2px;
     background-color: transparent;
-    
-    &::-webkit-input-placeholder, 
+
+    &::-webkit-input-placeholder,
     &::-moz-placeholder,
     &:-ms-input-placeholder,
     &:-moz-placeholder {
@@ -100,8 +99,8 @@ const useStyles = makeStyles({
     borderColor: '#4cae4c',
     color: '#ffffff',
     border: '1px solid transparent',
-    borderRadius: '4px'
-  }
+    borderRadius: '4px',
+  },
 })
 
 const Signup = () => {
@@ -113,8 +112,16 @@ const Signup = () => {
     name: '',
     email: '',
     password: '',
-    passwordCheck: ''
+    passwordCheck: '',
   })
+  const clearInput = () => {
+    setInput({
+      name: '',
+      email: '',
+      password: '',
+      passwordCheck: '',
+    })
+  }
   const onSubmit = (data) => {
     dispatch({
       type: 'SIGN_UP_REQUEST',
@@ -122,32 +129,22 @@ const Signup = () => {
     })
     clearInput()
   }
-  const onChange = e => {
-    let { name, value } = e.target
-    let data = {
+  const onChange = (e) => {
+    const { name, value } = e.target
+    const data = {
       ...input,
-      [name]: value
+      [name]: value,
     }
     setInput(data)
   }
 
-  const clearInput = () => {
-    setInput({
-      name: '',
-      email: '',
-      password: '',
-      passwordCheck: ''
-    })
-  }
   return (
-    <Fragment>
+    <>
       <Navbar />
-      <StyledContainer >
+      <StyledContainer>
         <div className="wrapper">
           <div className="title">Sign up</div>
-          <Form
-            action=""
-            onSubmit={handleSubmit(onSubmit)} >
+          <Form action="" onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="">
               <span>Username</span>
               {errors.name && (
@@ -166,10 +163,10 @@ const Signup = () => {
                 required: 'Please fill in this field.',
                 minLength: {
                   value: 2,
-                  message: "Minimum length of username is 2",
+                  message: 'Minimum length of username is 2',
                 },
-              })} />
-
+              })}
+            />
             <label htmlFor="">
               <span>Email</span>
               {errors.email && (
@@ -188,14 +185,17 @@ const Signup = () => {
                 required: 'Please fill in this field.',
                 pattern: {
                   value: /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/,
-                  message: "Invalid email",
-                }
-              })} />
+                  message: 'Invalid email',
+                },
+              })}
+            />
             <label htmlFor="">
               <span>Password</span>
               {errors.password && (
                 <HelperText>
-                  <p> {errors.password.message}</p>
+                  <p>
+                    {errors.password.message}
+                  </p>
                 </HelperText>
               )}
             </label>
@@ -209,9 +209,10 @@ const Signup = () => {
                 required: 'Please fill in this field.',
                 minLength: {
                   value: 8,
-                  message: "Minimum length of password is 8",
+                  message: 'Minimum length of password is 8',
                 },
-              })} />
+              })}
+            />
 
             <label htmlFor="">
               <span>Password check</span>
@@ -231,18 +232,27 @@ const Signup = () => {
                 required: 'Please fill in this field.',
                 minLength: {
                   value: 8,
-                  message: "Minimum length of password is 8",
+                  message: 'Minimum length of password is 8',
                 },
-              })} />
+              })}
+            />
             <Button
               classes={{ root: classes.styledBtn }}
-              type="submit" variant="contained">Sign up</Button>
-
+              type="submit"
+              variant="contained"
+            >
+              Sign up
+            </Button>
           </Form>
-          <div className="foot-text">Have an account? <Link to="/signin" className="foot-text__link">Sign in</Link></div>
+          <div className="foot-text">
+            Have an account?
+            <Link to="/signin" className="foot-text__link">
+              Sign in
+            </Link>
+          </div>
         </div>
       </StyledContainer>
-    </Fragment>
+    </>
   )
 }
 
