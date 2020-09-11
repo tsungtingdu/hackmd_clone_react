@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&display=swap');
+
+.for-container {
+  border: 0px solid transparent !important;
+
+  .for-toolbar {
+    background-color: #1c1c1e;
+    font-weight: 700;
+    border-radius: 0px !important;
+    border-bottom: 1px solid #cccccc;
+
+    ul {
+      li {
+        color: #cccccc;
+
+        .for-subfield,
+        .for-eye-off {
+          font-weight: 500;
+          color: #1c1c1e;
+        }
+      }
+    }
+  }
+
+  .for-editor-block {
+    background-color: #1e2126;
+    color: #ffffff;
+
+    .for-line-num {
+      color: #eda35e;
+      font-weight: 600;
+      background-color: #1e2126 !important;
+      border-right: 1px solid #cccccc;
+    }
+
+    .for-editor-content {
+      textarea {
+        font-family: 'Source Code Pro', monospace;
+        // font-size: 18px;
+        font-weight: 700;
+      }
+    }
+  }
+}
