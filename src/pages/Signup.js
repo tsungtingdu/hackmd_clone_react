@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom'
-import Navbar from '../conponents/Navbar'
+import Navbar from '../components/Navbar'
 import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'

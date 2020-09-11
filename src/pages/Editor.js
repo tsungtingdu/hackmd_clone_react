@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Navbar from '../conponents/Navbar'
+import Navbar from '../components/Navbar'
 import { saveToLocal } from '../apis/postApi'
 import Editor from 'for-editor'
 import '../css/editor.scss'
