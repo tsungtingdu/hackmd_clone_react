@@ -8,7 +8,7 @@ const createPostApi = async (TOKEN) => {
       `${ENDPOINT}/post`,
       {
         title: '',
-        content: '# Hello world :)',
+        content: '',
         status: 'private',
       },
       {

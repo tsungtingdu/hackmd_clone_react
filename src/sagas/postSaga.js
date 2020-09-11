@@ -6,7 +6,7 @@ export function* handleCreatePost() {
   try {
     const TOKEN = yield call(getToken)
     const data = yield call(createPostApi, TOKEN)
-    yield put({ type: 'CREATE_POST_SUCCESS', data })
+    yield put({ type: 'UPDATE_POST_SUCCESS', data })
   } catch (err) {}
 }
 
@@ -18,7 +18,7 @@ export function* handleSavePost(action) {
       token: TOKEN,
     }
     const resData = yield call(savePostApi, reqData)
-    yield put({ type: 'SAVE_POST_SUCCESS', resData })
+    yield put({ type: 'UPDATE_POST_SUCCESS', resData })
   } catch (err) {}
 }
 

@@ -25,7 +25,7 @@ const placeholder = '# Put your note title here'
 
 const EditorPage = () => {
   const dispatch = useDispatch()
-  const post = useSelector((state) => state.post.data)
+  const post = useSelector((state) => state.post)
   const [input, setInput] = useState()
 
   const handleChange = (e) => {

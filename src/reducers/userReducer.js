@@ -1,15 +1,14 @@
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SIGN_IN_SUCCESS':
+      const { token, user } = action.data.data
       return {
         ...state,
-        ...action.data,
+        token,
+        user
       }
     case 'SIGN_UP_SUCCESS':
-      return {
-        ...state,
-        ...action.data,
-      }
+      return state
     default:
       return state
   }

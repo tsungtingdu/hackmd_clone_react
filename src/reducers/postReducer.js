@@ -1,14 +1,12 @@
 const postReducer = (state = {}, action) => {
   switch (action.type) {
-    case 'CREATE_POST_SUCCESS':
+    case 'UPDATE_POST_SUCCESS':
+      const { id, title, content } = action.data.data
       return {
         ...state,
-        ...action.data,
-      }
-    case 'SAVE_POST_SUCCESS':
-      return {
-        ...state,
-        ...action.data,
+        id,
+        title,
+        content
       }
     default:
       return state
