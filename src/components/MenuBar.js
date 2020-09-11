@@ -233,7 +233,7 @@ const MenuBar = () => {
           Profile
         </div>
         <div className="profile__btn">
-          <i class="fas fa-angle-up"></i>
+          {profileMenu ? (<i class="fas fa-angle-down"></i>) : (<i class="fas fa-angle-up"></i>)}
         </div>
       </div>
     </MenuBarContainer>
