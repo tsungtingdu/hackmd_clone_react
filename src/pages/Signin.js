@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'
@@ -103,14 +103,25 @@ const useStyles = makeStyles({
   },
 })
 
-const Signin = () => {
+const Signin = (props) => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const userState = useSelector(state => state.user)
   const { register, handleSubmit, errors } = useForm()
   const [input, setInput] = useState({
     email: '',
     password: '',
   })
+
+  const handleRedirect = () => {
+    if (userState && userState.user && userState.user.id) {
+      props.history.push('/')
+    } 
+  }
+  
+  useEffect(() => {
+    handleRedirect()
+  }, [userState])
 
   const clearInput = () => {
     setInput({ email: '', password: '' })
@@ -205,4 +216,4 @@ const Signin = () => {
   )
 }
 
-export default Signin
+export default withRouter(Signin)
