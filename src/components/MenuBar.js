@@ -195,7 +195,7 @@ const MenuBar = () => {
   return (
     <MenuBarContainer>
       <div className="title">
-        <i class="fas fa-user-alt"></i><span>My Workspace</span>
+        <i className="fas fa-user-alt"></i><span>My Workspace</span>
       </div>
       <div className="searchBar">
         <form action="" className="searchBar__form">
@@ -204,7 +204,7 @@ const MenuBar = () => {
               name="" 
               id=""
               placeholder="Search keyword" />
-           <i class="fas fa-search"></i>
+           <i className="fas fa-search"></i>
         </form>
       </div>
       <Link className="newNote" to={"/editor"} onClick={handleCreatePost}>
@@ -214,13 +214,13 @@ const MenuBar = () => {
       <div className="postSelector">
         <div className="postSelector__option">
           <div className="postSelector__option-icon">
-            <i class="fas fa-lock"></i> 
+            <i className="fas fa-lock"></i> 
           </div>
           My Notes
         </div>
         <div className="postSelector__option">
           <div className="postSelector__option-icon">
-            <i class="fas fa-users"></i>
+            <i className="fas fa-users"></i>
           </div>
            Collaborative Notes
           </div>
