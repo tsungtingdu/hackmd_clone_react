@@ -8,7 +8,7 @@ const PostPanelContainer = styled.div`
 
 const PostPanel = () => {
   return (
-    <h1>post panel</h1>
+    <PostPanelContainer>post panel</PostPanelContainer>
   )
 }
 

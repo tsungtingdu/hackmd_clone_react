@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 const MenuBarContainer = styled.div`
-  width: 270px;
+  /* width: 270px; */
+  min-width: 270px;
   height: 100%;
   display: flex;
   flex-flow: column;
@@ -186,6 +187,11 @@ const MenuBar = () => {
       type: "SIGN_OUT_REQUEST"
     })
   }
+  const handleCreatePost = () => {
+    dispatch({
+      type: 'CREATE_POST_REQUEST',
+    })
+  }
   return (
     <MenuBarContainer>
       <div className="title">
@@ -201,7 +207,7 @@ const MenuBar = () => {
            <i class="fas fa-search"></i>
         </form>
       </div>
-      <Link  className="newNote" to={"/editor"}>
+      <Link className="newNote" to={"/editor"} onClick={handleCreatePost}>
           <div className="newNote__icon">+</div>
           <div className="newNote__text">New note</div>
       </Link>
@@ -222,18 +228,18 @@ const MenuBar = () => {
       <div className="profile" onClick={handleProfileMenu}>
         {profileMenu ? (<div className="profile__menu">
           <div className="profile__menu__option" onClick={handleLogout}>
-            <i class="fas fa-sign-out-alt"></i>
+            <i className="fas fa-sign-out-alt"></i>
             <p>Sign out</p>
           </div>
         </div>):''}
         <div className="profile__avatar">
-          <i class="fas fa-user-circle"></i>
+          <i className="fas fa-user-circle"></i>
         </div>
         <div className="profile__text">
           Profile
         </div>
         <div className="profile__btn">
-          {profileMenu ? (<i class="fas fa-angle-down"></i>) : (<i class="fas fa-angle-up"></i>)}
+          {profileMenu ? (<i className="fas fa-angle-down"></i>) : (<i className="fas fa-angle-up"></i>)}
         </div>
       </div>
     </MenuBarContainer>

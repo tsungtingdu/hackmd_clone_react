@@ -6,7 +6,6 @@ import EditorPage from './pages/Editor'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 
-
 const Router = ({ store }) => (
   <Provider store={store}>
     <BrowserRouter>
