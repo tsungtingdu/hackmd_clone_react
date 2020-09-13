@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import Posts from './Posts'
 
 const PostPanelContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 20px 40px 0 20px;
+  display: flex;
+  flex-flow: column-reverse;
+  justify-content: flex-end;
 `
 const WidgetContainer = styled.div`
     width: 100%;
@@ -14,7 +18,6 @@ const WidgetContainer = styled.div`
     flex-flow: row-reverse;
     align-items: center;
 `
-
 const SelectBtn = styled.div`
   width: 130px;
   height: 36px;
@@ -130,10 +133,11 @@ const PostPanel = () => {
   }
   return (
     <PostPanelContainer>
+      <Posts layoutOption={layoutOption} />
       <WidgetContainer>
         {layoutOption.menuDisplay ? (<MenuLayer onClick={handleMenuDisplay}></MenuLayer>) : ''}
         <SelectBtn onClick={handleMenuDisplay}>
-          Layout <i className="fas fa-angle-down"></i>
+          Layout {layoutOption.menuDisplay ? (<i className="fas fa-angle-up"></i>):(<i className="fas fa-angle-down"></i>)}
         </SelectBtn>
         {layoutOption.menuDisplay ? (<SelectMenu>
           <SelectGroup>
