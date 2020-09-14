@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
 const GridCardsWrapper = styled.div`
@@ -89,18 +89,20 @@ const GridCard = styled.div`
 const GridCardsContainer = (props) => {
   const { posts } = props
   return (
-    <GridCardsWrapper>
-      {posts.map(i => {
-        return (<GridCard>
-          <div className="title">Title</div>
-          <div className="changeTime"><i className="fas fa-history"></i>changed 2 days ago</div>
-          <div className="viewMode tooltip">
-            <i className="far fa-eye "></i>
-            <span className="tooltiptext">Open in view mode</span>
-          </div>
-        </GridCard>)
-      })}
-    </GridCardsWrapper>
+    <Fragment>
+      {posts !== undefined && (posts.length > 0) ? (<GridCardsWrapper>
+        {posts.map(i => {
+          return (<GridCard key={i.Post.id}>
+            <div className="title">{i.Post.title}</div>
+            <div className="changeTime"><i className="fas fa-history"></i>changed 2 days ago</div>
+            <div className="viewMode tooltip">
+              <i className="far fa-eye "></i>
+              <span className="tooltiptext">Open in view mode</span>
+            </div>
+          </GridCard>)
+        })}
+      </GridCardsWrapper>) : ''}
+    </Fragment>
   )
 }
 
