@@ -68,6 +68,11 @@ const postReducer = (state = {}, action) => {
     case 'GET_OWN_DATASET':
       let allPostsForOwn = state.allPosts
       let ownPosts = allPostsForOwn.filter(i => i.role === 'owner')
+      ownPosts.sort((a, b) => {
+        let dateA = new Date(a.Post.createdAt)
+        let dateB = new Date(b.Post.createdAt)
+        return dateB - dateA
+      })
       return {
         ...state,
         posts: ownPosts
@@ -75,6 +80,11 @@ const postReducer = (state = {}, action) => {
     case 'GET_COLLABORATIVE_DATASET':
       let allPostsForCo = state.allPosts
       let collaborativePosts = allPostsForCo.filter(i => i.role !== 'owner')
+      collaborativePosts.sort((a, b) => {
+        let dateA = new Date(a.Post.createdAt)
+        let dateB = new Date(b.Post.createdAt)
+        return dateB - dateA
+      })
       return {
         ...state,
         posts: collaborativePosts
