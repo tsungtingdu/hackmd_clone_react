@@ -118,13 +118,11 @@ const PostPanel = () => {
   const handleLayoutSelect = (data) => {
     let newOp
     if (LAYOUT_OPTIONS.includes(data)) {
-      console.log('change!')
       newOp = {
         ...layoutOption,
         layout: data
       }
     } else if (SORT_OPTIONS.includes(data)) {
-      console.log('change!')
       newOp = {
         ...layoutOption,
         sort: data
