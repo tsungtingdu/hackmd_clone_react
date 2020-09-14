@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 const PostsContainer = styled.div`
+  position: relative;
   width: 100%;
+  height: 100%;
   padding: 20px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    visibility: hidden;
+  }
 `
 
 const SectionTitle = styled.div`
@@ -123,10 +130,10 @@ const Card = styled.div`
 `
 
 const Posts = (props) => {
+  // for testing, will remove 
   const arr = new Array(10).fill('test')
-  console.log(arr)
   return (
-    <PostsContainer>
+    <PostsContainer id="postsContainer">
       <SectionTitle>
         <div className="title">Posts</div>
       </SectionTitle>

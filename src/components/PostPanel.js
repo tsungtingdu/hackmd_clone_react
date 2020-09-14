@@ -4,11 +4,13 @@ import Posts from './Posts'
 
 const PostPanelContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding: 20px 40px 0 20px;
   display: flex;
   flex-flow: column-reverse;
   justify-content: flex-end;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `
 const WidgetContainer = styled.div`
     width: 100%;
@@ -97,7 +99,6 @@ const PostPanel = () => {
     layout: 'GridLayout',
     sort: 'NewToOld'
   })
-
   const handleMenuDisplay = () => {
     let newOp
     if (layoutOption.menuDisplay) {

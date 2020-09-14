@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 const MenuBarContainer = styled.div`
   /* width: 270px; */
   min-width: 270px;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-flow: column;
   background-color: #262626;
