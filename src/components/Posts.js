@@ -55,8 +55,9 @@ const Posts = (props) => {
       <SectionTitle>
         <div className="title">Posts</div>
       </SectionTitle>
-      <GridCardsContainer posts={posts} />
-      <ListCardsContainer posts={posts} />
+      {
+        layoutOption.layout === 'GridLayout' ? (<GridCardsContainer posts={posts} />) : (<ListCardsContainer posts={posts} />)
+      }
     </PostsContainer>
     )
   }
