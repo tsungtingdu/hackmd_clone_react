@@ -9,8 +9,8 @@ const postReducer = (state = {}, action) => {
         content
       }
     case 'GET_POSTS_SUCCESS':
-      let posts = action.resData.data
-      posts = posts.filter( i => i.role === 'owner')
+      let allPosts = action.resData.data
+      let posts = allPosts.filter( i => i.role === 'owner')
       posts.sort((a, b) => {
         let dateA = new Date(a.Post.createdAt)
         let dateB = new Date(b.Post.createdAt)
@@ -18,6 +18,7 @@ const postReducer = (state = {}, action) => {
       })
       return {
         ...state,
+        allPosts: allPosts,
         posts: posts
       }
     case 'SORT_POST_NEWTOOLD':
@@ -44,18 +45,39 @@ const postReducer = (state = {}, action) => {
       }
     case 'SORT_POST_ATOZ':
       let aToZPosts = state.posts
-      aToZPosts.sort()
+      aToZPosts.sort((a, b) => {
+        let aTitle = a.Post.title
+        let bTitle = b.Post.title
+        return aTitle.localeCompare(bTitle)
+      })
       return {
         ...state,
         posts: aToZPosts
       }
     case 'SORT_POST_ZTOA':
       let zToAPosts = state.posts
-      zToAPosts.sort()
-      zToAPosts.reverse()
+      zToAPosts.sort((a, b) => {
+        let aTitle = a.Post.title
+        let bTitle = b.Post.title
+        return bTitle.localeCompare(aTitle)
+      })
       return {
         ...state,
         posts: zToAPosts
+      }
+    case 'GET_OWN_DATASET':
+      let allPostsForOwn = state.allPosts
+      let ownPosts = allPostsForOwn.filter(i => i.role === 'owner')
+      return {
+        ...state,
+        posts: ownPosts
+      }
+    case 'GET_COLLABORATIVE_DATASET':
+      let allPostsForCo = state.allPosts
+      let collaborativePosts = allPostsForCo.filter(i => i.role !== 'owner')
+      return {
+        ...state,
+        posts: collaborativePosts
       }
     default:
       return state

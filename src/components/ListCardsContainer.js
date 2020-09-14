@@ -79,7 +79,6 @@ const ListCard = styled.div`
 const ListCardsContainer = (props) => {
   const { posts } = props
   return (
-
     <Fragment>
       {posts !== undefined && (posts.length > 0) ? (
         <ListCardsWrapper>

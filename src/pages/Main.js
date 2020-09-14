@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import MenuBar from '../components/MenuBar'
 import PostPanel from '../components/PostPanel'
@@ -11,10 +11,15 @@ const MainPageContainer = styled.div`
 `
 
 const App = () => {
+  const [layoutOption, setLayoutOption] = useState({
+    menuDisplay: false,
+    layout: 'GridLayout',
+    sort: 'NewToOld'
+  })
   return (
     <MainPageContainer>
-      <MenuBar/>
-      <PostPanel/>
+      <MenuBar layoutOption={layoutOption} setLayoutOption={setLayoutOption}/>
+      <PostPanel layoutOption={layoutOption} setLayoutOption={setLayoutOption} />
     </MainPageContainer>
   )
 }

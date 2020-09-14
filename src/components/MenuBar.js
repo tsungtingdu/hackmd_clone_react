@@ -172,9 +172,11 @@ const MenuBarContainer = styled.div`
   }
 `
 
-const MenuBar = () => {
+const MenuBar = (props) => {
   const dispatch = useDispatch()
   const [profileMenu, setProfileMenu] = useState(false)
+  const { layoutOption, setLayoutOption } = props
+
   const handleProfileMenu = () => {
     if (profileMenu === false) {
       setProfileMenu(true)
@@ -192,6 +194,24 @@ const MenuBar = () => {
       type: 'CREATE_POST_REQUEST',
     })
   }
+
+  const handleDataSet = (data) => {
+    if (data === 'own') {
+      dispatch({
+        type: 'GET_OWN_DATASET',
+      })
+    }
+    if (data === 'collaborative') {
+      dispatch({
+        type: 'GET_COLLABORATIVE_DATASET',
+      })
+    }
+    setLayoutOption({
+      ...layoutOption,
+      sort: 'NewToOld'
+    })
+  }
+
   return (
     <MenuBarContainer>
       <div className="title">
@@ -212,18 +232,18 @@ const MenuBar = () => {
           <div className="newNote__text">New note</div>
       </Link>
       <div className="postSelector">
-        <div className="postSelector__option">
+        <div className="postSelector__option" onClick={() => handleDataSet('own')}>
           <div className="postSelector__option-icon">
             <i className="fas fa-lock"></i> 
           </div>
           My Notes
         </div>
-        <div className="postSelector__option">
+        <div className="postSelector__option" onClick={() => handleDataSet('collaborative')}>
           <div className="postSelector__option-icon">
             <i className="fas fa-users"></i>
           </div>
            Collaborative Notes
-          </div>
+        </div>
       </div>
       <div className="profile" onClick={handleProfileMenu}>
         {profileMenu ? (<div className="profile__menu">

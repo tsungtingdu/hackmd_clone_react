@@ -6,6 +6,7 @@ export function* handleSignIn(action) {
     const data = yield call(signInApi, action.data)
     yield call(setToken, data.data)
     yield put({ type: 'SIGN_IN_SUCCESS', data })
+    yield put({ type: 'GET_POSTS_REQUEST'})
   } catch (err) {
     yield put({ type: 'SIGN_IN_ERROR' })
   }

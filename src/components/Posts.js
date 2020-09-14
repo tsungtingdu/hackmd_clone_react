@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import GridCardsContainer from '../components/GridCardsContainer'
 import ListCardsContainer from '../components/ListCardsContainer'
@@ -49,27 +49,15 @@ const SectionTitle = styled.div`
 
 const Posts = (props) => {
   const { layoutOption } = props
-  const dispatch = useDispatch()
-  const posts = useSelector(state => state.post)
-  const displayData = posts ? posts.posts : []
-
-  const getPostData = () => {
-    dispatch({
-      type: 'GET_POSTS_REQUEST',
-    })
-  }
-
-  useEffect(()=>{
-    getPostData()
-  }, [])
-
+  const post = useSelector(state => state.post)
+  const displayPosts = post.posts
   return (
     <PostsContainer id="postsContainer">
       <SectionTitle>
         <div className="title">Posts</div>
       </SectionTitle>
       {
-        layoutOption.layout === 'GridLayout' ? (<GridCardsContainer posts={displayData} />) : (<ListCardsContainer posts={displayData} />)
+        layoutOption.layout === 'GridLayout' ? (<GridCardsContainer posts={displayPosts} />) : (<ListCardsContainer posts={displayPosts} />)
       }
     </PostsContainer>
     )

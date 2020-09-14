@@ -92,15 +92,11 @@ const MenuLayer = styled.div`
   background-color: transparent;
 `
 
-const PostPanel = () => {
+const PostPanel = (props) => {
   const LAYOUT_OPTIONS = ['GridLayout', 'RowLayout']
   const SORT_OPTIONS = ['NewToOld', 'OldToNew', 'AToZ', 'ZToA']
   const dispatch = useDispatch()
-  const [layoutOption, setLayoutOption] = useState({
-    menuDisplay: false,
-    layout: 'GridLayout',
-    sort: 'NewToOld'
-  })
+  const { layoutOption, setLayoutOption } = props
 
   const handleMenuDisplay = () => {
     let newOp
