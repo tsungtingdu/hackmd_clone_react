@@ -88,12 +88,12 @@ const GridCard = styled.div`
 `
 
 const GridCardsContainer = (props) => {
-  const { posts } = props
+  const { posts, handleCardOpen } = props
   return (
     <Fragment>
       {posts !== undefined && (posts.length > 0) ? (<GridCardsWrapper>
         {posts.map(i => {
-          return (<GridCard key={i.Post.id}>
+          return (<GridCard key={i.Post.id} onClick={() => { handleCardOpen(i.Post.id) }}>
             <div className="title">{i.Post.title}</div>
             <div className="changeTime"><i className="fas fa-history"></i>changed 2 days ago</div>
             <div className="viewMode tooltip">

@@ -1,5 +1,6 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import GridCardsContainer from '../components/GridCardsContainer'
 import ListCardsContainer from '../components/ListCardsContainer'
@@ -49,18 +50,32 @@ const SectionTitle = styled.div`
 
 const Posts = (props) => {
   const { layoutOption } = props
+  const dispatch = useDispatch()
   const post = useSelector(state => state.post)
   const displayPosts = post.posts
+
+  const handleCardOpen = (id) => {
+    dispatch({
+      type: 'GET_POST_REQUEST',
+      payload: {
+        id: id
+      }
+    })
+    props.history.push(`/post/${id}`)
+  }
+
   return (
     <PostsContainer id="postsContainer">
       <SectionTitle>
         <div className="title">Posts</div>
       </SectionTitle>
       {
-        layoutOption.layout === 'GridLayout' ? (<GridCardsContainer posts={displayPosts} />) : (<ListCardsContainer posts={displayPosts} />)
+        layoutOption.layout === 'GridLayout'
+          ? (<GridCardsContainer posts={displayPosts} handleCardOpen={handleCardOpen} />)
+          : (<ListCardsContainer posts={displayPosts} handleCardOpen={handleCardOpen} />)
       }
     </PostsContainer>
     )
   }
 
-export default Posts
+export default withRouter(Posts)

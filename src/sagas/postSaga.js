@@ -1,6 +1,18 @@
 import { takeEvery, takeLatest, call, put } from 'redux-saga/effects'
 import { getToken } from '../apis/userApi'
-import { createPostApi, savePostApi, getPostsApi } from '../apis/postApi'
+import { createPostApi, savePostApi, getPostsApi, getPostApi } from '../apis/postApi'
+
+export function* handleGetPost(action) {
+  try {
+    const TOKEN = yield call(getToken)
+    const reqData = {
+      ...action.payload,
+      token: TOKEN,
+    }
+    const resData = yield call(getPostApi, reqData)
+    yield put({ type: 'GET_POST_SUCCESS', resData })
+  } catch (err) { }
+}
 
 export function* handleGetPosts(action) {
   try {
@@ -35,6 +47,7 @@ export function* handleSavePost(action) {
 }
 
 export default function* watchPostReq() {
+  yield takeLatest('GET_POST_REQUEST', handleGetPost)
   yield takeLatest('GET_POSTS_REQUEST', handleGetPosts)
   yield takeLatest('CREATE_POST_REQUEST', handleCreatePost)
   yield takeLatest('SAVE_POST_REQUEST', handleSavePost)

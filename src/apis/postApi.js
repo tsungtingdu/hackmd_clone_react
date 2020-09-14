@@ -63,8 +63,25 @@ const getPostsApi = async (data) => {
   }
 }
 
+const getPostApi = async (data) => {
+  try {
+    const res = await axios.get(
+      `${ENDPOINT}/post/${data.id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${data.token}`,
+        },
+      },
+    )
+    return res.data
+  } catch (err) {
+    return {}
+  }
+}
+
 const saveToLocal = (data) => {
   localStorage.setItem(`HEYMD_CONTENT_${data.id}`, data.content)
 }
 
-export { createPostApi, savePostApi, saveToLocal, getPostsApi}
+export { createPostApi, savePostApi, saveToLocal, getPostsApi, getPostApi}

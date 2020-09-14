@@ -27,10 +27,13 @@ const Nav = styled.div`
 const Navbar = (props) => {
   const dispatch = useDispatch()
   const handleClick = () => {
-    props.history.push('/')
+    dispatch({
+      type: 'CLEAR_POST_REQUEST'
+    })
     dispatch({
       type: 'GET_POSTS_REQUEST'
     })
+    props.history.push('/')
   }
   return (
     <Nav>

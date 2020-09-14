@@ -24,11 +24,13 @@ const toolbar = {
 const placeholder = '# Put your note title here'
 
 const EditorPage = () => {
-  const dispatch = useDispatch()
-  const post = useSelector((state) => state.post)
   const [input, setInput] = useState()
-
+  const dispatch = useDispatch()
+  let post = useSelector((state) => state.post)
+  post = post.post && post.post.Post ? post.post.Post : {}
+  
   const handleChange = (e) => {
+    console.log(e)
     setInput(e)
     saveToLocal({ id: post.id, title: '', content: input })
   }
@@ -44,7 +46,7 @@ const EditorPage = () => {
   useEffect(() => {
     if (post) {
       setInput(post.content)
-      saveToLocal({ id: post.id, title: '', content: input })
+      saveToLocal({ id: post.id, title: post.title, content: input })
     }
   }, [post])
 

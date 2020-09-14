@@ -13,6 +13,7 @@ const Router = ({ store }) => (
         <Route path="/signup"><Signup /></Route>
         <Route path="/signin"><Signin /></Route>
         <PrivateRoute path="/editor"><EditorPage /></PrivateRoute>
+        <PrivateRoute path="/post/:id"><EditorPage /></PrivateRoute>
         <PrivateRoute path="/"><Main /></PrivateRoute>
       </Switch>
     </BrowserRouter>

@@ -1,12 +1,12 @@
 const postReducer = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_POST_SUCCESS':
-      const { id, title, content } = action.data.data
+      const updatedPost = action.data.data
       return {
         ...state,
-        id,
-        title,
-        content
+        post: {
+          Post: updatedPost
+        }
       }
     case 'GET_POSTS_SUCCESS':
       let allPosts = action.resData.data
@@ -20,6 +20,17 @@ const postReducer = (state = {}, action) => {
         ...state,
         allPosts: allPosts,
         posts: posts
+      }
+    case 'GET_POST_SUCCESS':
+      let post = action.resData.data
+      return {
+        ...state,
+        post: post
+      }
+    case 'CLEAR_POST_REQUEST':
+      return {
+        ...state,
+        post: {}
       }
     case 'SORT_POST_NEWTOOLD':
       let newToOldPosts = state.posts

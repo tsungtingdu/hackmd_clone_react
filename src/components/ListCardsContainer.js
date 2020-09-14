@@ -77,13 +77,13 @@ const ListCard = styled.div`
 `
 
 const ListCardsContainer = (props) => {
-  const { posts } = props
+  const { posts, handleCardOpen } = props
   return (
     <Fragment>
       {posts !== undefined && (posts.length > 0) ? (
         <ListCardsWrapper>
           {posts.map(i => {
-            return (<ListCard key={i.Post.id}>
+            return (<ListCard key={i.Post.id} onClick={() => { handleCardOpen(i.Post.id) }}>
               <div className="title">{i.Post.title}</div>
               <div className="viewMode tooltip">
                 <i className="far fa-eye "></i>
