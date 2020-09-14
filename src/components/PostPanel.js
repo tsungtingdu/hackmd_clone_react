@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import Posts from './Posts'
 
@@ -94,11 +95,13 @@ const MenuLayer = styled.div`
 const PostPanel = () => {
   const LAYOUT_OPTIONS = ['GridLayout', 'RowLayout']
   const SORT_OPTIONS = ['NewToOld', 'OldToNew', 'AToZ', 'ZToA']
+  const dispatch = useDispatch()
   const [layoutOption, setLayoutOption] = useState({
     menuDisplay: false,
     layout: 'GridLayout',
     sort: 'NewToOld'
   })
+
   const handleMenuDisplay = () => {
     let newOp
     if (layoutOption.menuDisplay) {
@@ -129,7 +132,24 @@ const PostPanel = () => {
       }
     }
     setLayoutOption(newOp)
+    handleSorting(newOp.sort)
   }
+
+  const handleSorting = (data) => {
+    switch (data) {
+      case 'NewToOld':
+        return dispatch({type: 'SORT_POST_NEWTOOLD'})
+      case 'OldToNew':
+        return dispatch({ type: 'SORT_POST_OLDTONEW' })
+      case 'AToZ':
+        return dispatch({ type: 'SORT_POST_ATOZ' })
+      case 'ZToA':
+        return dispatch({ type: 'SORT_POST_ZTOA' })
+      default:
+        return
+    }
+  }
+
   return (
     <PostPanelContainer>
       <Posts layoutOption={layoutOption} />
