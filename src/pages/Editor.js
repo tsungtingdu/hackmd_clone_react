@@ -28,9 +28,8 @@ const EditorPage = () => {
   const dispatch = useDispatch()
   let post = useSelector((state) => state.post)
   post = post.post && post.post.Post ? post.post.Post : {}
-  
+
   const handleChange = (e) => {
-    console.log(e)
     setInput(e)
     saveToLocal({ id: post.id, title: '', content: input })
   }
