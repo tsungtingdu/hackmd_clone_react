@@ -40,6 +40,7 @@ const GridCard = styled.div`
     font-weight: 600;
     line-height: 22px;
     color: #333333;
+    text-align: center;
   }
   .changeTime {
     font-size: 12px;
