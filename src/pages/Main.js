@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import styled from 'styled-components'
 import MenuBar from '../components/MenuBar'
 import PostPanel from '../components/PostPanel'
+import LoadingMask from '../LoadingMask'
 
 const MainPageContainer = styled.div`
   width: 100%;
@@ -17,10 +18,13 @@ const App = () => {
     sort: 'NewToOld'
   })
   return (
-    <MainPageContainer>
-      <MenuBar layoutOption={layoutOption} setLayoutOption={setLayoutOption}/>
-      <PostPanel layoutOption={layoutOption} setLayoutOption={setLayoutOption} />
-    </MainPageContainer>
+    <Fragment>
+      <LoadingMask />
+      <MainPageContainer>
+        <MenuBar layoutOption={layoutOption} setLayoutOption={setLayoutOption}/>
+        <PostPanel layoutOption={layoutOption} setLayoutOption={setLayoutOption} />
+      </MainPageContainer>
+    </Fragment>
   )
 }
 

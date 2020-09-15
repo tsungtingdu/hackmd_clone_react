@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Editor from 'for-editor'
 import Navbar from '../components/Navbar'
+import LoadingMask from '../LoadingMask'
 import { saveToLocal } from '../apis/postApi'
 import '../css/editor.scss'
 
@@ -50,7 +51,8 @@ const EditorPage = () => {
   }, [post])
 
   return (
-    <>
+    <Fragment>
+      <LoadingMask />
       <Navbar />
       <Editor
         value={input}
@@ -63,7 +65,7 @@ const EditorPage = () => {
         placeholder={placeholder}
         language="en"
       />
-    </>
+    </Fragment>
   )
 }
 

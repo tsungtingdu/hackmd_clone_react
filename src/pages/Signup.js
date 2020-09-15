@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'
 import Navbar from '../components/Navbar'
+import LoadingMask from '../LoadingMask'
 
 const StyledContainer = styled.div`
   width: 100vw;
@@ -139,7 +140,8 @@ const Signup = () => {
   }
 
   return (
-    <>
+    <Fragment>
+      <LoadingMask />
       <Navbar />
       <StyledContainer>
         <div className="wrapper">
@@ -251,7 +253,7 @@ const Signup = () => {
           </div>
         </div>
       </StyledContainer>
-    </>
+    </Fragment>
   )
 }
 

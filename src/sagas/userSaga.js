@@ -3,21 +3,27 @@ import { signInApi, signUpApi, setToken, signOutApi } from '../apis/userApi'
 
 export function* handleSignIn(action) {
   try {
+    yield put({ type: 'DATA_LOADING' })
     const data = yield call(signInApi, action.data)
     yield call(setToken, data.data)
     yield put({ type: 'SIGN_IN_SUCCESS', data })
     yield put({ type: 'GET_POSTS_REQUEST'})
+    yield put({ type: 'DATA_LOADED' })
   } catch (err) {
     yield put({ type: 'SIGN_IN_ERROR' })
+    // yield put({ type: 'DATA_LOADED' })
   }
 }
 
 export function* handleSignUp(action) {
   try {
+    yield put({ type: 'DATA_LOADING' })
     const data = yield call(signUpApi, action.data)
     yield put({ type: 'SIGN_UP_SUCCESS', data })
+    yield put({ type: 'DATA_LOADED' })
   } catch (err) {
     yield put({ type: 'SIGN_UP_ERROR' })
+    yield put({ type: 'DATA_LOADED' })
   }
 }
 
@@ -27,6 +33,7 @@ export function* handleSignOut() {
     yield put({ type: 'SIGN_OUT_SUCCESS'})
   } catch (err) {
     yield put({ type: 'SIGN_OUT_ERROR' })
+    yield put({ type: 'DATA_LOADED' })
   }
 }
 
