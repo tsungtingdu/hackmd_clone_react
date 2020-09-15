@@ -35,24 +35,36 @@ const GridCard = styled.div`
   background-color: #ffffff;
   padding: 16px;
   cursor: pointer;
-  .title {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 22px;
-    color: #333333;
-    text-align: center;
-  }
-  .changeTime {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 22px;
-    font-style: italic;
-    color: #777777;
+  .wrapper {
     display: flex;
+    flex-flow: column;
+    justify-content: center;
     align-items: center;
-    i {
-      margin-right: 5px;
+    width: 100%;
+    height: 100%;
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 22px;
+      color: #333333;
+      text-align: center;
     }
+    .changeTime {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 22px;
+      font-style: italic;
+      color: #777777;
+      display: flex;
+      align-items: center;
+      i {
+        margin-right: 5px;
+      }
+    }
+  }
+  &:hover {
+    background-color: #eee;
   }
   .viewMode {
     position: absolute;
@@ -63,9 +75,6 @@ const GridCard = styled.div`
     font-style: italic;
     color: #777777;
     text-align: right;
-  }
-  &:hover {
-    background-color: #eee;
   }
   .tooltip .tooltiptext {
     position: absolute;
@@ -84,22 +93,43 @@ const GridCard = styled.div`
   }
   .tooltip:hover .tooltiptext {
     visibility: visible;
+    z-index: 1;
+  }
+
+  .deleteBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    width: 20px;
+    font-size: 12px;
+    margin: 10px 10px 0 0;
+    color: #C9302C;
+    text-align: center;
+    &:hover {
+       transform: scale(1.25)
+    }
   }
 `
 
 const GridCardsContainer = (props) => {
-  const { posts, handleCardOpen } = props
+  const { posts, handleCardOpen, handleCardDelete } = props
   return (
     <Fragment>
       {posts !== undefined && (posts.length > 0) ? (<GridCardsWrapper>
         {posts.map(i => {
-          return (<GridCard key={i.Post.id} onClick={() => { handleCardOpen(i.Post.id) }}>
-            <div className="title">{i.Post.title}</div>
-            <div className="changeTime"><i className="fas fa-history"></i>changed 2 days ago</div>
-            <div className="viewMode tooltip">
-              <i className="far fa-eye "></i>
-              <span className="tooltiptext">Open in view mode</span>
-            </div>
+          return (<GridCard key={i.Post.id} >
+              <div className="deleteBtn" onClick={() => { handleCardDelete({ type: 'delete', payload: i.Post.id }) }}>
+                <i className="far fa-trash-alt"></i>
+              </div>
+              <div className="wrapper" onClick={() => { handleCardOpen({ type: 'open', payload: i.Post.id }) }}>
+                <div className="title">{i.Post.title}</div>
+                <div className="changeTime"><i className="fas fa-history"></i>changed 2 days ago</div>
+                <div className="viewMode tooltip">
+                  <i className="far fa-eye "></i>
+                  <span className="tooltiptext">Open in view mode</span>
+                </div>
+              </div>
           </GridCard>)
         })}
       </GridCardsWrapper>) : ''}

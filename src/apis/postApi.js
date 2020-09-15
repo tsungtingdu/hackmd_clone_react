@@ -81,8 +81,25 @@ const getPostApi = async (data) => {
   }
 }
 
+const DeletePostApi = async (data) => {
+  try {
+    const res = await axios.delete(
+      `${ENDPOINT}/post/${data.id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${data.token}`,
+        },
+      },
+    )
+    return res.data
+  } catch (err) {
+    return {}
+  }
+}
+
 const saveToLocal = (data) => {
   localStorage.setItem(`HEYMD_CONTENT_${data.id}`, data.content)
 }
 
-export { createPostApi, savePostApi, saveToLocal, getPostsApi, getPostApi}
+export { createPostApi, savePostApi, saveToLocal, getPostsApi, getPostApi, DeletePostApi}

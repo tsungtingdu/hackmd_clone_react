@@ -54,14 +54,29 @@ const Posts = (props) => {
   const post = useSelector(state => state.post)
   const displayPosts = post.posts
 
-  const handleCardOpen = (id) => {
-    dispatch({
-      type: 'GET_POST_REQUEST',
-      payload: {
-        id: id
-      }
-    })
-    props.history.push(`/post/${id}`)
+  const handleCardOpen = (data) => {
+    if (data.type === 'open') {
+      dispatch({
+        type: 'GET_POST_REQUEST',
+        payload: {
+          id: data.payload
+        }
+      })
+      props.history.push(`/post/${data.payload}`)
+    }
+    return
+  }
+
+  const handleCardDelete = (data) => {
+    if (data.type === 'delete') {
+      dispatch({
+        type: 'DELETE_POST_REQUEST',
+        payload: {
+          id: data.payload
+        }
+      })
+    }
+    return
   }
 
   return (
@@ -71,8 +86,14 @@ const Posts = (props) => {
       </SectionTitle>
       {
         layoutOption.layout === 'GridLayout'
-          ? (<GridCardsContainer posts={displayPosts} handleCardOpen={handleCardOpen} />)
-          : (<ListCardsContainer posts={displayPosts} handleCardOpen={handleCardOpen} />)
+          ? (<GridCardsContainer
+              posts={displayPosts}
+              handleCardOpen={handleCardOpen}
+              handleCardDelete={handleCardDelete} />)
+          : (<ListCardsContainer
+              posts={displayPosts}
+              handleCardOpen={handleCardOpen}
+              handleCardDelete={handleCardDelete} />)
       }
     </PostsContainer>
     )
