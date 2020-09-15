@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import Moment from 'react-moment'
 
 const GridCardsWrapper = styled.div`
   padding: 20px 0;
@@ -124,7 +125,11 @@ const GridCardsContainer = (props) => {
               </div>
               <div className="wrapper" onClick={() => { handleCardOpen({ type: 'open', payload: i.Post.id }) }}>
                 <div className="title">{i.Post.title}</div>
-                <div className="changeTime"><i className="fas fa-history"></i>changed 2 days ago</div>
+                <div className="changeTime">
+                  <i className="fas fa-history"></i>
+                  changed&nbsp;
+                  <Moment fromNow>{i.Post.updatedAt}</Moment>
+                </div>
                 <div className="viewMode tooltip">
                   <i className="far fa-eye "></i>
                   <span className="tooltiptext">Open in view mode</span>

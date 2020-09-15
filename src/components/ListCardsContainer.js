@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import Moment from 'react-moment'
 
 const ListCardsWrapper = styled.div`
   padding: 20px 0;
@@ -114,7 +115,10 @@ const ListCardsContainer = (props) => {
                   <i className="far fa-eye"></i>
                   <span className="tooltiptext">Open in view mode</span>
                 </div>
-                <div className="changeTime"><i className="fas fa-history"></i>changed 2 days ago</div>
+                <div className="changeTime">
+                  <i className="fas fa-history"></i>
+                  changed&nbsp;
+                  <Moment fromNow>{i.Post.updatedAt}</Moment></div>
               </div>
               <div className="deleteBtn" onClick={() => { handleCardDelete({ type: 'delete', payload: i.Post.id })}}><i className="far fa-trash-alt"></i></div>
             </ListCard>)
