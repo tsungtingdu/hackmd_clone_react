@@ -100,6 +100,8 @@ const postReducer = (state = {}, action) => {
         ...state,
         posts: collaborativePosts
       }
+    case 'CLEAR_POST':
+      return {}
     default:
       return state
   }

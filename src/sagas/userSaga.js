@@ -30,6 +30,7 @@ export function* handleSignUp(action) {
 export function* handleSignOut() {
   try {
     yield call(signOutApi)
+    yield put({ type: 'CLEAR_POST' })
     yield put({ type: 'SIGN_OUT_SUCCESS'})
   } catch (err) {
     yield put({ type: 'SIGN_OUT_ERROR' })

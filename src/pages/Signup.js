@@ -1,7 +1,7 @@
-import React, { useState, Fragment } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState, Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'
@@ -104,10 +104,21 @@ const useStyles = makeStyles({
   },
 })
 
-const Signup = () => {
+const Signup = (props) => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const userStatus = useSelector(state => state.user.userStatus)
   const { register, handleSubmit, errors } = useForm()
+
+  const handleRedirect = () => {
+    if (userStatus === 'SIGNED_UP') {
+      props.history.push('/siginin')
+    }
+  }
+
+  useEffect(() => {
+    handleRedirect()
+  }, [userStatus])
 
   const [input, setInput] = useState({
     name: '',
@@ -202,7 +213,7 @@ const Signup = () => {
               )}
             </label>
             <input
-              type="text"
+              type="password"
               placeholder="Your password"
               name="password"
               value={input.password}
@@ -225,7 +236,7 @@ const Signup = () => {
               )}
             </label>
             <input
-              type="text"
+              type="password"
               placeholder="Your password again"
               name="passwordCheck"
               value={input.passwordCheck}
@@ -257,4 +268,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default withRouter(Signup)

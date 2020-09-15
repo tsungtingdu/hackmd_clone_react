@@ -107,7 +107,7 @@ const useStyles = makeStyles({
 const Signin = (props) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const userState = useSelector(state => state.user)
+  const userStatus = useSelector(state => state.user.userStatus)
   const { register, handleSubmit, errors } = useForm()
   const [input, setInput] = useState({
     email: '',
@@ -115,14 +115,14 @@ const Signin = (props) => {
   })
 
   const handleRedirect = () => {
-    if (userState && userState.user && userState.user.id) {
+    if (userStatus === 'SIGNED_IN') {
       props.history.push('/')
     } 
   }
   
   useEffect(() => {
     handleRedirect()
-  }, [userState])
+  }, [userStatus])
 
   const clearInput = () => {
     setInput({ email: '', password: '' })
