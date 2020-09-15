@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getTitle } from '../utilities/getTitle'
 
 const ENDPOINT = 'https://hackmd-clone.herokuapp.com/api'
 
@@ -7,7 +8,7 @@ const createPostApi = async (TOKEN) => {
     const res = await axios.post(
       `${ENDPOINT}/post`,
       {
-        title: '',
+        title: 'Untitled',
         content: '',
         status: 'private',
       },
@@ -29,7 +30,7 @@ const savePostApi = async (data) => {
     const res = await axios.put(
       `${ENDPOINT}/post/${data.id}`,
       {
-        title: data.title,
+        title: getTitle(data.content),
         content: data.content,
         status: data.status ? data.status : 'private',
       },

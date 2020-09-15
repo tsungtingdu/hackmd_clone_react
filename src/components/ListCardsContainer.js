@@ -29,9 +29,14 @@ const ListCard = styled.div`
     font-size: 16px;
     font-weight: 600;
     line-height: 22px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 10px;
     color: #333333;
   }
   .changeTime {
+    min-width: 120px;
     margin-left: auto;
     font-size: 12px;
     font-weight: 400;
@@ -51,7 +56,7 @@ const ListCard = styled.div`
     font-style: italic;
     color: #777777;
     text-align: right;
-    margin-left: 10px;
+    margin: 0 10px;
   }
   &:hover {
     background-color: #eee;
@@ -86,7 +91,7 @@ const ListCardsContainer = (props) => {
             return (<ListCard key={i.Post.id} onClick={() => { handleCardOpen(i.Post.id) }}>
               <div className="title">{i.Post.title}</div>
               <div className="viewMode tooltip">
-                <i className="far fa-eye "></i>
+                <i className="far fa-eye"></i>
                 <span className="tooltiptext">Open in view mode</span>
               </div>
               <div className="changeTime"><i className="fas fa-history"></i>changed 2 days ago</div>
