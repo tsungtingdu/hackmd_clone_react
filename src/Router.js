@@ -1,11 +1,10 @@
 import React from 'react'
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
 import { useSelector, Provider } from 'react-redux'
-import App from './pages/App'
+import Main from './pages/Main'
 import EditorPage from './pages/Editor'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
-
 
 const Router = ({ store }) => (
   <Provider store={store}>
@@ -14,7 +13,8 @@ const Router = ({ store }) => (
         <Route path="/signup"><Signup /></Route>
         <Route path="/signin"><Signin /></Route>
         <PrivateRoute path="/editor"><EditorPage /></PrivateRoute>
-        <PrivateRoute path="/"><App /></PrivateRoute>
+        <PrivateRoute path="/post/:id"><EditorPage /></PrivateRoute>
+        <PrivateRoute path="/"><Main /></PrivateRoute>
       </Switch>
     </BrowserRouter>
   </Provider>

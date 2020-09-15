@@ -1,5 +1,7 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { withRouter } from 'react-router-dom'
 
 const Nav = styled.div`
   width: 100%;
@@ -17,16 +19,29 @@ const Nav = styled.div`
     &_title {
       font-size: 20px;
       line-height: 20px;
+      cursor: pointer;
     }
   }
 `
 
-const Navbar = () => (
-  <Nav>
-    <div className="nav_content">
-      <div className="nav_content_title">HeyMD</div>
-    </div>
-  </Nav>
-)
+const Navbar = (props) => {
+  const dispatch = useDispatch()
+  const handleClick = () => {
+    dispatch({
+      type: 'CLEAR_POST_REQUEST'
+    })
+    dispatch({
+      type: 'GET_POSTS_REQUEST'
+    })
+    props.history.push('/')
+  }
+  return (
+    <Nav>
+      <div className="nav_content">
+        <div className="nav_content_title" onClick={handleClick}>HeyMD</div>
+      </div>
+    </Nav>
+  )
+}
 
-export default Navbar
+export default withRouter(Navbar)

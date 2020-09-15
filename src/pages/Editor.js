@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Editor from 'for-editor'
 import Navbar from '../components/Navbar'
+import LoadingMask from '../LoadingMask'
 import { saveToLocal } from '../apis/postApi'
 import '../css/editor.scss'
 
@@ -24,17 +25,18 @@ const toolbar = {
 const placeholder = '# Put your note title here'
 
 const EditorPage = () => {
-  const dispatch = useDispatch()
-  const post = useSelector((state) => state.post)
   const [input, setInput] = useState()
+  const dispatch = useDispatch()
+  let post = useSelector((state) => state.post)
+  post = post.post && post.post.Post ? post.post.Post : {}
 
   const handleChange = (e) => {
     setInput(e)
-    saveToLocal({ id: post.id, title: '', content: input })
+    saveToLocal({ id: post.id, content: input })
   }
 
   const handleSave = () => {
-    const data = { id: post.id, title: '', content: input }
+    const data = { id: post.id, content: input }
     dispatch({
       type: 'SAVE_POST_REQUEST',
       data,
@@ -44,12 +46,13 @@ const EditorPage = () => {
   useEffect(() => {
     if (post) {
       setInput(post.content)
-      saveToLocal({ id: post.id, title: '', content: input })
+      saveToLocal({ id: post.id, content: input })
     }
   }, [post])
 
   return (
-    <>
+    <Fragment>
+      <LoadingMask />
       <Navbar />
       <Editor
         value={input}
@@ -62,7 +65,7 @@ const EditorPage = () => {
         placeholder={placeholder}
         language="en"
       />
-    </>
+    </Fragment>
   )
 }
 

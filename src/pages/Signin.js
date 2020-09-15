@@ -1,11 +1,12 @@
-import React, { Fragment, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect, Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'
 import Navbar from '../components/Navbar'
+import LoadingMask from '../LoadingMask'
 
 const StyledContainer = styled.div`
   width: 100vw;
@@ -103,14 +104,25 @@ const useStyles = makeStyles({
   },
 })
 
-const Signin = () => {
+const Signin = (props) => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const userStatus = useSelector(state => state.user.userStatus)
   const { register, handleSubmit, errors } = useForm()
   const [input, setInput] = useState({
     email: '',
     password: '',
   })
+
+  const handleRedirect = () => {
+    if (userStatus === 'SIGNED_IN') {
+      props.history.push('/')
+    } 
+  }
+  
+  useEffect(() => {
+    handleRedirect()
+  }, [userStatus])
 
   const clearInput = () => {
     setInput({ email: '', password: '' })
@@ -134,7 +146,8 @@ const Signin = () => {
   }
 
   return (
-    <>
+    <Fragment>
+      <LoadingMask />
       <Navbar />
       <StyledContainer>
         <div className="wrapper">
@@ -201,8 +214,8 @@ const Signin = () => {
           </div>
         </div>
       </StyledContainer>
-    </>
+    </Fragment>
   )
 }
 
-export default Signin
+export default withRouter(Signin)

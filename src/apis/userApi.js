@@ -38,6 +38,14 @@ const signUpApi = async (data) => {
   }
 }
 
+const signOutApi = async () => {
+  try {
+    localStorage.setItem('HEYMD_TOKEN', null)
+  } catch (err) {
+
+  }
+}
+
 const setToken = async (data) => {
   try {
     return localStorage.setItem('HEYMD_TOKEN', data.token)
@@ -59,5 +67,5 @@ const removeToken = async () => {
 }
 
 export {
-  signInApi, signUpApi, setToken, getToken, removeToken,
+  signInApi, signUpApi, setToken, getToken, removeToken, signOutApi
 }
