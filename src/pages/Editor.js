@@ -32,11 +32,11 @@ const EditorPage = () => {
 
   const handleChange = (e) => {
     setInput(e)
-    saveToLocal({ id: post.id, title: '', content: input })
+    saveToLocal({ id: post.id, content: input })
   }
 
   const handleSave = () => {
-    const data = { id: post.id, title: '', content: input }
+    const data = { id: post.id, content: input }
     dispatch({
       type: 'SAVE_POST_REQUEST',
       data,
@@ -46,7 +46,7 @@ const EditorPage = () => {
   useEffect(() => {
     if (post) {
       setInput(post.content)
-      saveToLocal({ id: post.id, title: post.title, content: input })
+      saveToLocal({ id: post.id, content: input })
     }
   }, [post])
 

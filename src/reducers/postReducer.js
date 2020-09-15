@@ -12,8 +12,8 @@ const postReducer = (state = {}, action) => {
       let allPosts = action.resData.data
       let posts = allPosts.filter( i => i.role === 'owner')
       posts.sort((a, b) => {
-        let dateA = new Date(a.Post.createdAt)
-        let dateB = new Date(b.Post.createdAt)
+        let dateA = new Date(a.Post.updatedAt)
+        let dateB = new Date(b.Post.updatedAt)
         return dateB - dateA
       })
       return {
@@ -35,8 +35,8 @@ const postReducer = (state = {}, action) => {
     case 'SORT_POST_NEWTOOLD':
       let newToOldPosts = state.posts
       newToOldPosts.sort((a, b) => {
-        let dateA = new Date(a.Post.createdAt)
-        let dateB = new Date(b.Post.createdAt)
+        let dateA = new Date(a.Post.updatedAt)
+        let dateB = new Date(b.Post.updatedAt)
         return dateB - dateA
       })
       return {
@@ -46,8 +46,8 @@ const postReducer = (state = {}, action) => {
     case 'SORT_POST_OLDTONEW':
       let oldToNewPosts = state.posts
       oldToNewPosts.sort((a, b) => {
-        let dateA = new Date(a.Post.createdAt)
-        let dateB = new Date(b.Post.createdAt)
+        let dateA = new Date(a.Post.updatedAt)
+        let dateB = new Date(b.Post.updatedAt)
         return dateA - dateB
       })
       return {
@@ -80,8 +80,8 @@ const postReducer = (state = {}, action) => {
       let allPostsForOwn = state.allPosts
       let ownPosts = allPostsForOwn.filter(i => i.role === 'owner')
       ownPosts.sort((a, b) => {
-        let dateA = new Date(a.Post.createdAt)
-        let dateB = new Date(b.Post.createdAt)
+        let dateA = new Date(a.Post.updatedAt)
+        let dateB = new Date(b.Post.updatedAt)
         return dateB - dateA
       })
       return {
@@ -92,8 +92,8 @@ const postReducer = (state = {}, action) => {
       let allPostsForCo = state.allPosts
       let collaborativePosts = allPostsForCo.filter(i => i.role !== 'owner')
       collaborativePosts.sort((a, b) => {
-        let dateA = new Date(a.Post.createdAt)
-        let dateB = new Date(b.Post.createdAt)
+        let dateA = new Date(a.Post.updatedAt)
+        let dateB = new Date(b.Post.updatedAt)
         return dateB - dateA
       })
       return {
