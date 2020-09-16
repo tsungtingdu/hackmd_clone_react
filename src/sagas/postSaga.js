@@ -38,8 +38,8 @@ export function* handleCreatePost() {
   try {
     yield put({ type: 'DATA_LOADING' })
     const TOKEN = yield call(getToken)
-    const data = yield call(createPostApi, TOKEN)
-    yield put({ type: 'UPDATE_POST_SUCCESS', data })
+    const resData = yield call(createPostApi, TOKEN)
+    yield put({ type: 'UPDATE_POST_SUCCESS', resData })
     yield put({ type: 'DATA_LOADED' })
   } catch (err) {
     yield put({ type: 'DATA_LOADED' })
