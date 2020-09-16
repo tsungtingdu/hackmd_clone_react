@@ -1,68 +1,86 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# HeyMD
 
-## Available Scripts
+HeyMD is an online markdown note appplication. [Visit it now](https://tsungtingdu.github.io/heymd)!
 
-In the project directory, you can run:
+![Imgur](https://i.imgur.com/CEe3JcG.png)
 
-### `yarn start`
+### test accounts
+| role  | name  | email  |  password  |   |
+|---|---|---|---|---|
+| user | user1 | user1@gmail.com | 12345678 |
+| user | user2 | user2@gmail.com | 12345678 |
+| user | user3 | user3@gmail.com | 12345678 |
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+you can also sign up your own account as well.
 
-### `yarn test`
+***
+## User stories and specs
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Done
+* ✅ user can sign up with email
+* ✅ user can sign in with email
+* ✅ user can create a new post
+* ✅ user can edit a post
+* ✅ user can delete a post
+* ✅ user can see all posts that he/she created, with differnt sorting choices and layouts
 
-### `yarn build`
+### In progress
+* ◽️ user can publish a post and share with non-login user
+* ◽️ user can add other user as collaborator with different authority
+  * viewer: view only
+  * collaborator: view and edit
+  * owner: view, edit, and delete
+* ◽️ post can be auto saved when editing
+* ◽️ user can edit the post offline, then save it when back to online
+* ◽️ multiple users can edit a post at the same time
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Optimization
+* 🔸 consolidate variable names in store
+* 🔸 create layout for loading spinning instead of component
+* 🔸 move layout options' state to store for better management
+* 🔸 use styled components only, instead of using SCSS and styled components at the same time
+* 🔸 speed up the app
+* ... and more  
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Future
+* ◽️ super admin panel
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+***
 
-### `yarn eject`
+## Tech stack & resources
+### Tech stack:
+* Backend
+  * Node
+  * Express
+  * mysql
+  * swagger `(api doc)`
+  * Heroku `(deployment)`
+* Frontend
+  * React (with React Hook)
+  * react-redux
+  * redux-saga
+  * react-router
+  * styled-components
+  * github page `(deployment)`
+### Resources:
+* Backend
+  * [repo](https://github.com/tsungtingdu/hackmd_clone_api_server)
+  * [API doc](https://hackmd-clone.herokuapp.com/api-doc/#/)
+  * API endpoint: [https://hackmd-clone.herokuapp.com/](https://hackmd-clone.herokuapp.com/)
+* Frontend
+  * [repo](https://github.com/tsungtingdu/heymd)
+  * [live page](https://tsungtingdu.github.io/heymd)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+***
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Author
+[tsungtingdu](https://github.com/tsungtingdu) (Tim)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Self-taught and trained in software development knowledge and skills, I am passionate about creating changes through technology.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+You can find more about me here:
+* [Medium](https://medium.com/tds-note)
+* [Profile](https://tsungtingdu.github.io/profile)
+* [LinkedIn](https://www.linkedin.com/in/tsung-ting-tu/)
+* [Teaching Assistant at ALPHA Camp](https://lighthouse.alphacamp.co/users/3247/ta_profile)
