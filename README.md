@@ -24,6 +24,7 @@ you can sign up your own account as well.
 * ✅ user can edit a post
 * ✅ user can delete a post
 * ✅ user can see all posts that he/she created, with differnt sorting choices and layouts
+* ✅ post can be auto saved when editing
 
 ### In progress
 * ◽️ user can publish a post and share with non-login user
@@ -31,7 +32,6 @@ you can sign up your own account as well.
   * viewer: view only
   * collaborator: view and edit
   * owner: view, edit, and delete
-* ◽️ post can be auto saved when editing
 * ◽️ user can edit the post offline, then save it when back to online
 * ◽️ multiple users can edit a post at the same time
 
@@ -63,6 +63,7 @@ you can sign up your own account as well.
   * redux-saga
   * react-router
   * styled-components
+  * for-editor `(markdown editor)`
   * github page `(deployment)`
 ### Resources:
 * Backend
