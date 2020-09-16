@@ -119,6 +119,24 @@ const postReducer = (state = {}, action) => {
         ...state,
         posts: collaborativePosts
       }
+    case 'KEYWORD_DATASET':
+      if (!state.allPosts) return state
+
+      let keyword = action.payload.keyword
+      let allPostsForKeyword = state.allPosts
+      let keywordPosts = allPostsForKeyword.filter(i => {
+        let title = i.Post.title
+        return title.includes(keyword) && i.role === 'owner'
+      })
+      keywordPosts.sort((a, b) => {
+        let dateA = new Date(a.Post.updatedAt)
+        let dateB = new Date(b.Post.updatedAt)
+        return dateB - dateA
+      })
+      return {
+        ...state,
+        posts: keywordPosts
+      }
     case 'CLEAR_POST':
       return {}
     default:

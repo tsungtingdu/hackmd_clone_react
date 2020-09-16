@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import _ from 'lodash' 
 import styled from 'styled-components'
 import { Input } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 const MenuBarContainer = styled.div`
-  /* width: 270px; */
   min-width: 270px;
   height: 100vh;
   display: flex;
@@ -175,6 +175,7 @@ const MenuBarContainer = styled.div`
 const MenuBar = (props) => {
   const dispatch = useDispatch()
   const [profileMenu, setProfileMenu] = useState(false)
+  const [keyword, setKeyword] = useState('')
   const { layoutOption, setLayoutOption } = props
 
   const handleProfileMenu = () => {
@@ -196,7 +197,27 @@ const MenuBar = (props) => {
     })
   }
 
+  const keywordSearch = useRef(_.debounce((keyword) => {
+    dispatch({
+      type: 'KEYWORD_DATASET',
+      payload: {
+        keyword: keyword
+      }
+    })
+  }, 500)).current
+
+  const handleKeyword = (e) => {
+    setKeyword(e.target.value)
+    keywordSearch(e.target.value)
+  }
+
+  const removeKeyword = () => {
+    setKeyword('')
+    keywordSearch('')
+  }
+
   const handleDataSet = (data) => {
+    setKeyword('')
     if (data === 'own') {
       dispatch({
         type: 'GET_OWN_DATASET',
@@ -220,12 +241,13 @@ const MenuBar = (props) => {
       </div>
       <div className="searchBar">
         <form action="" className="searchBar__form">
-            <Input 
-              type="search" 
-              name="" 
-              id=""
-              placeholder="Search keyword" />
-           <i className="fas fa-search"></i>
+          <Input
+            type="search"
+            name="keyword"
+            id=""
+            value={keyword}
+            onChange={handleKeyword}
+            placeholder="Search my notes" />
         </form>
       </div>
       <Link className="newNote" to={"/editor"} onClick={handleCreatePost}>
