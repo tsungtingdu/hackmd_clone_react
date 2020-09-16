@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Input } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
 
 const MenuBarContainer = styled.div`
   min-width: 270px;
@@ -171,8 +172,15 @@ const MenuBarContainer = styled.div`
     }
   }
 `
+const useStyles = makeStyles({
+  styledInput: {
+    width: '100%',
+    padding: '0 10px',
+  },
+})
 
 const MenuBar = (props) => {
+  const classes = useStyles()
   const dispatch = useDispatch()
   const [profileMenu, setProfileMenu] = useState(false)
   const [keyword, setKeyword] = useState('')
@@ -247,6 +255,7 @@ const MenuBar = (props) => {
             id=""
             value={keyword}
             onChange={handleKeyword}
+            classes={{ root: classes.styledInput }}
             placeholder="Search my notes" />
         </form>
       </div>
