@@ -40,6 +40,7 @@ you can sign up your own account as well.
 * 🔸 create layout for loading spinning instead of component
 * 🔸 move layout options' state to store for better management
 * 🔸 use styled components only, instead of using SCSS and styled components at the same time
+* 🔸 menu bar RWD
 * 🔸 speed up the app
 * ... and more  
 
