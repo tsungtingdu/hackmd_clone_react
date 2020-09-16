@@ -35,6 +35,7 @@ you can sign up your own account as well.
 * ◽️ user can edit the post offline, then save it when back to online
 * ◽️ multiple users can edit a post at the same time
 * ◽️ error handling and error message for users
+* ◽️ user can search posts by keywords
 
 ### Optimization
 * 🔸 consolidate variable names in store
