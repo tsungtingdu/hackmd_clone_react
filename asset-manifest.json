@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/hackmd_clone_react/static/css/main.a8626f62.chunk.css",
+    "main.js": "/hackmd_clone_react/static/js/main.debd9db6.chunk.js",
+    "main.js.map": "/hackmd_clone_react/static/js/main.debd9db6.chunk.js.map",
+    "runtime-main.js": "/hackmd_clone_react/static/js/runtime-main.9f985947.js",
+    "runtime-main.js.map": "/hackmd_clone_react/static/js/runtime-main.9f985947.js.map",
+    "static/js/2.6fb42917.chunk.js": "/hackmd_clone_react/static/js/2.6fb42917.chunk.js",
+    "static/js/2.6fb42917.chunk.js.map": "/hackmd_clone_react/static/js/2.6fb42917.chunk.js.map",
+    "index.html": "/hackmd_clone_react/index.html",
+    "precache-manifest.eaacf7e9cd831c3e6be4518a54ef7a17.js": "/hackmd_clone_react/precache-manifest.eaacf7e9cd831c3e6be4518a54ef7a17.js",
+    "service-worker.js": "/hackmd_clone_react/service-worker.js",
+    "static/css/main.a8626f62.chunk.css.map": "/hackmd_clone_react/static/css/main.a8626f62.chunk.css.map",
+    "static/js/2.6fb42917.chunk.js.LICENSE.txt": "/hackmd_clone_react/static/js/2.6fb42917.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9f985947.js",
+    "static/js/2.6fb42917.chunk.js",
+    "static/css/main.a8626f62.chunk.css",
+    "static/js/main.debd9db6.chunk.js"
+  ]
+}
