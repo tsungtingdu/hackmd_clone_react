@@ -38,6 +38,21 @@ const signUpApi = async (data) => {
   }
 }
 
+const getUserApi = async () => {
+  try {
+    const TOKEN = await getToken()
+    const res = await axios.get(`${ENDPOINT}/user`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    })
+    return res.data
+  } catch (err) {
+    return
+  }
+}
+
 const signOutApi = async () => {
   try {
     localStorage.setItem('HEYMD_TOKEN', null)
@@ -67,5 +82,5 @@ const removeToken = async () => {
 }
 
 export {
-  signInApi, signUpApi, setToken, getToken, removeToken, signOutApi
+  signInApi, signUpApi, setToken, getToken, removeToken, signOutApi, getUserApi
 }

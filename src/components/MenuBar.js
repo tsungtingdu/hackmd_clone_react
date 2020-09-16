@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Input } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 const MenuBarContainer = styled.div`
@@ -188,6 +188,7 @@ const MenuBar = (props) => {
     dispatch({
       type: "SIGN_OUT_REQUEST"
     })
+    props.history.push('/signin')
   }
   const handleCreatePost = () => {
     dispatch({
@@ -266,4 +267,4 @@ const MenuBar = (props) => {
   )
 }
 
-export default MenuBar
+export default withRouter(MenuBar)

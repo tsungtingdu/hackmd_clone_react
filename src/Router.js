@@ -1,6 +1,6 @@
 import React from 'react'
-import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
-import { useSelector, Provider } from 'react-redux'
+import { Route, Switch, BrowserRouter, Redirect, useLocation } from 'react-router-dom'
+import { Provider, useDispatch } from 'react-redux'
 import Main from './pages/Main'
 import EditorPage from './pages/Editor'
 import Signin from './pages/Signin'
@@ -21,12 +21,34 @@ const Router = ({ store }) => (
 )
 
 const PrivateRoute = ({ children, ...rest }) => {
-  const user = useSelector((state) => state.user.user)
+
+  const isAuthenticated = localStorage.getItem('HEYMD_TOKEN')
+  const dispatch = useDispatch()
+  const location = useLocation()
+
+  // get data back to store
+  if (isAuthenticated !== 'null' && isAuthenticated !== 'undefined') {
+    // user data
+    dispatch({ type: 'GET_USER_REQUEST' })
+    // all posts data
+    dispatch({ type: 'GET_POSTS_REQUEST' })
+    // working post data
+    let postPath = location.pathname
+    let postId = Number(postPath.split('/post/')[1])
+    if(!isNaN(postId)) {
+      dispatch({
+        type: 'GET_POST_REQUEST',
+        payload: {
+          id: postId,
+        }
+      })
+    }
+  }
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        (user && user.id) ? (
+        (isAuthenticated !== 'null' && isAuthenticated !== 'undefined') ? (
           children
         ) : (
             <Redirect

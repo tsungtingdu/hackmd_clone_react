@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
-import { signInApi, signUpApi, setToken, signOutApi } from '../apis/userApi'
+import { signInApi, signUpApi, setToken, signOutApi, getUserApi } from '../apis/userApi'
 
 export function* handleSignIn(action) {
   try {
@@ -38,8 +38,20 @@ export function* handleSignOut() {
   }
 }
 
+export function* handleGetUser(action) {
+  try {
+    yield put({ type: 'DATA_LOADING' })
+    const data = yield call(getUserApi, action.data)
+    yield put({ type: 'SIGN_IN_SUCCESS', data })
+    yield put({ type: 'DATA_LOADED' })
+  } catch (err) {
+    yield put({ type: 'DATA_LOADED' })
+  }
+}
+
 export default function* watchUserReq() {
   yield takeLatest('SIGN_IN_REQUEST', handleSignIn)
   yield takeLatest('SIGN_UP_REQUEST', handleSignUp)
   yield takeLatest('SIGN_OUT_REQUEST', handleSignOut)
+  yield takeLatest('GET_USER_REQUEST', handleGetUser)
 }
