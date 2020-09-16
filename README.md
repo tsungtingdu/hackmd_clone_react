@@ -34,6 +34,7 @@ you can sign up your own account as well.
   * owner: view, edit, and delete
 * ◽️ user can edit the post offline, then save it when back to online
 * ◽️ multiple users can edit a post at the same time
+* ◽️ error handling and error message for users
 
 ### Optimization
 * 🔸 consolidate variable names in store
@@ -65,6 +66,7 @@ you can sign up your own account as well.
   * styled-components
   * for-editor `(markdown editor)`
   * github page `(deployment)`
+
 ### Resources:
 * Backend
   * [repo](https://github.com/tsungtingdu/hackmd_clone_api_server)
