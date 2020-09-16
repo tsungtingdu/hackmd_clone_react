@@ -25,6 +25,7 @@ you can sign up your own account as well.
 * ✅ user can delete a post
 * ✅ user can see all posts that he/she created, with differnt sorting choices and layouts
 * ✅ post can be auto saved when editing
+* ✅ user can search posts by keywords
 
 ### In progress
 * ◽️ user can publish a post and share with non-login user
@@ -35,7 +36,6 @@ you can sign up your own account as well.
 * ◽️ user can edit the post offline, then save it when back to online
 * ◽️ multiple users can edit a post at the same time
 * ◽️ error handling and error message for users
-* ◽️ user can search posts by keywords
 
 ### Optimization
 * 🔸 consolidate variable names in store
