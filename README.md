@@ -12,7 +12,7 @@ HeyMD is an online markdown note appplication. [Visit it now](https://tsungtingd
 | user | user3 | user3@gmail.com | 12345678 |
 
 
-you can also sign up your own account as well.
+you can sign up your own account as well.
 
 ***
 ## User stories and specs
