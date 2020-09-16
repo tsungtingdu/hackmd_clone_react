@@ -1,5 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import _ from 'lodash' 
 import Editor from 'for-editor'
 import Navbar from '../components/Navbar'
 import LoadingMask from '../LoadingMask'
@@ -30,9 +31,17 @@ const EditorPage = () => {
   let post = useSelector((state) => state.post)
   post = post.post && post.post.Post ? post.post.Post : {}
 
+  const autoSave = useRef(_.debounce((data) => {
+    dispatch({
+      type: 'AUTO_SAVE_POST',
+      data: data
+    })
+  }, 2000)).current
+
   const handleChange = (e) => {
     setInput(e)
     saveToLocal({ id: post.id, content: input })
+    autoSave({ id: post.id, content: e })
   }
 
   const handleSave = () => {

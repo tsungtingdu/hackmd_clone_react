@@ -56,6 +56,7 @@ const getUserApi = async () => {
 const signOutApi = async () => {
   try {
     localStorage.setItem('HEYMD_TOKEN', null)
+    localStorage.setItem('HEYMD_POSTS', null)
   } catch (err) {
 
   }

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getTitle } from '../utilities/getTitle'
+import { getToken } from '../apis/userApi'
 
 const ENDPOINT = 'https://hackmd-clone.herokuapp.com/api'
 
@@ -99,7 +100,40 @@ const DeletePostApi = async (data) => {
 }
 
 const saveToLocal = (data) => {
-  localStorage.setItem(`HEYMD_CONTENT_${data.id}`, data.content)
+  let posts = JSON.parse(localStorage.getItem('HEYMD_POSTS'))
+  if (!posts) posts = {}
+  if (data.id && data.content){
+    posts[data.id] = {
+      content: data.content ? data.content : posts[data.id].content,
+      updatedAt: new Date()
+    }
+  }
+  localStorage.setItem(`HEYMD_POSTS`, JSON.stringify(posts))
 }
 
-export { createPostApi, savePostApi, saveToLocal, getPostsApi, getPostApi, DeletePostApi}
+const autoSaveApi = async (data) => {
+  try {
+    console.log('api called!')
+    console.log(data)
+    const TOKEN = await getToken()
+    const res = await axios.put(
+      `${ENDPOINT}/post/${data.id}`,
+      {
+        title: getTitle(data.content),
+        content: data.content,
+        status: data.status ? data.status : 'private',
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      },
+    )
+    return res.data
+  } catch (err) {
+    return {}
+  }
+}
+
+export { createPostApi, savePostApi, saveToLocal, getPostsApi, getPostApi, DeletePostApi, autoSaveApi}

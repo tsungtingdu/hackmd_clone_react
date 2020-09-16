@@ -1,7 +1,7 @@
 const postReducer = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_POST_SUCCESS':
-      const updatedPost = action.data.data
+      const updatedPost = action.resData.data
       return {
         ...state,
         post: {
