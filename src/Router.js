@@ -22,12 +22,12 @@ const Router = ({ store }) => (
 
 const PrivateRoute = ({ children, ...rest }) => {
 
-  const isAuthenticated = JSON.parse(localStorage.getItem('HEYMD_TOKEN'))
+  const isAuthenticated = localStorage.getItem('HEYMD_TOKEN')
   const dispatch = useDispatch()
   const location = useLocation()
 
   // get data back to store
-  if (isAuthenticated !== null && isAuthenticated !== undefined) {
+  if (isAuthenticated !== null && isAuthenticated !== 'null' && isAuthenticated !== undefined) {
     // user data
     dispatch({ type: 'GET_USER_REQUEST' })
     // all posts data
@@ -48,7 +48,7 @@ const PrivateRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) =>
-        (isAuthenticated !== null && isAuthenticated !== undefined) ? (
+        (isAuthenticated !== null && isAuthenticated !== 'null' && isAuthenticated !== undefined) ? (
           children
         ) : (
             <Redirect
