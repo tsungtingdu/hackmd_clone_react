@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
-import Posts from './Posts'
+import React from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import Posts from "./Posts";
 
 const PostPanelContainer = styled.div`
   width: 100%;
@@ -12,15 +12,15 @@ const PostPanelContainer = styled.div`
   justify-content: flex-end;
   overflow-y: scroll;
   overflow-x: hidden;
-`
+`;
 const WidgetContainer = styled.div`
-    width: 100%;
-    height: 50px;
-    margin: 10px 0;
-    display: flex;
-    flex-flow: row-reverse;
-    align-items: center;
-`
+  width: 100%;
+  height: 50px;
+  margin: 10px 0;
+  display: flex;
+  flex-flow: row-reverse;
+  align-items: center;
+`;
 const SelectBtn = styled.div`
   width: 130px;
   height: 36px;
@@ -32,14 +32,14 @@ const SelectBtn = styled.div`
   padding: 6px 12px;
   color: #ffffff;
   font-weight: 600;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   position: relative;
   cursor: pointer;
   &:hover {
     background-color: #ffffff;
     color: #333;
   }
-`
+`;
 
 const SelectMenu = styled.div`
   position: absolute;
@@ -47,11 +47,11 @@ const SelectMenu = styled.div`
   right: 0;
   transform: translate(-40px, 75px);
   width: 210px;
-  background-color: #686868; 
-  border-radius: 4px;  
+  background-color: #686868;
+  border-radius: 4px;
   padding-bottom: 4px;
   cursor: pointer;
-`
+`;
 
 const SelectGroup = styled.div`
   display: flex;
@@ -81,7 +81,7 @@ const SelectGroup = styled.div`
       width: 15px;
     }
   }
-`
+`;
 
 const MenuLayer = styled.div`
   position: fixed;
@@ -90,135 +90,190 @@ const MenuLayer = styled.div`
   bottom: 0;
   left: 0;
   background-color: transparent;
-`
+`;
 
 const PostPanel = (props) => {
-  const LAYOUT_OPTIONS = ['GridLayout', 'RowLayout']
-  const SORT_OPTIONS = ['NewToOld', 'OldToNew', 'AToZ', 'ZToA']
-  const dispatch = useDispatch()
-  const { layoutOption, setLayoutOption } = props
+  const LAYOUT_OPTIONS = ["GridLayout", "RowLayout"];
+  const SORT_OPTIONS = ["NewToOld", "OldToNew", "AToZ", "ZToA"];
+  const dispatch = useDispatch();
+  const { layoutOption, setLayoutOption } = props;
 
   const handleMenuDisplay = () => {
-    let newOp
+    let newOp;
     if (layoutOption.menuDisplay) {
       newOp = {
         ...layoutOption,
-        menuDisplay: false
-      }
+        menuDisplay: false,
+      };
     } else {
       newOp = {
         ...layoutOption,
-        menuDisplay: true
-      }
+        menuDisplay: true,
+      };
     }
-    setLayoutOption(newOp)
-  }
-
-  const handleLayoutSelect = (data) => {
-    let newOp
-    if (LAYOUT_OPTIONS.includes(data)) {
-      newOp = {
-        ...layoutOption,
-        layout: data
-      }
-    } else if (SORT_OPTIONS.includes(data)) {
-      newOp = {
-        ...layoutOption,
-        sort: data
-      }
-    }
-    setLayoutOption(newOp)
-    handleSorting(newOp.sort)
-  }
+    setLayoutOption(newOp);
+  };
 
   const handleSorting = (data) => {
     switch (data) {
-      case 'NewToOld':
-        return dispatch({type: 'SORT_POST_NEWTOOLD'})
-      case 'OldToNew':
-        return dispatch({ type: 'SORT_POST_OLDTONEW' })
-      case 'AToZ':
-        return dispatch({ type: 'SORT_POST_ATOZ' })
-      case 'ZToA':
-        return dispatch({ type: 'SORT_POST_ZTOA' })
+      case "NewToOld":
+        return dispatch({ type: "SORT_POST_NEWTOOLD" });
+      case "OldToNew":
+        return dispatch({ type: "SORT_POST_OLDTONEW" });
+      case "AToZ":
+        return dispatch({ type: "SORT_POST_ATOZ" });
+      case "ZToA":
+        return dispatch({ type: "SORT_POST_ZTOA" });
       default:
-        return
+        return dispatch({ type: "SORT_POST_NEWTOOLD" });
     }
-  }
+  };
+
+  const handleLayoutSelect = (data) => {
+    let newOp;
+    if (LAYOUT_OPTIONS.includes(data)) {
+      newOp = {
+        ...layoutOption,
+        layout: data,
+      };
+    } else if (SORT_OPTIONS.includes(data)) {
+      newOp = {
+        ...layoutOption,
+        sort: data,
+      };
+    }
+    setLayoutOption(newOp);
+    handleSorting(newOp.sort);
+  };
 
   return (
     <PostPanelContainer>
       <Posts layoutOption={layoutOption} />
       <WidgetContainer>
-        {layoutOption.menuDisplay ? (<MenuLayer onClick={handleMenuDisplay}></MenuLayer>) : ''}
+        {layoutOption.menuDisplay ? (
+          <MenuLayer onClick={handleMenuDisplay} />
+        ) : (
+          ""
+        )}
         <SelectBtn onClick={handleMenuDisplay}>
-          Layout {layoutOption.menuDisplay ? (<i className="fas fa-angle-up"></i>):(<i className="fas fa-angle-down"></i>)}
+          Layout{" "}
+          {layoutOption.menuDisplay ? (
+            <i className="fas fa-angle-up" />
+          ) : (
+            <i className="fas fa-angle-down" />
+          )}
         </SelectBtn>
-        {layoutOption.menuDisplay ? (<SelectMenu>
-          <SelectGroup>
-            <div className="category">Layout</div>
-            <div className="option" onClick={() => { handleLayoutSelect("GridLayout") }}>
-              <div className="option__check">
-                {(layoutOption.layout === "GridLayout") ? (<i className="fas fa-check"></i>) : ''}
-              </div>
-              <div className="option__icon" >
-                <i className="fas fa-th"></i>
-              </div>
-              <div className="option__text">
-                Grid layout
-            </div>
-            </div>
-            <div className="option" onClick={() => { handleLayoutSelect("RowLayout") }}>
-              <div className="option__check">
-                {(layoutOption.layout === "RowLayout") ? (<i className="fas fa-check"></i>) : ''}
-              </div>
-              <div className="option__icon" >
-                <i className="fas fa-list"></i>
-              </div>
-              <div className="option__text">
-                Row layout
-            </div>
-            </div>
-          </SelectGroup>
-          <SelectGroup>
-            <div className="category">Posts sorted by</div>
-            <div className="option" onClick={() => { handleLayoutSelect("NewToOld") }}>
-              <div className="option__check">
-                {(layoutOption.sort === "NewToOld") ? (<i className="fas fa-check"></i>) : ''}
-              </div>
-              <div className="option__text">
-                New to old
+        {layoutOption.menuDisplay ? (
+          <SelectMenu>
+            <SelectGroup>
+              <div className="category">Layout</div>
+              <div
+                className="option"
+                onClick={() => {
+                  handleLayoutSelect("GridLayout");
+                }}
+              >
+                <div className="option__check">
+                  {layoutOption.layout === "GridLayout" ? (
+                    <i className="fas fa-check" />
+                  ) : (
+                    ""
+                  )}
                 </div>
-            </div>
-            <div className="option" onClick={() => { handleLayoutSelect("OldToNew") }}>
-              <div className="option__check">
-                {(layoutOption.sort === "OldToNew") ? (<i className="fas fa-check"></i>) : ''}
+                <div className="option__icon">
+                  <i className="fas fa-th" />
+                </div>
+                <div className="option__text">Grid layout</div>
               </div>
-              <div className="option__text">
-                Old to New
+              <div
+                className="option"
+                onClick={() => {
+                  handleLayoutSelect("RowLayout");
+                }}
+              >
+                <div className="option__check">
+                  {layoutOption.layout === "RowLayout" ? (
+                    <i className="fas fa-check" />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="option__icon">
+                  <i className="fas fa-list" />
+                </div>
+                <div className="option__text">Row layout</div>
               </div>
-            </div>
-            <div className="option" onClick={() => { handleLayoutSelect("AToZ") }}>
-              <div className="option__check">
-                {(layoutOption.sort === "AToZ") ? (<i className="fas fa-check"></i>) : ''}
+            </SelectGroup>
+            <SelectGroup>
+              <div className="category">Posts sorted by</div>
+              <div
+                className="option"
+                onClick={() => {
+                  handleLayoutSelect("NewToOld");
+                }}
+              >
+                <div className="option__check">
+                  {layoutOption.sort === "NewToOld" ? (
+                    <i className="fas fa-check" />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="option__text">New to old</div>
               </div>
-              <div className="option__text">
-                A to Z
+              <div
+                className="option"
+                onClick={() => {
+                  handleLayoutSelect("OldToNew");
+                }}
+              >
+                <div className="option__check">
+                  {layoutOption.sort === "OldToNew" ? (
+                    <i className="fas fa-check" />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="option__text">Old to New</div>
               </div>
-            </div>
-            <div className="option" onClick={() => { handleLayoutSelect("ZToA") }}>
-              <div className="option__check">
-                {(layoutOption.sort === "ZToA") ? (<i className="fas fa-check"></i>) : ''}
+              <div
+                className="option"
+                onClick={() => {
+                  handleLayoutSelect("AToZ");
+                }}
+              >
+                <div className="option__check">
+                  {layoutOption.sort === "AToZ" ? (
+                    <i className="fas fa-check" />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="option__text">A to Z</div>
               </div>
-              <div className="option__text">
-                Z to A
+              <div
+                className="option"
+                onClick={() => {
+                  handleLayoutSelect("ZToA");
+                }}
+              >
+                <div className="option__check">
+                  {layoutOption.sort === "ZToA" ? (
+                    <i className="fas fa-check" />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="option__text">Z to A</div>
               </div>
-            </div>
-          </SelectGroup>
-        </SelectMenu>) : ''}
+            </SelectGroup>
+          </SelectMenu>
+        ) : (
+          ""
+        )}
       </WidgetContainer>
     </PostPanelContainer>
-  )
-}
+  );
+};
 
-export default PostPanel
+export default PostPanel;

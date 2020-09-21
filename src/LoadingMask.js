@@ -1,14 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useSelector } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
-import { CircularProgress } from '@material-ui/core'
+import React from "react";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles({
   styledProgress: {
-    color: '#ffffff',
+    color: "#ffffff",
   },
-})
+});
 const LoadingMaskContainer = styled.div`
   position: fixed;
   width: 100vw;
@@ -22,18 +22,18 @@ const LoadingMaskContainer = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.25);
   z-index: 999;
-`
+`;
 
 const LoadingMask = () => {
-  const loading = useSelector(state => state.loading)
-  const loadingState = loading.loading === true ? loading.loading : false
-  const classes = useStyles()
+  const loading = useSelector((state) => state.loading);
+  const loadingState = loading.loading === true ? loading.loading : false;
+  const classes = useStyles();
 
   return (
     <LoadingMaskContainer style={{ display: loadingState ? "flex" : "none" }}>
       <CircularProgress classes={{ root: classes.styledProgress }} />
-    </LoadingMaskContainer >
-  ) 
-}
+    </LoadingMaskContainer>
+  );
+};
 
-export default LoadingMask
+export default LoadingMask;

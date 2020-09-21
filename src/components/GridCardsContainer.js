@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
-import styled from 'styled-components'
-import Moment from 'react-moment'
+import React from "react";
+import styled from "styled-components";
+import Moment from "react-moment";
 
 const GridCardsWrapper = styled.div`
   padding: 20px 0;
@@ -8,22 +8,22 @@ const GridCardsWrapper = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
 
-  @media screen and (max-width: 1400px)  {
-     grid-template-columns: 1fr 1fr 1fr 1fr;
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-  @media screen and (max-width: 1400px)  {
-     grid-template-columns: 1fr 1fr 1fr 1fr;
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-  @media screen and (max-width: 1280px)  {
-     grid-template-columns: 1fr 1fr 1fr;
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
-  @media screen and (max-width: 1200px)  {
-     grid-template-columns: 1fr 1fr;
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
   }
-  @media screen and (max-width: 768px)  {
-     grid-template-columns: 1fr;
-  }  
-`
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
 
 const GridCard = styled.div`
   position: relative;
@@ -82,7 +82,7 @@ const GridCard = styled.div`
     visibility: hidden;
     font-style: normal;
     width: 120px;
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0, 0, 0, 0.75);
     color: #fff;
     font-weight: 600;
     text-align: center;
@@ -105,41 +105,55 @@ const GridCard = styled.div`
     width: 20px;
     font-size: 12px;
     margin: 10px 10px 0 0;
-    color: #C9302C;
+    color: #c9302c;
     text-align: center;
     &:hover {
-       transform: scale(1.25)
+      transform: scale(1.25);
     }
   }
-`
+`;
 
 const GridCardsContainer = (props) => {
-  const { posts, handleCardOpen, handleCardDelete } = props
+  const { posts, handleCardOpen, handleCardDelete } = props;
   return (
-    <Fragment>
-      {posts !== undefined && (posts.length > 0) ? (<GridCardsWrapper>
-        {posts.map(i => {
-          return (<GridCard key={i.Post.id} >
-              <div className="deleteBtn" onClick={() => { handleCardDelete({ type: 'delete', payload: i.Post.id }) }}>
-                <i className="far fa-trash-alt"></i>
+    <>
+      {posts !== undefined && posts.length > 0 ? (
+        <GridCardsWrapper>
+          {posts.map((i) => (
+            <GridCard key={i.Post.id}>
+              <div
+                className="deleteBtn"
+                onClick={() => {
+                  handleCardDelete({ type: "delete", payload: i.Post.id });
+                }}
+              >
+                <i className="far fa-trash-alt" />
               </div>
-              <div className="wrapper" onClick={() => { handleCardOpen({ type: 'open', payload: i.Post.id }) }}>
+              <div
+                className="wrapper"
+                onClick={() => {
+                  handleCardOpen({ type: "open", payload: i.Post.id });
+                }}
+              >
                 <div className="title">{i.Post.title}</div>
                 <div className="changeTime">
-                  <i className="fas fa-history"></i>
+                  <i className="fas fa-history" />
                   changed&nbsp;
                   <Moment fromNow>{i.Post.updatedAt}</Moment>
                 </div>
                 <div className="viewMode tooltip">
-                  <i className="far fa-eye "></i>
+                  <i className="far fa-eye " />
                   <span className="tooltiptext">Open in view mode</span>
                 </div>
               </div>
-          </GridCard>)
-        })}
-      </GridCardsWrapper>) : ''}
-    </Fragment>
-  )
-}
+            </GridCard>
+          ))}
+        </GridCardsWrapper>
+      ) : (
+        ""
+      )}
+    </>
+  );
+};
 
-export default GridCardsContainer
+export default GridCardsContainer;

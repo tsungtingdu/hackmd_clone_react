@@ -1,12 +1,12 @@
-import React, { useState, useEffect, Fragment } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from 'react-hook-form'
-import { Link, withRouter } from 'react-router-dom'
-import { Button } from '@material-ui/core'
-import styled from 'styled-components'
-import { makeStyles } from '@material-ui/core/styles'
-import Navbar from '../components/Navbar'
-import LoadingMask from '../LoadingMask'
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { Link, withRouter } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import styled from "styled-components";
+import { makeStyles } from "@material-ui/core/styles";
+import Navbar from "../components/Navbar";
+import LoadingMask from "../LoadingMask";
 
 const StyledContainer = styled.div`
   width: 100vw;
@@ -50,7 +50,7 @@ const StyledContainer = styled.div`
     font-size: 18px;
     margin: 10px 0 5px 0;
   }
-`
+`;
 const Form = styled.form`
   display: flex;
   flex-flow: column;
@@ -69,17 +69,17 @@ const Form = styled.form`
     font-size: 18px;
     padding: 6px 12px;
     color: #ffffff;
-    border: 1px solid  #4f4f4f;
+    border: 1px solid #4f4f4f;
     border-radius: 2px;
     background-color: transparent;
-    &::-webkit-input-placeholder, 
+    &::-webkit-input-placeholder,
     &::-moz-placeholder,
     &:-ms-input-placeholder,
     &:-moz-placeholder {
       color: #4f4f4f;
     }
   }
-`
+`;
 const HelperText = styled.div`
   display: flex;
   align-items: flex-end;
@@ -89,73 +89,70 @@ const HelperText = styled.div`
     font-size: 12px;
     margin: 0;
   }
-`
+`;
 
 const useStyles = makeStyles({
   styledBtn: {
-    fontSize: '18px',
-    padding: '10px',
-    margin: '50px 0 0 0',
-    backgroundColor: '#5cb85c',
-    borderColor: '#4cae4c',
-    color: '#ffffff',
-    border: '1px solid transparent',
-    borderRadius: '4px',
+    fontSize: "18px",
+    padding: "10px",
+    margin: "50px 0 0 0",
+    backgroundColor: "#5cb85c",
+    borderColor: "#4cae4c",
+    color: "#ffffff",
+    border: "1px solid transparent",
+    borderRadius: "4px",
   },
-})
+});
 
 const Signin = (props) => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const userStatus = useSelector(state => state.user.userStatus)
-  const { register, handleSubmit, errors } = useForm()
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const userStatus = useSelector((state) => state.user.userStatus);
+  const { register, handleSubmit, errors } = useForm();
   const [input, setInput] = useState({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
 
   const handleRedirect = () => {
-    if (userStatus === 'SIGNED_IN') {
-      props.history.push('/')
-    } 
-  }
-  
+    if (userStatus === "SIGNED_IN") {
+      props.history.push("/");
+    }
+  };
+
   useEffect(() => {
-    handleRedirect()
-  }, [userStatus])
+    handleRedirect();
+  }, [userStatus]);
 
   const clearInput = () => {
-    setInput({ email: '', password: '' })
-  }
+    setInput({ email: "", password: "" });
+  };
 
   const onSubmit = (data) => {
     dispatch({
-      type: 'SIGN_IN_REQUEST',
+      type: "SIGN_IN_REQUEST",
       data,
-    })
-    clearInput()
-  }
+    });
+    clearInput();
+  };
 
   const onChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     const data = {
       ...input,
       [name]: value,
-    }
-    setInput(data)
-  }
+    };
+    setInput(data);
+  };
 
   return (
-    <Fragment>
+    <>
       <LoadingMask />
       <Navbar />
       <StyledContainer>
         <div className="wrapper">
           <div className="title">Sign in</div>
-          <Form
-            action=""
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <Form action="" onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="">
               <span>Email</span>
               {errors.email && (
@@ -171,10 +168,10 @@ const Signin = (props) => {
               value={input.email}
               onChange={onChange}
               ref={register({
-                required: 'Please fill in this field.',
+                required: "Please fill in this field.",
                 pattern: {
                   value: /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/,
-                  message: 'Invalid email',
+                  message: "Invalid email",
                 },
               })}
             />
@@ -193,10 +190,10 @@ const Signin = (props) => {
               value={input.password}
               onChange={onChange}
               ref={register({
-                required: 'Please fill in this field.',
+                required: "Please fill in this field.",
                 minLength: {
                   value: 8,
-                  message: 'Minimum length of password is 8',
+                  message: "Minimum length of password is 8",
                 },
               })}
             />
@@ -210,12 +207,15 @@ const Signin = (props) => {
             </Button>
           </Form>
           <div className="foot-text">
-            New to HeyMD? <Link to="/signup" className="foot-text__link">Sign up</Link>
+            New to HeyMD?{" "}
+            <Link to="/signup" className="foot-text__link">
+              Sign up
+            </Link>
           </div>
         </div>
       </StyledContainer>
-    </Fragment>
-  )
-}
+    </>
+  );
+};
 
-export default withRouter(Signin)
+export default withRouter(Signin);

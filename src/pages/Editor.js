@@ -1,11 +1,11 @@
-import React, { useState, useEffect, Fragment, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import _ from 'lodash' 
-import Editor from 'for-editor'
-import Navbar from '../components/Navbar'
-import LoadingMask from '../LoadingMask'
-import { saveToLocal } from '../apis/postApi'
-import '../css/editor.scss'
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import _ from "lodash";
+import Editor from "for-editor";
+import Navbar from "../components/Navbar";
+import LoadingMask from "../LoadingMask";
+import { saveToLocal } from "../apis/postApi";
+import "../css/editor.scss";
 
 const toolbar = {
   h1: true,
@@ -21,46 +21,48 @@ const toolbar = {
   redo: true,
   save: true,
   subfield: true,
-}
+};
 
-const placeholder = '# Put your note title here'
+const placeholder = "# Put your note title here";
 
 const EditorPage = () => {
-  const [input, setInput] = useState()
-  const dispatch = useDispatch()
-  let post = useSelector((state) => state.post)
-  post = post.post && post.post.Post ? post.post.Post : {}
+  const [input, setInput] = useState();
+  const dispatch = useDispatch();
+  let post = useSelector((state) => state.post);
+  post = post.post && post.post.Post ? post.post.Post : {};
 
-  const autoSave = useRef(_.debounce((data) => {
-    dispatch({
-      type: 'AUTO_SAVE_POST',
-      data: data
-    })
-  }, 2000)).current
+  const autoSave = useRef(
+    _.debounce((data) => {
+      dispatch({
+        type: "AUTO_SAVE_POST",
+        data,
+      });
+    }, 2000),
+  ).current;
 
   const handleChange = (e) => {
-    setInput(e)
-    saveToLocal({ id: post.id, content: input })
-    autoSave({ id: post.id, content: e })
-  }
+    setInput(e);
+    saveToLocal({ id: post.id, content: input });
+    autoSave({ id: post.id, content: e });
+  };
 
   const handleSave = () => {
-    const data = { id: post.id, content: input }
+    const data = { id: post.id, content: input };
     dispatch({
-      type: 'SAVE_POST_REQUEST',
+      type: "SAVE_POST_REQUEST",
       data,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     if (post) {
-      setInput(post.content)
-      saveToLocal({ id: post.id, content: input })
+      setInput(post.content);
+      saveToLocal({ id: post.id, content: input });
     }
-  }, [post])
+  }, [post]);
 
   return (
-    <Fragment>
+    <>
       <LoadingMask />
       <Navbar />
       <Editor
@@ -74,8 +76,8 @@ const EditorPage = () => {
         placeholder={placeholder}
         language="en"
       />
-    </Fragment>
-  )
-}
+    </>
+  );
+};
 
-export default EditorPage
+export default EditorPage;

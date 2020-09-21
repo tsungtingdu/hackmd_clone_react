@@ -1,9 +1,9 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import styled from 'styled-components'
-import GridCardsContainer from '../components/GridCardsContainer'
-import ListCardsContainer from '../components/ListCardsContainer'
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
+import styled from "styled-components";
+import GridCardsContainer from "./GridCardsContainer";
+import ListCardsContainer from "./ListCardsContainer";
 
 const PostsContainer = styled.div`
   position: relative;
@@ -15,7 +15,7 @@ const PostsContainer = styled.div`
   ::-webkit-scrollbar {
     visibility: hidden;
   }
-`
+`;
 
 const SectionTitle = styled.div`
   width: 100%;
@@ -46,38 +46,36 @@ const SectionTitle = styled.div`
       margin-left: 1rem;
     }
   }
-`
+`;
 
 const Posts = (props) => {
-  const { layoutOption } = props
-  const dispatch = useDispatch()
-  const post = useSelector(state => state.post)
-  const displayPosts = post.posts
+  const { layoutOption } = props;
+  const dispatch = useDispatch();
+  const post = useSelector((state) => state.post);
+  const displayPosts = post.posts;
 
   const handleCardOpen = (data) => {
-    if (data.type === 'open') {
+    if (data.type === "open") {
       dispatch({
-        type: 'GET_POST_REQUEST',
+        type: "GET_POST_REQUEST",
         payload: {
-          id: data.payload
-        }
-      })
-      props.history.push(`/post/${data.payload}`)
+          id: data.payload,
+        },
+      });
+      props.history.push(`/post/${data.payload}`);
     }
-    return
-  }
+  };
 
   const handleCardDelete = (data) => {
-    if (data.type === 'delete') {
+    if (data.type === "delete") {
       dispatch({
-        type: 'DELETE_POST_REQUEST',
+        type: "DELETE_POST_REQUEST",
         payload: {
-          id: data.payload
-        }
-      })
+          id: data.payload,
+        },
+      });
     }
-    return
-  }
+  };
 
   return (
     <PostsContainer id="postsContainer">
@@ -85,18 +83,24 @@ const Posts = (props) => {
         <div className="title">Posts</div>
       </SectionTitle>
       {
-        layoutOption.layout === 'GridLayout'
-          ? (<GridCardsContainer
+        layoutOption.layout === "GridLayout"
+          ? (
+            <GridCardsContainer
               posts={displayPosts}
               handleCardOpen={handleCardOpen}
-              handleCardDelete={handleCardDelete} />)
-          : (<ListCardsContainer
+              handleCardDelete={handleCardDelete}
+            />
+          )
+          : (
+            <ListCardsContainer
               posts={displayPosts}
               handleCardOpen={handleCardOpen}
-              handleCardDelete={handleCardDelete} />)
+              handleCardDelete={handleCardDelete}
+            />
+          )
       }
     </PostsContainer>
-    )
-  }
+  );
+};
 
-export default withRouter(Posts)
+export default withRouter(Posts);

@@ -1,18 +1,18 @@
 const loadingReducer = (state = {}, action) => {
   switch (action.type) {
-    case 'DATA_LOADING':
+    case "DATA_LOADING":
       return {
         ...state,
-        loading: true
-      }
-    case 'DATA_LOADED':
+        loading: true,
+      };
+    case "DATA_LOADED":
       return {
         ...state,
-        loading: false
-      }
+        loading: false,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default loadingReducer
+export default loadingReducer;

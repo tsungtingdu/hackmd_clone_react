@@ -1,12 +1,12 @@
-import React, { useEffect, useState, Fragment } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from 'react-hook-form'
-import { Link, withRouter } from 'react-router-dom'
-import { Button } from '@material-ui/core'
-import styled from 'styled-components'
-import { makeStyles } from '@material-ui/core/styles'
-import Navbar from '../components/Navbar'
-import LoadingMask from '../LoadingMask'
+import React, { useEffect, useState, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { Link, withRouter } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import styled from "styled-components";
+import { makeStyles } from "@material-ui/core/styles";
+import Navbar from "../components/Navbar";
+import LoadingMask from "../LoadingMask";
 
 const StyledContainer = styled.div`
   width: 100vw;
@@ -50,7 +50,7 @@ const StyledContainer = styled.div`
     font-size: 18px;
     margin: 10px 0 5px 0;
   }
-`
+`;
 const Form = styled.form`
   display: flex;
   flex-flow: column;
@@ -80,7 +80,7 @@ const Form = styled.form`
       color: #4f4f4f;
     }
   }
-`
+`;
 const HelperText = styled.div`
   display: flex;
   align-items: flex-end;
@@ -90,68 +90,68 @@ const HelperText = styled.div`
     font-size: 12px;
     margin: 0;
   }
-`
+`;
 const useStyles = makeStyles({
   styledBtn: {
-    fontSize: '18px',
-    padding: '10px',
-    margin: '50px 0 0 0',
-    backgroundColor: '#5cb85c',
-    borderColor: '#4cae4c',
-    color: '#ffffff',
-    border: '1px solid transparent',
-    borderRadius: '4px',
+    fontSize: "18px",
+    padding: "10px",
+    margin: "50px 0 0 0",
+    backgroundColor: "#5cb85c",
+    borderColor: "#4cae4c",
+    color: "#ffffff",
+    border: "1px solid transparent",
+    borderRadius: "4px",
   },
-})
+});
 
 const Signup = (props) => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const userStatus = useSelector(state => state.user.userStatus)
-  const { register, handleSubmit, errors } = useForm()
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const userStatus = useSelector((state) => state.user.userStatus);
+  const { register, handleSubmit, errors } = useForm();
 
   const handleRedirect = () => {
-    if (userStatus === 'SIGNED_UP') {
-      props.history.push('/siginin')
+    if (userStatus === "SIGNED_UP") {
+      props.history.push("/siginin");
     }
-  }
+  };
 
   useEffect(() => {
-    handleRedirect()
-  }, [userStatus])
+    handleRedirect();
+  }, [userStatus]);
 
   const [input, setInput] = useState({
-    name: '',
-    email: '',
-    password: '',
-    passwordCheck: '',
-  })
+    name: "",
+    email: "",
+    password: "",
+    passwordCheck: "",
+  });
   const clearInput = () => {
     setInput({
-      name: '',
-      email: '',
-      password: '',
-      passwordCheck: '',
-    })
-  }
+      name: "",
+      email: "",
+      password: "",
+      passwordCheck: "",
+    });
+  };
   const onSubmit = (data) => {
     dispatch({
-      type: 'SIGN_UP_REQUEST',
+      type: "SIGN_UP_REQUEST",
       data,
-    })
-    clearInput()
-  }
+    });
+    clearInput();
+  };
   const onChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     const data = {
       ...input,
       [name]: value,
-    }
-    setInput(data)
-  }
+    };
+    setInput(data);
+  };
 
   return (
-    <Fragment>
+    <>
       <LoadingMask />
       <Navbar />
       <StyledContainer>
@@ -173,10 +173,10 @@ const Signup = (props) => {
               value={input.name}
               onChange={onChange}
               ref={register({
-                required: 'Please fill in this field.',
+                required: "Please fill in this field.",
                 minLength: {
                   value: 2,
-                  message: 'Minimum length of username is 2',
+                  message: "Minimum length of username is 2",
                 },
               })}
             />
@@ -195,10 +195,10 @@ const Signup = (props) => {
               value={input.email}
               onChange={onChange}
               ref={register({
-                required: 'Please fill in this field.',
+                required: "Please fill in this field.",
                 pattern: {
                   value: /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/,
-                  message: 'Invalid email',
+                  message: "Invalid email",
                 },
               })}
             />
@@ -219,10 +219,10 @@ const Signup = (props) => {
               value={input.password}
               onChange={onChange}
               ref={register({
-                required: 'Please fill in this field.',
+                required: "Please fill in this field.",
                 minLength: {
                   value: 8,
-                  message: 'Minimum length of password is 8',
+                  message: "Minimum length of password is 8",
                 },
               })}
             />
@@ -242,10 +242,10 @@ const Signup = (props) => {
               value={input.passwordCheck}
               onChange={onChange}
               ref={register({
-                required: 'Please fill in this field.',
+                required: "Please fill in this field.",
                 minLength: {
                   value: 8,
-                  message: 'Minimum length of password is 8',
+                  message: "Minimum length of password is 8",
                 },
               })}
             />
@@ -258,14 +258,16 @@ const Signup = (props) => {
             </Button>
           </Form>
           <div className="foot-text">
-            Have an account? <Link to="/signin" className="foot-text__link">
+            Have an account?
+            {" "}
+            <Link to="/signin" className="foot-text__link">
               Sign in
             </Link>
           </div>
         </div>
       </StyledContainer>
-    </Fragment>
-  )
-}
+    </>
+  );
+};
 
-export default withRouter(Signup)
+export default withRouter(Signup);

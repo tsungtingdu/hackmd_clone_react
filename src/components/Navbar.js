@@ -1,8 +1,8 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
-import { withRouter } from 'react-router-dom'
-import docs from '../images/docs.png'
+import React from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { withRouter } from "react-router-dom";
+import docs from "../images/docs.png";
 
 const Nav = styled.div`
   width: 100%;
@@ -21,7 +21,7 @@ const Nav = styled.div`
     cursor: pointer;
     &_title {
       font-size: 20px;
-      line-height: 20px; 
+      line-height: 20px;
     }
     &_img {
       width: 20px;
@@ -29,27 +29,27 @@ const Nav = styled.div`
       margin-right: 5px;
     }
   }
-`
+`;
 
 const Navbar = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleClick = () => {
     dispatch({
-      type: 'CLEAR_POST_REQUEST'
-    })
+      type: "CLEAR_POST_REQUEST",
+    });
     dispatch({
-      type: 'GET_POSTS_REQUEST'
-    })
-    props.history.push('/')
-  }
+      type: "GET_POSTS_REQUEST",
+    });
+    props.history.push("/");
+  };
   return (
     <Nav>
       <div className="nav_content" onClick={handleClick}>
-        <img className="nav_content_img" src={docs} />
+        <img className="nav_content_img" src={docs} alt="HeyMD" />
         <div className="nav_content_title">HeyMD</div>
       </div>
     </Nav>
-  )
-}
+  );
+};
 
-export default withRouter(Navbar)
+export default withRouter(Navbar);

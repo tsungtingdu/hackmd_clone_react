@@ -1,30 +1,30 @@
-import axios from 'axios'
-import { getTitle } from '../utilities/getTitle'
-import { getToken } from '../apis/userApi'
+import axios from "axios";
+import { getTitle } from "../utilities/getTitle";
+import { getToken } from "./userApi";
 
-const ENDPOINT = 'https://hackmd-clone.herokuapp.com/api'
+const ENDPOINT = "https://hackmd-clone.herokuapp.com/api";
 
 const createPostApi = async (TOKEN) => {
   try {
     const res = await axios.post(
       `${ENDPOINT}/post`,
       {
-        title: 'Untitled',
-        content: '',
-        status: 'private',
+        title: "Untitled",
+        content: "",
+        status: "private",
       },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${TOKEN}`,
         },
       },
-    )
-    return res.data
+    );
+    return res.data;
   } catch (err) {
-    return {}
+    return {};
   }
-}
+};
 
 const savePostApi = async (data) => {
   try {
@@ -33,20 +33,20 @@ const savePostApi = async (data) => {
       {
         title: getTitle(data.content),
         content: data.content,
-        status: data.status ? data.status : 'private',
+        status: data.status ? data.status : "private",
       },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${data.token}`,
         },
       },
-    )
-    return res.data
+    );
+    return res.data;
   } catch (err) {
-    return {}
+    return {};
   }
-}
+};
 
 const getPostsApi = async (data) => {
   try {
@@ -54,16 +54,16 @@ const getPostsApi = async (data) => {
       `${ENDPOINT}/posts`,
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${data.token}`,
         },
       },
-    )
-    return res.data
+    );
+    return res.data;
   } catch (err) {
-    return {}
+    return {};
   }
-}
+};
 
 const getPostApi = async (data) => {
   try {
@@ -71,16 +71,16 @@ const getPostApi = async (data) => {
       `${ENDPOINT}/post/${data.id}`,
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${data.token}`,
         },
       },
-    )
-    return res.data
+    );
+    return res.data;
   } catch (err) {
-    return {}
+    return {};
   }
-}
+};
 
 const DeletePostApi = async (data) => {
   try {
@@ -88,52 +88,54 @@ const DeletePostApi = async (data) => {
       `${ENDPOINT}/post/${data.id}`,
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${data.token}`,
         },
       },
-    )
-    return res.data
+    );
+    return res.data;
   } catch (err) {
-    return {}
+    return {};
   }
-}
+};
 
 const saveToLocal = (data) => {
-  let posts = JSON.parse(localStorage.getItem('HEYMD_POSTS'))
-  if (!posts) posts = {}
-  if (data.id && data.content){
+  let posts = JSON.parse(localStorage.getItem("HEYMD_POSTS"));
+  if (!posts) posts = {};
+  if (data.id && data.content) {
     posts[data.id] = {
       content: data.content ? data.content : posts[data.id].content,
-      updatedAt: new Date()
-    }
+      updatedAt: new Date(),
+    };
   }
-  localStorage.setItem(`HEYMD_POSTS`, JSON.stringify(posts))
-}
+  localStorage.setItem("HEYMD_POSTS", JSON.stringify(posts));
+};
 
 const autoSaveApi = async (data) => {
   try {
-    console.log('api called!')
-    console.log(data)
-    const TOKEN = await getToken()
+    console.log("api called!");
+    console.log(data);
+    const TOKEN = await getToken();
     const res = await axios.put(
       `${ENDPOINT}/post/${data.id}`,
       {
         title: getTitle(data.content),
         content: data.content,
-        status: data.status ? data.status : 'private',
+        status: data.status ? data.status : "private",
       },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${TOKEN}`,
         },
       },
-    )
-    return res.data
+    );
+    return res.data;
   } catch (err) {
-    return {}
+    return {};
   }
-}
+};
 
-export { createPostApi, savePostApi, saveToLocal, getPostsApi, getPostApi, DeletePostApi, autoSaveApi}
+export {
+  createPostApi, savePostApi, saveToLocal, getPostsApi, getPostApi, DeletePostApi, autoSaveApi,
+};
