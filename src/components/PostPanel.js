@@ -156,7 +156,8 @@ const PostPanel = (props) => {
           ""
         )}
         <SelectBtn onClick={handleMenuDisplay}>
-          Layout{" "}
+          Layout
+          {" "}
           {layoutOption.menuDisplay ? (
             <i className="fas fa-angle-up" />
           ) : (

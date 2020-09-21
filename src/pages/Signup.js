@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Link, withRouter } from "react-router-dom";
@@ -206,9 +206,7 @@ const Signup = (props) => {
               <span>Password</span>
               {errors.password && (
                 <HelperText>
-                  <p>
-                    {errors.password.message}
-                  </p>
+                  <p>{errors.password.message}</p>
                 </HelperText>
               )}
             </label>
@@ -258,8 +256,7 @@ const Signup = (props) => {
             </Button>
           </Form>
           <div className="foot-text">
-            Have an account?
-            {" "}
+            Have an account?{" "}
             <Link to="/signin" className="foot-text__link">
               Sign in
             </Link>

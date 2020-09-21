@@ -207,7 +207,8 @@ const Signin = (props) => {
             </Button>
           </Form>
           <div className="foot-text">
-            New to HeyMD?{" "}
+            New to HeyMD?
+            {" "}
             <Link to="/signup" className="foot-text__link">
               Sign up
             </Link>

@@ -12,7 +12,7 @@ const MenuBarContainer = styled.div`
   display: flex;
   flex-flow: column;
   background-color: #262626;
-  
+
   .title {
     padding: 0 20px;
     height: 65px;
@@ -47,9 +47,9 @@ const MenuBarContainer = styled.div`
       input {
         flex: 1 1 200px;
         color: #ffffff;
-        font-family: 'Source Sans Pro', sans-serif;
+        font-family: "Source Sans Pro", sans-serif;
       }
-  
+
       i {
         color: #ffffff;
         background-color: transparent;
@@ -151,7 +151,7 @@ const MenuBarContainer = styled.div`
       position: absolute;
       top: 0;
       transform: translate(0, -100%);
-      background-color: #686868; 
+      background-color: #686868;
       border-radius: 4px;
       width: 80%;
       &__option {
@@ -205,23 +205,20 @@ const MenuBar = (props) => {
     });
   };
 
-  const keywordSearch = useRef(_.debounce((keyword) => {
-    dispatch({
-      type: "KEYWORD_DATASET",
-      payload: {
-        keyword,
-      },
-    });
-  }, 500)).current;
+  const keywordSearch = useRef(
+    _.debounce((keyword) => {
+      dispatch({
+        type: "KEYWORD_DATASET",
+        payload: {
+          keyword,
+        },
+      });
+    }, 500)
+  ).current;
 
   const handleKeyword = (e) => {
     setKeyword(e.target.value);
     keywordSearch(e.target.value);
-  };
-
-  const removeKeyword = () => {
-    setKeyword("");
-    keywordSearch("");
   };
 
   const handleDataSet = (data) => {
@@ -266,13 +263,19 @@ const MenuBar = (props) => {
         <div className="newNote__text">New note</div>
       </Link>
       <div className="postSelector">
-        <div className="postSelector__option" onClick={() => handleDataSet("own")}>
+        <div
+          className="postSelector__option"
+          onClick={() => handleDataSet("own")}
+        >
           <div className="postSelector__option-icon">
             <i className="fas fa-lock" />
           </div>
           My Notes
         </div>
-        <div className="postSelector__option" onClick={() => handleDataSet("collaborative")}>
+        <div
+          className="postSelector__option"
+          onClick={() => handleDataSet("collaborative")}
+        >
           <div className="postSelector__option-icon">
             <i className="fas fa-users" />
           </div>
@@ -287,15 +290,19 @@ const MenuBar = (props) => {
               <p>Sign out</p>
             </div>
           </div>
-        ) : ""}
+        ) : (
+          ""
+        )}
         <div className="profile__avatar">
           <i className="fas fa-user-circle" />
         </div>
-        <div className="profile__text">
-          Profile
-        </div>
+        <div className="profile__text">Profile</div>
         <div className="profile__btn">
-          {profileMenu ? (<i className="fas fa-angle-down" />) : (<i className="fas fa-angle-up" />)}
+          {profileMenu ? (
+            <i className="fas fa-angle-down" />
+          ) : (
+            <i className="fas fa-angle-up" />
+          )}
         </div>
       </div>
     </MenuBarContainer>
