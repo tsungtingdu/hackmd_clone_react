@@ -41,7 +41,7 @@ const Connection = styled.div`
 const Badge = styled.div`
   display: flex;
   font-size: 15px;
-  line-height: 24px;
+  line-height: 20px;
   padding: 5px 10px;
   background-color: #337ab7;
   border-radius: 4px;
@@ -58,7 +58,7 @@ const Badge = styled.div`
 const DisconnectBadge = styled.div`
   display: flex;
   font-size: 15px;
-  line-height: 24px;
+  line-height: 20px;
   padding: 5px 10px;
   background-color: #c9302c;
   border-radius: 4px;
@@ -103,7 +103,7 @@ const Navbar = (props) => {
           {numOfUser ? (
             <Badge>
               <div className="icon">
-                <i class="fas fa-users"></i>
+                <i className="fas fa-users"></i>
               </div>
               <div className="text">
                 <span> {numOfUser} </span> <span> ONLINE </span>
@@ -112,7 +112,7 @@ const Navbar = (props) => {
           ) : (
             <DisconnectBadge>
               <div className="icon">
-                <i class="fas fa-plug"></i>
+                <i className="fas fa-plug"></i>
               </div>
               <div className="text">
                 <span>OFFLINE</span>
