@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import _ from "lodash";
@@ -36,7 +36,6 @@ const SocketPage = () => {
   const [input, setInput] = useState();
   const dispatch = useDispatch();
   let post = useSelector((state) => state.post);
-  post = post.post && post.post.Post ? post.post.Post : {};
 
   const handleChange = (e) => {
     setInput(e);
@@ -51,8 +50,17 @@ const SocketPage = () => {
     socket.on("post", (data) => {
       if (data.room === roomId) {
         setInput(data.msg);
+        dispatch({
+          type: "UPDATE_NUMBER_OF_USERS",
+          payload: {
+            numOfUser: data.numOfUser,
+          },
+        });
       }
     });
+    return () => {
+      socket.close();
+    };
   }, []);
 
   const handleSave = () => {

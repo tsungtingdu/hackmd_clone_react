@@ -109,7 +109,9 @@ const postReducer = (state = {}, action) => {
       if (!state.allPosts) return state;
 
       const allPostsForCo = state.allPosts;
-      const collaborativePosts = allPostsForCo.filter((i) => i.role !== "owner");
+      const collaborativePosts = allPostsForCo.filter(
+        (i) => i.role !== "owner"
+      );
       collaborativePosts.sort((a, b) => {
         const dateA = new Date(a.Post.updatedAt);
         const dateB = new Date(b.Post.updatedAt);
@@ -139,6 +141,17 @@ const postReducer = (state = {}, action) => {
       };
     case "CLEAR_POST":
       return {};
+    case "UPDATE_NUMBER_OF_USERS":
+      const numOfUser = action.payload.numOfUser;
+      let updatedPostWithUser = {
+        ...state.post,
+        numOfUser,
+      };
+      return {
+        ...state,
+        post: updatedPostWithUser,
+      };
+      return;
     default:
       return state;
   }
