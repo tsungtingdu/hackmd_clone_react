@@ -23,7 +23,7 @@ const createPostApi = async (TOKEN) => {
     );
     return res.data;
   } catch (err) {
-    return {};
+    return null;
   }
 };
 
@@ -45,7 +45,7 @@ const savePostApi = async (data) => {
     );
     return res.data;
   } catch (err) {
-    return {};
+    return null;
   }
 };
 
@@ -59,7 +59,7 @@ const getPostsApi = async (data) => {
     });
     return res.data;
   } catch (err) {
-    return {};
+    return null;
   }
 };
 
@@ -73,7 +73,7 @@ const getPostApi = async (data) => {
     });
     return res.data;
   } catch (err) {
-    return {};
+    return null;
   }
 };
 
@@ -87,7 +87,7 @@ const DeletePostApi = async (data) => {
     });
     return res.data;
   } catch (err) {
-    return {};
+    return null;
   }
 };
 
@@ -122,7 +122,7 @@ const autoSaveApi = async (data) => {
     );
     return res.data;
   } catch (err) {
-    return {};
+    return null;
   }
 };
 

@@ -1,17 +1,13 @@
-import React from "react";
-import {
-  Route,
-  Switch,
-  BrowserRouter,
-  Redirect,
-  useLocation,
-} from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
 import { Provider, useDispatch } from "react-redux";
 import Main from "./pages/Main";
 import EditorPage from "./pages/Editor";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import SocketPage from "./pages/Socket";
+import LoadingMask from "./LoadingMask";
+import { getUserApi } from "./apis/userApi";
 
 const Router = ({ store }) => (
   <Provider store={store}>
@@ -43,50 +39,52 @@ const Router = ({ store }) => (
 );
 
 const PrivateRoute = ({ children, ...rest }) => {
-  const isAuthenticated = localStorage.getItem("HEYMD_TOKEN");
+  const [loading, setLoading] = useState(true);
+  const [login, setLogin] = useState(false);
   const dispatch = useDispatch();
-  const location = useLocation();
 
-  // get data back to store
-  if (
-    isAuthenticated !== null &&
-    isAuthenticated !== "null" &&
-    isAuthenticated !== undefined
-  ) {
-    // user data
-    dispatch({ type: "GET_USER_REQUEST" });
-    // all posts data
-    dispatch({ type: "GET_POSTS_REQUEST" });
-    // working post data
-    const postPath = location.pathname;
-    const postId = Number(postPath.split("/post/")[1]);
-    if (!isNaN(postId)) {
-      dispatch({
-        type: "GET_POST_REQUEST",
-        payload: {
-          id: postId,
-        },
-      });
+  const fetchData = async () => {
+    let user = await getUserApi();
+    let userId = user ? user.data.user.id : null;
+
+    // check login auth
+    if (userId) {
+      setLogin(true);
+      dispatch({ type: "GET_USER_REQUEST" });
+      dispatch({ type: "GET_POSTS_REQUEST" });
+    } else {
+      setLogin(false);
     }
-  }
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        isAuthenticated !== null &&
-        isAuthenticated !== "null" &&
-        isAuthenticated !== undefined ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/signin",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
+    <Fragment>
+      {loading ? (
+        <LoadingMask />
+      ) : (
+        <Route
+          {...rest}
+          render={({ location }) =>
+            login ? (
+              children
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/signin",
+                  state: { from: location },
+                }}
+              />
+            )
+          }
+        />
+      )}
+    </Fragment>
   );
 };
 

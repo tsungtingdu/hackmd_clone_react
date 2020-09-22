@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import _ from "lodash";
+import { useLocation, withRouter } from "react-router-dom";
+import _, { isNull } from "lodash";
 import Editor from "for-editor";
 import Navbar from "../components/Navbar";
 import LoadingMask from "../LoadingMask";
-import { saveToLocal } from "../apis/postApi";
+import { saveToLocal, getPostApi } from "../apis/postApi";
+import { getToken } from "../apis/userApi";
 import "../css/editor.scss";
 
 const toolbar = {
@@ -25,11 +27,47 @@ const toolbar = {
 
 const placeholder = "# Put your note title here";
 
-const EditorPage = () => {
+const EditorPage = (props) => {
   const [input, setInput] = useState();
   const dispatch = useDispatch();
+  const location = useLocation();
+
   let post = useSelector((state) => state.post);
   post = post.post && post.post.Post ? post.post.Post : {};
+
+  const fetchData = async () => {
+    dispatch({
+      type: "DATA_LOADING",
+    });
+    // clear data
+    dispatch({
+      type: "CLEAR_POST_REQUEST",
+    });
+    // retrieve new data
+    const postPath = location.pathname;
+    const postId = Number(postPath.split("/post/")[1]);
+    let token = await getToken();
+    let data = {
+      id: postId,
+      token: token,
+    };
+
+    let post = await getPostApi(data);
+    if (post.data) {
+      dispatch({
+        type: "GET_POST_REQUEST",
+        payload: {
+          id: postId,
+        },
+      });
+    } else {
+      props.history.push("/");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const autoSave = useRef(
     _.debounce((data) => {
@@ -37,7 +75,7 @@ const EditorPage = () => {
         type: "AUTO_SAVE_POST",
         data,
       });
-    }, 2000),
+    }, 2000)
   ).current;
 
   const handleChange = (e) => {
@@ -80,4 +118,4 @@ const EditorPage = () => {
   );
 };
 
-export default EditorPage;
+export default withRouter(EditorPage);
