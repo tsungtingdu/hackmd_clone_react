@@ -2,7 +2,8 @@ import axios from "axios";
 import { getTitle } from "../utilities/getTitle";
 import { getToken } from "./userApi";
 
-const ENDPOINT = "https://hackmd-clone.herokuapp.com/api";
+// const ENDPOINT = "https://hackmd-clone.herokuapp.com/api";
+const ENDPOINT = "http://localhost:3000/api";
 
 const createPostApi = async (TOKEN) => {
   try {
@@ -18,7 +19,7 @@ const createPostApi = async (TOKEN) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${TOKEN}`,
         },
-      },
+      }
     );
     return res.data;
   } catch (err) {
@@ -40,7 +41,7 @@ const savePostApi = async (data) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${data.token}`,
         },
-      },
+      }
     );
     return res.data;
   } catch (err) {
@@ -50,15 +51,12 @@ const savePostApi = async (data) => {
 
 const getPostsApi = async (data) => {
   try {
-    const res = await axios.get(
-      `${ENDPOINT}/posts`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data.token}`,
-        },
+    const res = await axios.get(`${ENDPOINT}/posts`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.token}`,
       },
-    );
+    });
     return res.data;
   } catch (err) {
     return {};
@@ -67,15 +65,12 @@ const getPostsApi = async (data) => {
 
 const getPostApi = async (data) => {
   try {
-    const res = await axios.get(
-      `${ENDPOINT}/post/${data.id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data.token}`,
-        },
+    const res = await axios.get(`${ENDPOINT}/post/${data.id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.token}`,
       },
-    );
+    });
     return res.data;
   } catch (err) {
     return {};
@@ -84,15 +79,12 @@ const getPostApi = async (data) => {
 
 const DeletePostApi = async (data) => {
   try {
-    const res = await axios.delete(
-      `${ENDPOINT}/post/${data.id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data.token}`,
-        },
+    const res = await axios.delete(`${ENDPOINT}/post/${data.id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.token}`,
       },
-    );
+    });
     return res.data;
   } catch (err) {
     return {};
@@ -113,8 +105,6 @@ const saveToLocal = (data) => {
 
 const autoSaveApi = async (data) => {
   try {
-    console.log("api called!");
-    console.log(data);
     const TOKEN = await getToken();
     const res = await axios.put(
       `${ENDPOINT}/post/${data.id}`,
@@ -128,7 +118,7 @@ const autoSaveApi = async (data) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${TOKEN}`,
         },
-      },
+      }
     );
     return res.data;
   } catch (err) {
@@ -137,5 +127,11 @@ const autoSaveApi = async (data) => {
 };
 
 export {
-  createPostApi, savePostApi, saveToLocal, getPostsApi, getPostApi, DeletePostApi, autoSaveApi,
+  createPostApi,
+  savePostApi,
+  saveToLocal,
+  getPostsApi,
+  getPostApi,
+  DeletePostApi,
+  autoSaveApi,
 };

@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const ENDPOINT = "https://hackmd-clone.herokuapp.com/api";
+// const ENDPOINT = "https://hackmd-clone.herokuapp.com/api";
+const ENDPOINT = "http://localhost:3000/api";
 
 const signInApi = async (data) => {
   try {
@@ -12,7 +13,7 @@ const signInApi = async (data) => {
         headers: {
           "Content-Type": "application/json",
         },
-      },
+      }
     );
     return res.data;
   } catch (err) {
@@ -22,16 +23,21 @@ const signInApi = async (data) => {
 
 const signUpApi = async (data) => {
   try {
-    const {
-      name, email, password, passwordCheck,
-    } = data;
-    const res = await axios.post(`${ENDPOINT}/user/signup`, {
-      name, email, password, passwordCheck,
-    }, {
-      headers: {
-        "Content-Type": "application/json",
+    const { name, email, password, passwordCheck } = data;
+    const res = await axios.post(
+      `${ENDPOINT}/user/signup`,
+      {
+        name,
+        email,
+        password,
+        passwordCheck,
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return res.data;
   } catch (err) {
     return {};
@@ -48,34 +54,26 @@ const getUserApi = async () => {
       },
     });
     return res.data;
-  } catch (err) {
-
-  }
+  } catch (err) {}
 };
 
 const signOutApi = async () => {
   try {
     localStorage.setItem("HEYMD_TOKEN", null);
     localStorage.setItem("HEYMD_POSTS", null);
-  } catch (err) {
-
-  }
+  } catch (err) {}
 };
 
 const setToken = async (data) => {
   try {
     return localStorage.setItem("HEYMD_TOKEN", data.token);
-  } catch (err) {
-
-  }
+  } catch (err) {}
 };
 
 const getToken = async () => {
   try {
     return localStorage.getItem("HEYMD_TOKEN");
-  } catch (err) {
-
-  }
+  } catch (err) {}
 };
 
 const removeToken = async () => {
@@ -83,5 +81,11 @@ const removeToken = async () => {
 };
 
 export {
-  signInApi, signUpApi, setToken, getToken, removeToken, signOutApi, getUserApi,
+  signInApi,
+  signUpApi,
+  setToken,
+  getToken,
+  removeToken,
+  signOutApi,
+  getUserApi,
 };
