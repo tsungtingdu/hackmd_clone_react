@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import _ from "lodash";
 import Editor from "for-editor";
 import Navbar from "../components/Navbar";
 import LoadingMask from "../LoadingMask";
@@ -59,12 +60,18 @@ const SocketPage = () => {
     }
   }, [socket]);
 
+  const syncMessage = useRef(
+    _.debounce((data) => {
+      setInput(data.msg);
+    }, 600)
+  ).current;
+
   // listening on broadcast message
   useEffect(() => {
     if (socket) {
       socket.on("post", (data) => {
         if (data.room === roomId) {
-          setInput(data.msg);
+          syncMessage(data);
           dispatch({
             type: "UPDATE_NUMBER_OF_USERS",
             payload: {
