@@ -82,23 +82,19 @@ const Posts = (props) => {
       <SectionTitle>
         <div className="title">Posts</div>
       </SectionTitle>
-      {
-        layoutOption.layout === "GridLayout"
-          ? (
-            <GridCardsContainer
-              posts={displayPosts}
-              handleCardOpen={handleCardOpen}
-              handleCardDelete={handleCardDelete}
-            />
-          )
-          : (
-            <ListCardsContainer
-              posts={displayPosts}
-              handleCardOpen={handleCardOpen}
-              handleCardDelete={handleCardDelete}
-            />
-          )
-      }
+      {layoutOption.layout === "GridLayout" ? (
+        <GridCardsContainer
+          posts={displayPosts}
+          handleCardOpen={handleCardOpen}
+          handleCardDelete={handleCardDelete}
+        />
+      ) : (
+        <ListCardsContainer
+          posts={displayPosts}
+          handleCardOpen={handleCardOpen}
+          handleCardDelete={handleCardDelete}
+        />
+      )}
     </PostsContainer>
   );
 };

@@ -5,6 +5,8 @@ import { Input } from "@material-ui/core";
 import { Link, withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import { getToken } from "../apis/userApi";
+import { createPostApi } from "../apis/postApi";
 
 const MenuBarContainer = styled.div`
   min-width: 270px;
@@ -199,10 +201,12 @@ const MenuBar = (props) => {
     });
     props.history.push("/signin");
   };
-  const handleCreatePost = () => {
-    dispatch({
-      type: "CREATE_POST_REQUEST",
-    });
+  const handleCreatePost = async () => {
+    let token = await getToken();
+    let newPost = await createPostApi(token);
+    if (newPost.data.id) {
+      props.history.push(`/post/${newPost.data.id}`);
+    }
   };
 
   const keywordSearch = useRef(

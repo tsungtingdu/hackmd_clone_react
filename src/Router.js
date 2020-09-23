@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
 import { Provider, useDispatch } from "react-redux";
 import Main from "./pages/Main";
-import EditorPage from "./pages/Editor";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import SocketPage from "./pages/Socket";
@@ -19,17 +18,9 @@ const Router = ({ store }) => (
         <Route path="/signin">
           <Signin />
         </Route>
-        <PrivateRoute path="/editor">
-          <EditorPage />
-        </PrivateRoute>
         <PrivateRoute path="/post/:id">
-          <EditorPage />
-        </PrivateRoute>
-        {/* for development use */}
-        <PrivateRoute path="/socket/post/:id">
           <SocketPage />
         </PrivateRoute>
-        {/* for development use */}
         <PrivateRoute path="/">
           <Main />
         </PrivateRoute>
@@ -55,7 +46,6 @@ const PrivateRoute = ({ children, ...rest }) => {
     } else {
       setLogin(false);
     }
-
     setLoading(false);
   };
 

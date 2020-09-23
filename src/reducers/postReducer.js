@@ -151,7 +151,6 @@ const postReducer = (state = {}, action) => {
         ...state,
         post: updatedPostWithUser,
       };
-      return;
     default:
       return state;
   }

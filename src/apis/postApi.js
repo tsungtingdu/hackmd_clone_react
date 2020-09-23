@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getTitle } from "../utilities/getTitle";
 import { getToken } from "./userApi";
+import { API_ENDPOINT } from "../constant/constant";
 
-// const ENDPOINT = "https://hackmd-clone.herokuapp.com/api";
-const ENDPOINT = "http://localhost:3000/api";
+const ENDPOINT = `${API_ENDPOINT}/api`;
 
 const createPostApi = async (TOKEN) => {
   try {

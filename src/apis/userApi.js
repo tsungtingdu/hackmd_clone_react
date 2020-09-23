@@ -1,7 +1,7 @@
 import axios from "axios";
+import { API_ENDPOINT } from "../constant/constant";
 
-// const ENDPOINT = "https://hackmd-clone.herokuapp.com/api";
-const ENDPOINT = "http://localhost:3000/api";
+const ENDPOINT = `${API_ENDPOINT}/api`;
 
 const signInApi = async (data) => {
   try {

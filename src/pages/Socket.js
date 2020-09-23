@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import _ from "lodash";
 import Editor from "for-editor";
 import Navbar from "../components/Navbar";
 import LoadingMask from "../LoadingMask";
 import { saveToLocal } from "../apis/postApi";
 import "../css/editor.scss";
-import socket from "../apis/socketApi";
+import io from "socket.io-client";
+import { API_ENDPOINT } from "../constant/constant";
 
+const ENDPOINT = API_ENDPOINT;
 const toolbar = {
   h1: true,
   h2: true,
@@ -21,13 +22,14 @@ const toolbar = {
   expand: false,
   undo: true,
   redo: true,
-  save: true,
+  save: false,
   subfield: true,
 };
 
 const placeholder = "# Put your note title here";
 
 const SocketPage = () => {
+  const [socket, setSocket] = useState(null);
   // socket, create room id
   const location = useLocation();
   let roomId = location.pathname.split("/post/");
@@ -45,31 +47,37 @@ const SocketPage = () => {
     socket.emit("post", roomId, e);
   };
 
-  // socket test
+  // set socket
   useEffect(() => {
-    socket.on("post", (data) => {
-      if (data.room === roomId) {
-        setInput(data.msg);
-        dispatch({
-          type: "UPDATE_NUMBER_OF_USERS",
-          payload: {
-            numOfUser: data.numOfUser,
-          },
-        });
-      }
-    });
-    return () => {
-      socket.close();
-    };
+    setSocket(io(ENDPOINT, { reconnect: true }));
   }, []);
 
-  const handleSave = () => {
-    const data = { id: post.id, content: input };
-    dispatch({
-      type: "SAVE_POST_REQUEST",
-      data,
-    });
-  };
+  // join a new room
+  useEffect(() => {
+    if (socket) {
+      socket.emit("join", roomId);
+    }
+  }, [socket]);
+
+  // listening on broadcast message
+  useEffect(() => {
+    if (socket) {
+      socket.on("post", (data) => {
+        if (data.room === roomId) {
+          setInput(data.msg);
+          dispatch({
+            type: "UPDATE_NUMBER_OF_USERS",
+            payload: {
+              numOfUser: data.numOfUser,
+            },
+          });
+        }
+      });
+      return () => {
+        socket.close();
+      };
+    }
+  }, [socket]);
 
   return (
     <>
@@ -79,7 +87,6 @@ const SocketPage = () => {
         value={input}
         height="calc(100vh - 50px)"
         onChange={handleChange}
-        onSave={handleSave}
         subfield
         preview
         toolbar={toolbar}
