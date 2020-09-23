@@ -16,6 +16,13 @@ object-assign
       http://jedwatson.github.io/classnames
     */
 
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
+ */
+
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -41,6 +48,8 @@ PERFORMANCE OF THIS SOFTWARE.
      *  Copyright 2018 John Madhavan-Reese
      *  Released under the MIT license
      */
+
+/*! https://mths.be/utf8js v2.1.2 by @mathias */
 
 /**
  * @license
