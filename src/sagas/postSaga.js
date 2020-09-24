@@ -1,7 +1,12 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import { getToken } from "../apis/userApi";
 import {
-  createPostApi, savePostApi, getPostsApi, getPostApi, DeletePostApi, autoSaveApi,
+  createPostApi,
+  updatePostStatusApi,
+  getPostsApi,
+  getPostApi,
+  DeletePostApi,
+  autoSaveApi,
 } from "../apis/postApi";
 
 export function* handleGetPost(action) {
@@ -53,10 +58,10 @@ export function* handleSavePost(action) {
     yield put({ type: "DATA_LOADING" });
     const TOKEN = yield call(getToken);
     const reqData = {
-      ...action.data,
+      ...action.payload,
       token: TOKEN,
     };
-    const resData = yield call(savePostApi, reqData);
+    const resData = yield call(updatePostStatusApi, reqData);
     yield put({ type: "UPDATE_POST_SUCCESS", resData });
     yield put({ type: "DATA_LOADED" });
   } catch (err) {
@@ -84,8 +89,7 @@ export function* handleAutoSave(action) {
   try {
     const resData = yield call(autoSaveApi, action.data);
     yield put({ type: "UPDATE_POST_SUCCESS", resData });
-  } catch (err) {
-  }
+  } catch (err) {}
 }
 
 export default function* watchPostReq() {

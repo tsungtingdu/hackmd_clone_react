@@ -27,13 +27,11 @@ const createPostApi = async (TOKEN) => {
   }
 };
 
-const savePostApi = async (data) => {
+const updatePostStatusApi = async (data) => {
   try {
     const res = await axios.put(
       `${ENDPOINT}/post/${data.id}`,
       {
-        title: getTitle(data.content),
-        content: data.content,
         status: data.status ? data.status : "private",
       },
       {
@@ -128,7 +126,7 @@ const autoSaveApi = async (data) => {
 
 export {
   createPostApi,
-  savePostApi,
+  updatePostStatusApi,
   saveToLocal,
   getPostsApi,
   getPostApi,

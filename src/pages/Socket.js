@@ -42,15 +42,21 @@ const SocketPage = () => {
 
   const handleChange = (e) => {
     setInput(e);
-    saveToLocal({ id: post.id, content: input });
+    saveToLocal({ id: roomId, content: input });
 
     // socket, emit message
     socket.emit("post", roomId, e);
   };
 
-  // set socket
+  // set socket & get initial post data
   useEffect(() => {
     setSocket(io(ENDPOINT, { reconnect: true }));
+    dispatch({
+      type: "GET_POST_REQUEST",
+      payload: {
+        id: roomId,
+      },
+    });
   }, []);
 
   // join a new room
