@@ -5,6 +5,7 @@ import _ from "lodash";
 import Editor from "for-editor";
 import Navbar from "../components/Navbar";
 import LoadingMask from "../LoadingMask";
+import styled from "styled-components";
 import { saveToLocal } from "../apis/postApi";
 import "../css/editor.scss";
 import io from "socket.io-client";
@@ -27,6 +28,11 @@ const toolbar = {
   subfield: true,
 };
 
+const Container = styled.div`
+  display: flex;
+  flex-flow: column-reverse;
+`;
+
 const placeholder = "# Put your note title here";
 
 const SocketPage = () => {
@@ -38,7 +44,6 @@ const SocketPage = () => {
 
   const [input, setInput] = useState();
   const dispatch = useDispatch();
-  let post = useSelector((state) => state.post);
 
   const handleChange = (e) => {
     setInput(e);
@@ -93,9 +98,7 @@ const SocketPage = () => {
   }, [socket]);
 
   return (
-    <>
-      <LoadingMask />
-      <Navbar />
+    <Container>
       <Editor
         value={input}
         height="calc(100vh - 50px)"
@@ -106,7 +109,9 @@ const SocketPage = () => {
         placeholder={placeholder}
         language="en"
       />
-    </>
+      <Navbar style={{ postion: "relative", zIndex: 1 }} />
+      <LoadingMask />
+    </Container>
   );
 };
 

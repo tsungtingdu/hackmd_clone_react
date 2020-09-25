@@ -3,6 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { withRouter, useLocation } from "react-router-dom";
 import docs from "../images/docs.png";
+import { makeStyles } from "@material-ui/core/styles";
+import { Paper, InputBase, IconButton } from "@material-ui/core";
+import SendIcon from "@material-ui/icons/Send";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+}));
 
 const Nav = styled.div`
   width: 100%;
@@ -32,6 +51,7 @@ const Nav = styled.div`
 `;
 
 const Connection = styled.div`
+  position: relative;
   height: 100%;
   padding: 15px;
   display: flex;
@@ -89,7 +109,8 @@ const SharePanel = styled.div`
   top: 50px;
   right: 0;
   width: 300px;
-  height: 500px;
+  height: 400px;
+  padding-bottom: 20px;
   background-color: #ffffff;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -147,8 +168,65 @@ const Publishing = styled.div`
   }
 `;
 
+const Invitee = styled.div`
+  width: 100%;
+  height: 100px;
+  padding: 10px 20px;
+  .text {
+    color: #333;
+    font-size: 16px;
+    text-align: left;
+    line-height: 36px;
+    font-weight: 700;
+    padding: 5px 0px;
+  }
+`;
+
+const Collaborators = styled.div`
+  width: 100%;
+  height: 100px;
+  padding: 10px 20px;
+  color: #337ab7;
+  .text {
+    color: #333;
+    font-size: 16px;
+    text-align: left;
+    line-height: 36px;
+    font-weight: 700;
+    padding: 5px 0px;
+  }
+  .user {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-right: 10px;
+    .userIcon {
+      margin-right: 10px;
+    }
+    .deleteIcon {
+      margin-left: auto;
+      color: #c9302c;
+      cursor: pointer;
+    }
+  }
+`;
+
+const MenuLayer = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+`;
+
 const Navbar = (props) => {
-  const [shareMenu, setShareeMenu] = useState(false);
+  const classes = useStyles();
+  const [shareMenu, setShareMenu] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState();
+
   // get location
   const location = useLocation();
   let roomId = location.pathname.split("/post/");
@@ -157,6 +235,16 @@ const Navbar = (props) => {
   // get post data
   let post = useSelector((state) => state.post);
   let numOfUser = post.post ? post.post.numOfUser : null;
+
+  // get collaborators data
+  let collaborators = useSelector((state) => state.collaborator);
+  collaborators = collaborators.data;
+  let owners;
+  let others;
+  if (collaborators) {
+    owners = collaborators.filter((i) => i.role === "owner");
+    others = collaborators.filter((i) => i.role !== "owner");
+  }
 
   const dispatch = useDispatch();
   const handleClick = () => {
@@ -170,9 +258,9 @@ const Navbar = (props) => {
   };
   const handleShareMenu = () => {
     if (shareMenu) {
-      setShareeMenu(false);
+      setShareMenu(false);
     } else {
-      setShareeMenu(true);
+      setShareMenu(true);
     }
   };
   const handlePublish = (e) => {
@@ -188,6 +276,33 @@ const Navbar = (props) => {
       });
     }
   };
+  const handleInviteEmail = (e) => {
+    setInviteEmail(e.target.value);
+  };
+  const handleInvite = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setInviteEmail(null);
+    dispatch({
+      type: "INVITE_COLLABORATOR_REQUEST",
+      payload: {
+        email: inviteEmail,
+        postId: roomId ? roomId : null,
+      },
+    });
+  };
+  const handleUserDelete = (e, email) => {
+    e.stopPropagation();
+    e.preventDefault();
+    dispatch({
+      type: "REMOVE_COLLABORATOR_REQUEST",
+      payload: {
+        email,
+        postId: roomId ? roomId : null,
+      },
+    });
+  };
+
   return (
     <Nav>
       <div className="nav_content" onClick={handleClick}>
@@ -197,6 +312,7 @@ const Navbar = (props) => {
       {roomId ? (
         <Fragment>
           <Connection>
+            {shareMenu ? <MenuLayer onClick={handleShareMenu}></MenuLayer> : ""}
             <ShareBtn
               onClick={handleShareMenu}
               style={
@@ -205,14 +321,18 @@ const Navbar = (props) => {
             >
               <i className="fas fa-share-alt"></i>
               {shareMenu ? (
-                <SharePanel>
+                <SharePanel
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
                   <Publishing>
                     <div className="text">
                       Status:
                       <span className="text_status">
                         {post && post.post.Post.status === "private"
                           ? " Private"
-                          : " Published"}
+                          : " Public"}
                       </span>
                     </div>
 
@@ -228,6 +348,55 @@ const Navbar = (props) => {
                       </div>
                     )}
                   </Publishing>
+                  <Invitee
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <div className="text">Invite:</div>
+                    <Paper component="form" className={classes.root}>
+                      <InputBase
+                        className={classes.input}
+                        placeholder="Email"
+                        inputProps={{ "aria-label": "invite via email" }}
+                        input={inviteEmail}
+                        onChange={handleInviteEmail}
+                      />
+                      <IconButton
+                        type="submit"
+                        className={classes.iconButton}
+                        aria-label="invite"
+                        onClick={handleInvite}
+                      >
+                        <SendIcon />
+                      </IconButton>
+                    </Paper>
+                  </Invitee>
+                  <Collaborators>
+                    <div className="text">Collaborators:</div>
+                    {owners.map((i) => {
+                      return (
+                        <div className="user" key={i.UserId}>
+                          <i className="fas fa-user-shield userIcon"></i>
+                          <span className="userEmail"> {i.userEmail}</span>
+                        </div>
+                      );
+                    })}
+                    {others.map((i) => {
+                      return (
+                        <div className="user" key={i.UserId}>
+                          <i className="fas fa-user-edit userIcon"></i>
+                          <span className="userEmail"> {i.userEmail}</span>
+                          <i
+                            className="far fa-trash-alt deleteIcon"
+                            onClick={(e) => {
+                              handleUserDelete(e, i.userEmail);
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </Collaborators>
                 </SharePanel>
               ) : (
                 ""

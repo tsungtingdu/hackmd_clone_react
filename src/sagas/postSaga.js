@@ -13,12 +13,15 @@ export function* handleGetPost(action) {
   try {
     yield put({ type: "DATA_LOADING" });
     const TOKEN = yield call(getToken);
-    const reqData = {
+    let reqData = {
       ...action.payload,
       token: TOKEN,
     };
+    // get post data
     const resData = yield call(getPostApi, reqData);
     yield put({ type: "GET_POST_SUCCESS", resData });
+    // get collaborators data
+    yield put({ type: "GET_COLLABORATORS_REQUEST", reqData });
     yield put({ type: "DATA_LOADED" });
   } catch (err) {
     yield put({ type: "DATA_LOADED" });
