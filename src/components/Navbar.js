@@ -343,7 +343,7 @@ const Navbar = (props) => {
                               <>
                                 Public (
                                 <a
-                                  href={`/#/heymd/post/${roomId}/view`}
+                                  href={`/heymd/#/heymd/post/${roomId}/view`}
                                   className="link"
                                   target="_blank"
                                 >
