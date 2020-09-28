@@ -23,6 +23,7 @@ const postReducer = (state = {}, action) => {
         ...state,
         allPosts,
         posts,
+        dataSet: "OWN_DATASET",
       };
     case "GET_POST_SUCCESS":
       const post = action.resData.data;
@@ -104,6 +105,7 @@ const postReducer = (state = {}, action) => {
       return {
         ...state,
         posts: ownPosts,
+        dataSet: "OWN_DATASET",
       };
     case "GET_COLLABORATIVE_DATASET":
       if (!state.allPosts) return state;
@@ -120,6 +122,7 @@ const postReducer = (state = {}, action) => {
       return {
         ...state,
         posts: collaborativePosts,
+        dataSet: "COLLABORATIVE_DATASET",
       };
     case "KEYWORD_DATASET":
       if (!state.allPosts) return state;
@@ -138,6 +141,7 @@ const postReducer = (state = {}, action) => {
       return {
         ...state,
         posts: keywordPosts,
+        dataSet: "OWN_DATASET",
       };
     case "CLEAR_POST":
       return {};

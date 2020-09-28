@@ -114,21 +114,23 @@ const GridCard = styled.div`
 `;
 
 const GridCardsContainer = (props) => {
-  const { posts, handleCardOpen, handleCardDelete } = props;
+  const { posts, handleCardOpen, handleCardDelete, dataSet } = props;
   return (
     <>
       {posts !== undefined && posts.length > 0 ? (
         <GridCardsWrapper>
           {posts.map((i) => (
             <GridCard key={i.Post.id}>
-              <div
-                className="deleteBtn"
-                onClick={() => {
-                  handleCardDelete({ type: "delete", payload: i.Post.id });
-                }}
-              >
-                <i className="far fa-trash-alt" />
-              </div>
+              {dataSet === "OWN_DATASET" && (
+                <div
+                  className="deleteBtn"
+                  onClick={() => {
+                    handleCardDelete({ type: "delete", payload: i.Post.id });
+                  }}
+                >
+                  <i className="far fa-trash-alt" />
+                </div>
+              )}
               <div
                 className="wrapper"
                 onClick={() => {

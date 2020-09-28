@@ -53,6 +53,7 @@ const Posts = (props) => {
   const dispatch = useDispatch();
   const post = useSelector((state) => state.post);
   const displayPosts = post.posts;
+  const dataSet = post.dataSet;
 
   const handleCardOpen = (data) => {
     if (data.type === "open") {
@@ -87,12 +88,14 @@ const Posts = (props) => {
           posts={displayPosts}
           handleCardOpen={handleCardOpen}
           handleCardDelete={handleCardDelete}
+          dataSet={dataSet}
         />
       ) : (
         <ListCardsContainer
           posts={displayPosts}
           handleCardOpen={handleCardOpen}
           handleCardDelete={handleCardDelete}
+          dataSet={dataSet}
         />
       )}
     </PostsContainer>

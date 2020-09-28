@@ -230,7 +230,11 @@ const Navbar = (props) => {
 
   // get post data
   let post = useSelector((state) => state.post);
-  let numOfUser = post.post ? post.post.numOfUser : null;
+  let numOfUser = post?.post?.numOfUser;
+
+  // get user role
+  let role = post?.posts?.filter((i) => i.PostId == roomId);
+  role = role && role[0] ? role[0].role : null;
 
   // get collaborators data
   let collaborators = useSelector((state) => state.collaborator);
@@ -322,53 +326,58 @@ const Navbar = (props) => {
                     e.stopPropagation();
                   }}
                 >
-                  <Publishing>
-                    <div className="text">
-                      Status:
-                      <span className="text_status">
-                        {post && post.post.Post.status === "private"
-                          ? " Private"
-                          : " Public"}
-                      </span>
-                    </div>
+                  {role === "owner" && (
+                    <Fragment>
+                      <Publishing>
+                        <div className="text">
+                          Status:
+                          <span className="text_status">
+                            {post && post.post.Post.status === "private"
+                              ? " Private"
+                              : " Public"}
+                          </span>
+                        </div>
 
-                    {post.post.Post.status === "private" ? (
-                      <div className="publishBtn" onClick={handlePublish}>
-                        <i className="fas fa-globe-americas"></i>
-                        Publish
-                      </div>
-                    ) : (
-                      <div className="unpublishBtn" onClick={handlePublish}>
-                        <i className="fas fa-user-lock"></i>
-                        Unpublish
-                      </div>
-                    )}
-                  </Publishing>
-                  <Invitee
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <div className="text">Invite:</div>
-                    <Paper component="form" className={classes.root}>
-                      <InputBase
-                        className={classes.input}
-                        placeholder="Email"
-                        inputProps={{ "aria-label": "invite via email" }}
-                        input={inviteEmail}
-                        value={inviteEmail}
-                        onChange={handleInviteEmail}
-                      />
-                      <IconButton
-                        type="button"
-                        className={classes.iconButton}
-                        aria-label="invite"
-                        onClick={handleInvite}
+                        {post.post.Post.status === "private" ? (
+                          <div className="publishBtn" onClick={handlePublish}>
+                            <i className="fas fa-globe-americas"></i>
+                            Publish
+                          </div>
+                        ) : (
+                          <div className="unpublishBtn" onClick={handlePublish}>
+                            <i className="fas fa-user-lock"></i>
+                            Unpublish
+                          </div>
+                        )}
+                      </Publishing>
+                      <Invitee
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
                       >
-                        <SendIcon />
-                      </IconButton>
-                    </Paper>
-                  </Invitee>
+                        <div className="text">Invite:</div>
+                        <Paper component="form" className={classes.root}>
+                          <InputBase
+                            className={classes.input}
+                            placeholder="Email"
+                            inputProps={{ "aria-label": "invite via email" }}
+                            input={inviteEmail}
+                            value={inviteEmail}
+                            onChange={handleInviteEmail}
+                          />
+                          <IconButton
+                            type="button"
+                            className={classes.iconButton}
+                            aria-label="invite"
+                            onClick={handleInvite}
+                          >
+                            <SendIcon />
+                          </IconButton>
+                        </Paper>
+                      </Invitee>
+                    </Fragment>
+                  )}
+
                   <Collaborators>
                     <div className="text">Collaborators:</div>
                     {owners.map((i) => {
@@ -384,12 +393,14 @@ const Navbar = (props) => {
                         <div className="user" key={i.UserId}>
                           <i className="fas fa-user-edit userIcon"></i>
                           <span className="userEmail"> {i.userEmail}</span>
-                          <i
-                            className="far fa-trash-alt deleteIcon"
-                            onClick={(e) => {
-                              handleUserDelete(e, i.userEmail);
-                            }}
-                          />
+                          {role === "owner" && (
+                            <i
+                              className="far fa-trash-alt deleteIcon"
+                              onClick={(e) => {
+                                handleUserDelete(e, i.userEmail);
+                              }}
+                            />
+                          )}
                         </div>
                       );
                     })}

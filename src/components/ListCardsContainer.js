@@ -102,7 +102,7 @@ const ListCard = styled.div`
 `;
 
 const ListCardsContainer = (props) => {
-  const { posts, handleCardOpen, handleCardDelete } = props;
+  const { posts, handleCardOpen, handleCardDelete, dataSet } = props;
   return (
     <>
       {posts !== undefined && posts.length > 0 ? (
@@ -126,14 +126,16 @@ const ListCardsContainer = (props) => {
                   <Moment fromNow>{i.Post.updatedAt}</Moment>
                 </div>
               </div>
-              <div
-                className="deleteBtn"
-                onClick={() => {
-                  handleCardDelete({ type: "delete", payload: i.Post.id });
-                }}
-              >
-                <i className="far fa-trash-alt" />
-              </div>
+              {dataSet === "OWN_DATASET" && (
+                <div
+                  className="deleteBtn"
+                  onClick={() => {
+                    handleCardDelete({ type: "delete", payload: i.Post.id });
+                  }}
+                >
+                  <i className="far fa-trash-alt" />
+                </div>
+              )}
             </ListCard>
           ))}
         </ListCardsWrapper>
