@@ -109,7 +109,6 @@ const SharePanel = styled.div`
   top: 50px;
   right: 0;
   width: 300px;
-  height: 400px;
   padding-bottom: 20px;
   background-color: #ffffff;
   border-bottom-left-radius: 4px;
@@ -121,7 +120,6 @@ const SharePanel = styled.div`
 
 const Publishing = styled.div`
   width: 100%;
-  height: 100px;
   padding: 10px 20px;
 
   .text {
@@ -170,7 +168,6 @@ const Publishing = styled.div`
 
 const Invitee = styled.div`
   width: 100%;
-  height: 100px;
   padding: 10px 20px;
   .text {
     color: #333;
@@ -184,7 +181,6 @@ const Invitee = styled.div`
 
 const Collaborators = styled.div`
   width: 100%;
-  height: 100px;
   padding: 10px 20px;
   color: #337ab7;
   .text {
@@ -282,7 +278,7 @@ const Navbar = (props) => {
   const handleInvite = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    setInviteEmail(null);
+    setInviteEmail("");
     dispatch({
       type: "INVITE_COLLABORATOR_REQUEST",
       payload: {
@@ -360,10 +356,11 @@ const Navbar = (props) => {
                         placeholder="Email"
                         inputProps={{ "aria-label": "invite via email" }}
                         input={inviteEmail}
+                        value={inviteEmail}
                         onChange={handleInviteEmail}
                       />
                       <IconButton
-                        type="submit"
+                        type="button"
                         className={classes.iconButton}
                         aria-label="invite"
                         onClick={handleInvite}
