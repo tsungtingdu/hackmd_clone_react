@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
+import { Route, Switch, HashRouter, Redirect } from "react-router-dom";
 import { Provider, useDispatch } from "react-redux";
 import Main from "./pages/Main";
 import Signin from "./pages/Signin";
@@ -10,7 +10,7 @@ import { getUserApi } from "./apis/userApi";
 
 const Router = ({ store }) => (
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter basename={"/heymd"}>
       <Switch>
         <Route path="/signup">
           <Signup />
@@ -25,7 +25,7 @@ const Router = ({ store }) => (
           <Main />
         </PrivateRoute>
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 );
 
