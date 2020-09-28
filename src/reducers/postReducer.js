@@ -155,6 +155,17 @@ const postReducer = (state = {}, action) => {
         ...state,
         post: updatedPostWithUser,
       };
+    case "GET_VIEW_ONLY_POST_SUCCESS":
+      const viewOnlyPost = action.resData.data;
+      return {
+        ...state,
+        viewOnlyPost,
+      };
+    case "GET_VIEW_ONLY_POST_FAIL":
+      return {
+        ...state,
+        viewOnlyPost: "NOT FOUND",
+      };
     default:
       return state;
   }

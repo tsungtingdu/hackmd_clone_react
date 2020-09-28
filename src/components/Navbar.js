@@ -131,6 +131,11 @@ const Publishing = styled.div`
     padding: 5px 0px;
     &_status {
       color: #337ab7;
+      margin-left: 5px;
+      .link {
+        text-decoration: underline;
+        color: #337ab7;
+      }
     }
   }
 
@@ -332,9 +337,21 @@ const Navbar = (props) => {
                         <div className="text">
                           Status:
                           <span className="text_status">
-                            {post && post.post.Post.status === "private"
-                              ? " Private"
-                              : " Public"}
+                            {post && post.post.Post.status === "private" ? (
+                              "Private"
+                            ) : (
+                              <>
+                                Public (
+                                <a
+                                  href={`/#/heymd/post/${roomId}/view`}
+                                  className="link"
+                                  target="_blank"
+                                >
+                                  Link
+                                </a>
+                                )
+                              </>
+                            )}
                           </span>
                         </div>
 

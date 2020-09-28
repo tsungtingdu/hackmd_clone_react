@@ -5,6 +5,7 @@ import {
   updatePostStatusApi,
   getPostsApi,
   getPostApi,
+  getViewOnlyPostApi,
   DeletePostApi,
   autoSaveApi,
 } from "../apis/postApi";
@@ -95,6 +96,19 @@ export function* handleAutoSave(action) {
   } catch (err) {}
 }
 
+export function* handleGetViewOnlyPost(action) {
+  try {
+    yield put({ type: "DATA_LOADING" });
+    let { postId } = action.payload;
+    const resData = yield call(getViewOnlyPostApi, postId);
+    yield put({ type: "GET_VIEW_ONLY_POST_SUCCESS", resData });
+    yield put({ type: "DATA_LOADED" });
+  } catch (err) {
+    yield put({ type: "GET_VIEW_ONLY_POST_FAIL" });
+    yield put({ type: "DATA_LOADED" });
+  }
+}
+
 export default function* watchPostReq() {
   yield takeLatest("GET_POST_REQUEST", handleGetPost);
   yield takeLatest("GET_POSTS_REQUEST", handleGetPosts);
@@ -102,4 +116,5 @@ export default function* watchPostReq() {
   yield takeLatest("SAVE_POST_REQUEST", handleSavePost);
   yield takeLatest("DELETE_POST_REQUEST", handleDeletePost);
   yield takeLatest("AUTO_SAVE_POST", handleAutoSave);
+  yield takeLatest("GET_VIEW_ONLY_POST_REQUEST", handleGetViewOnlyPost);
 }

@@ -5,6 +5,7 @@ import Main from "./pages/Main";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import SocketPage from "./pages/Socket";
+import ViewOnlyPage from "./pages/ViewOnlyPage";
 import LoadingMask from "./LoadingMask";
 import { getUserApi } from "./apis/userApi";
 
@@ -17,6 +18,9 @@ const Router = ({ store }) => (
         </Route>
         <Route path="/signin">
           <Signin />
+        </Route>
+        <Route path="/post/:id/view">
+          <ViewOnlyPage />
         </Route>
         <PrivateRoute path="/post/:id">
           <SocketPage />

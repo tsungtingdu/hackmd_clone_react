@@ -124,6 +124,19 @@ const autoSaveApi = async (data) => {
   }
 };
 
+const getViewOnlyPostApi = async (postId) => {
+  try {
+    const res = await axios.get(`${ENDPOINT}/post/${postId}/view`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};
+
 export {
   createPostApi,
   updatePostStatusApi,
@@ -132,4 +145,5 @@ export {
   getPostApi,
   DeletePostApi,
   autoSaveApi,
+  getViewOnlyPostApi,
 };
