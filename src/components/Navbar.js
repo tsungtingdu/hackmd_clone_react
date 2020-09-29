@@ -397,14 +397,15 @@ const Navbar = (props) => {
 
                   <Collaborators>
                     <div className="text">Collaborators:</div>
-                    {owners.map((i) => {
-                      return (
-                        <div className="user" key={i.UserId}>
-                          <i className="fas fa-user-shield userIcon"></i>
-                          <span className="userEmail"> {i.userEmail}</span>
-                        </div>
-                      );
-                    })}
+                    {owners &&
+                      owners.map((i) => {
+                        return (
+                          <div className="user" key={i.UserId}>
+                            <i className="fas fa-user-shield userIcon"></i>
+                            <span className="userEmail"> {i.userEmail}</span>
+                          </div>
+                        );
+                      })}
                     {others.map((i) => {
                       return (
                         <div className="user" key={i.UserId}>
