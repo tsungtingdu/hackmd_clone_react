@@ -238,7 +238,7 @@ const Navbar = (props) => {
   let numOfUser = post?.post?.numOfUser;
 
   // get user role
-  let role = post?.posts?.filter((i) => i.PostId == roomId);
+  let role = post?.posts?.filter((i) => i.PostId === roomId);
   role = role && role[0] ? role[0].role : null;
 
   // get collaborators data
@@ -346,6 +346,7 @@ const Navbar = (props) => {
                                   href={`/heymd/#/heymd/post/${roomId}/view`}
                                   className="link"
                                   target="_blank"
+                                  rel="noopener noreferrer"
                                 >
                                   Link
                                 </a>
