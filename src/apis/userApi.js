@@ -17,7 +17,7 @@ const signInApi = async (data) => {
     );
     return res.data;
   } catch (err) {
-    return {};
+    return null;
   }
 };
 
@@ -40,7 +40,7 @@ const signUpApi = async (data) => {
     );
     return res.data;
   } catch (err) {
-    return {};
+    return null;
   }
 };
 

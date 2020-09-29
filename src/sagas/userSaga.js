@@ -1,19 +1,29 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import {
-  signInApi, signUpApi, setToken, signOutApi, getUserApi,
+  signInApi,
+  signUpApi,
+  setToken,
+  signOutApi,
+  getUserApi,
 } from "../apis/userApi";
+import { toast } from "react-toastify";
 
 export function* handleSignIn(action) {
   try {
     yield put({ type: "DATA_LOADING" });
     const data = yield call(signInApi, action.data);
-    yield call(setToken, data.data);
-    yield put({ type: "SIGN_IN_SUCCESS", data });
-    yield put({ type: "GET_POSTS_REQUEST" });
+    if (!data) {
+      toast.error("something wrong, please try again");
+    } else {
+      yield call(setToken, data.data);
+      yield put({ type: "SIGN_IN_SUCCESS", data });
+      yield put({ type: "GET_POSTS_REQUEST" });
+    }
     yield put({ type: "DATA_LOADED" });
   } catch (err) {
     yield put({ type: "SIGN_IN_ERROR" });
-    // yield put({ type: 'DATA_LOADED' })
+    yield put({ type: "DATA_LOADED" });
+    toast.error("something wrong, please try again");
   }
 }
 
@@ -21,11 +31,17 @@ export function* handleSignUp(action) {
   try {
     yield put({ type: "DATA_LOADING" });
     const data = yield call(signUpApi, action.data);
-    yield put({ type: "SIGN_UP_SUCCESS", data });
+    if (!data) {
+      toast.error("something wrong, please try again");
+    } else {
+      yield put({ type: "SIGN_UP_SUCCESS", data });
+      toast.success("Sign up successfully, sign in now!");
+    }
     yield put({ type: "DATA_LOADED" });
   } catch (err) {
     yield put({ type: "SIGN_UP_ERROR" });
     yield put({ type: "DATA_LOADED" });
+    toast.error("something wrong, please try again");
   }
 }
 
@@ -34,9 +50,11 @@ export function* handleSignOut() {
     yield call(signOutApi);
     yield put({ type: "CLEAR_POST" });
     yield put({ type: "SIGN_OUT_SUCCESS" });
+    toast.success("sign out successfully");
   } catch (err) {
     yield put({ type: "SIGN_OUT_ERROR" });
     yield put({ type: "DATA_LOADED" });
+    toast.error("please try again");
   }
 }
 
