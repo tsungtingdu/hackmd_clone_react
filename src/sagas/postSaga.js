@@ -9,6 +9,7 @@ import {
   DeletePostApi,
   autoSaveApi,
 } from "../apis/postApi";
+import { toast } from "react-toastify";
 
 export function* handleGetPost(action) {
   try {
@@ -66,9 +67,15 @@ export function* handleSavePost(action) {
       token: TOKEN,
     };
     const resData = yield call(updatePostStatusApi, reqData);
-    yield put({ type: "UPDATE_POST_SUCCESS", resData });
+    if (!reqData) {
+      toast.error("something wrong, please try again");
+    } else {
+      toast.success("updated!");
+      yield put({ type: "UPDATE_POST_SUCCESS", resData });
+    }
     yield put({ type: "DATA_LOADED" });
   } catch (err) {
+    toast.error("something wrong, please try again");
     yield put({ type: "DATA_LOADED" });
   }
 }
@@ -82,9 +89,15 @@ export function* handleDeletePost(action) {
       token: TOKEN,
     };
     yield call(DeletePostApi, reqData);
+    if (!reqData) {
+      toast.error("something wrong, please try again");
+    } else {
+      toast.success("delete a note successfully");
+    }
     yield put({ type: "GET_POSTS_REQUEST" });
     yield put({ type: "DATA_LOADED" });
   } catch (err) {
+    toast.error("something wrong, please try again");
     yield put({ type: "DATA_LOADED" });
   }
 }

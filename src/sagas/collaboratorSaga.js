@@ -5,6 +5,7 @@ import {
   addCollaborator,
   removeCollaborator,
 } from "../apis/collaboratorApi";
+import { toast } from "react-toastify";
 
 export function* handleGetCollaborators(action) {
   try {
@@ -26,12 +27,17 @@ export function* handleInviteCollaborators(action) {
       email: action.payload.email,
       token: TOKEN,
     };
-    yield call(addCollaborator, reqData);
-
+    const resData = yield call(addCollaborator, reqData);
+    if (!resData) {
+      toast.error("something wrong, please try again");
+    } else {
+      toast.success("invited!");
+    }
     // renew data
     yield put({ type: "GET_COLLABORATORS_REQUEST", reqData });
     yield put({ type: "DATA_LOADED" });
   } catch (err) {
+    toast.error("something wrong, please try again");
     yield put({ type: "DATA_LOADED" });
   }
 }
@@ -44,12 +50,17 @@ export function* handleRemoveCollaborators(action) {
       email: action.payload.email,
       token: TOKEN,
     };
-    yield call(removeCollaborator, reqData);
-
+    const resData = yield call(removeCollaborator, reqData);
+    if (!resData) {
+      toast.error("something wrong, please try again");
+    } else {
+      toast.success("removed!");
+    }
     // renew data
     yield put({ type: "GET_COLLABORATORS_REQUEST", reqData });
     yield put({ type: "DATA_LOADED" });
   } catch (err) {
+    toast.error("something wrong, please try again");
     yield put({ type: "DATA_LOADED" });
   }
 }
