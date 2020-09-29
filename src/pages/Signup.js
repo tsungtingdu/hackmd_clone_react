@@ -170,7 +170,6 @@ const Signup = (props) => {
               type="text"
               placeholder="Your username"
               name="name"
-              value={input.name}
               onChange={onChange}
               ref={register({
                 required: "Please fill in this field.",
@@ -192,7 +191,6 @@ const Signup = (props) => {
               type="text"
               placeholder="Your email"
               name="email"
-              value={input.email}
               onChange={onChange}
               ref={register({
                 required: "Please fill in this field.",
@@ -214,7 +212,6 @@ const Signup = (props) => {
               type="password"
               placeholder="Your password"
               name="password"
-              value={input.password}
               onChange={onChange}
               ref={register({
                 required: "Please fill in this field.",
@@ -237,7 +234,6 @@ const Signup = (props) => {
               type="password"
               placeholder="Your password again"
               name="passwordCheck"
-              value={input.passwordCheck}
               onChange={onChange}
               ref={register({
                 required: "Please fill in this field.",

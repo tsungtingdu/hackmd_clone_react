@@ -165,7 +165,6 @@ const Signin = (props) => {
               type="text"
               placeholder="Your email"
               name="email"
-              value={input.email}
               onChange={onChange}
               ref={register({
                 required: "Please fill in this field.",
@@ -187,7 +186,6 @@ const Signin = (props) => {
               type="password"
               placeholder="Your password"
               name="password"
-              value={input.password}
               onChange={onChange}
               ref={register({
                 required: "Please fill in this field.",
@@ -207,8 +205,7 @@ const Signin = (props) => {
             </Button>
           </Form>
           <div className="foot-text">
-            New to HeyMD?
-            {" "}
+            New to HeyMD?{" "}
             <Link to="/signup" className="foot-text__link">
               Sign up
             </Link>
