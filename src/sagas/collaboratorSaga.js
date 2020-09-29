@@ -28,8 +28,8 @@ export function* handleInviteCollaborators(action) {
       token: TOKEN,
     };
     const resData = yield call(addCollaborator, reqData);
-    if (!resData) {
-      toast.error("something wrong, please try again");
+    if (resData.status !== 200) {
+      toast.error(resData.message);
     } else {
       toast.success("invited!");
     }
@@ -51,7 +51,7 @@ export function* handleRemoveCollaborators(action) {
       token: TOKEN,
     };
     const resData = yield call(removeCollaborator, reqData);
-    if (!resData) {
+    if (resData.status !== 200) {
       toast.error("something wrong, please try again");
     } else {
       toast.success("removed!");

@@ -12,8 +12,10 @@ export function* handleSignIn(action) {
   try {
     yield put({ type: "DATA_LOADING" });
     const data = yield call(signInApi, action.data);
-    if (!data) {
-      toast.error("something wrong, please try again");
+
+    if (data.status !== 200) {
+      // show error message
+      toast.error(data.message);
     } else {
       yield call(setToken, data.data);
       yield put({ type: "SIGN_IN_SUCCESS", data });
@@ -31,8 +33,10 @@ export function* handleSignUp(action) {
   try {
     yield put({ type: "DATA_LOADING" });
     const data = yield call(signUpApi, action.data);
-    if (!data) {
-      toast.error("something wrong, please try again");
+
+    if (data.status !== 200) {
+      // show error message
+      toast.error(data.message);
     } else {
       yield put({ type: "SIGN_UP_SUCCESS", data });
       toast.success("Sign up successfully, sign in now!");
