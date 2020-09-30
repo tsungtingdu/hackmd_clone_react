@@ -33,6 +33,8 @@ const Container = styled.div`
   flex-flow: column-reverse;
 `;
 
+const EditorContainer = styled.div``;
+
 const placeholder = "# Put your note title here";
 
 const SocketPage = () => {
@@ -51,6 +53,12 @@ const SocketPage = () => {
 
     // socket, emit message
     socket.emit("post", roomId, e);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      setInput(input + " " + "\n" + " ");
+    }
   };
 
   // set socket & get initial post data
@@ -99,16 +107,18 @@ const SocketPage = () => {
 
   return (
     <Container>
-      <Editor
-        value={input}
-        height="calc(100vh - 50px)"
-        onChange={handleChange}
-        subfield
-        preview
-        toolbar={toolbar}
-        placeholder={placeholder}
-        language="en"
-      />
+      <EditorContainer onKeyPress={handleKeyPress}>
+        <Editor
+          value={input}
+          height="calc(100vh - 50px)"
+          onChange={handleChange}
+          subfield
+          preview
+          toolbar={toolbar}
+          placeholder={placeholder}
+          language="en"
+        />
+      </EditorContainer>
       <Navbar style={{ postion: "relative", zIndex: 1 }} />
       <LoadingMask />
     </Container>
