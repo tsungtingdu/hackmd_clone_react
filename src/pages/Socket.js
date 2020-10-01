@@ -73,9 +73,6 @@ const SocketPage = () => {
 
   const handleKeyPress = (e) => {
     getCaretPostion();
-    if (e.key === "Enter") {
-      setInput(input + " " + "\n" + " ");
-    }
   };
 
   const handleClick = (e) => {

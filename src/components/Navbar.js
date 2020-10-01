@@ -407,22 +407,23 @@ const Navbar = (props) => {
                           </div>
                         );
                       })}
-                    {others.map((i) => {
-                      return (
-                        <div className="user" key={i.UserId}>
-                          <i className="fas fa-user-edit userIcon"></i>
-                          <span className="userEmail"> {i.userEmail}</span>
-                          {role === "owner" && (
-                            <i
-                              className="far fa-trash-alt deleteIcon"
-                              onClick={(e) => {
-                                handleUserDelete(e, i.userEmail);
-                              }}
-                            />
-                          )}
-                        </div>
-                      );
-                    })}
+                    {others &&
+                      others.map((i) => {
+                        return (
+                          <div className="user" key={i.UserId}>
+                            <i className="fas fa-user-edit userIcon"></i>
+                            <span className="userEmail"> {i.userEmail}</span>
+                            {role === "owner" && (
+                              <i
+                                className="far fa-trash-alt deleteIcon"
+                                onClick={(e) => {
+                                  handleUserDelete(e, i.userEmail);
+                                }}
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
                   </Collaborators>
                 </SharePanel>
               ) : (
