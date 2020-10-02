@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/heymd/precache-manifest.7454665392712fb3034e174776243f12.js"
+  "/heymd/precache-manifest.7db1d0d2d1ac6b31f76fc31af086a768.js"
 );
 
 self.addEventListener('message', (event) => {
