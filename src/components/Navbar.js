@@ -228,6 +228,8 @@ const Navbar = (props) => {
   const [shareMenu, setShareMenu] = useState(false);
   const [inviteEmail, setInviteEmail] = useState();
 
+  const { users } = props;
+
   // get location
   const location = useLocation();
   let roomId = location.pathname.split("/post/");
@@ -235,7 +237,6 @@ const Navbar = (props) => {
 
   // get post data
   let post = useSelector((state) => state.post);
-  let numOfUser = post?.post?.numOfUser;
 
   // get user role
   let role = post?.posts?.filter((i) => i.PostId === roomId);
@@ -430,13 +431,13 @@ const Navbar = (props) => {
                 ""
               )}
             </ShareBtn>
-            {numOfUser ? (
+            {users ? (
               <Badge>
                 <div className="icon">
                   <i className="fas fa-users"></i>
                 </div>
                 <div className="text">
-                  <span> {numOfUser} </span> <span> ONLINE </span>
+                  <span> {users} </span> <span> ONLINE </span>
                 </div>
               </Badge>
             ) : (

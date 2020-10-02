@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import _ from "lodash";
@@ -10,6 +10,7 @@ import { saveToLocal } from "../apis/postApi";
 import "../css/editor.scss";
 import io from "socket.io-client";
 import { API_ENDPOINT } from "../constant/constant";
+import DiffMatchPatch from "diff-match-patch";
 
 const ENDPOINT = API_ENDPOINT;
 const toolbar = {
@@ -39,12 +40,14 @@ const placeholder = "# Put your note title here";
 
 const SocketPage = () => {
   const [socket, setSocket] = useState(null);
+  const [users, setUsers] = useState(1);
   // socket, create room id
   const location = useLocation();
   let roomId = location.pathname.split("/post/");
   roomId = Number(roomId[roomId.length - 1]);
 
   const [input, setInput] = useState();
+  const prevInputRef = useRef();
   const dispatch = useDispatch();
 
   const getCaretPostion = () => {
@@ -80,6 +83,28 @@ const SocketPage = () => {
     getCaretPostion();
   };
 
+  const diffSync = (data) => {
+    const prevInput = prevInputRef.current;
+    let prevContent = data.msg;
+    if (prevInput) {
+      const dmp = new DiffMatchPatch();
+      let patches = dmp.patch_make(prevInput, prevContent);
+      let newContent = dmp.patch_apply(patches, prevInput);
+      setInput(newContent[0]);
+    } else {
+      setInput(prevContent);
+    }
+  };
+
+  const syncMessage = useCallback(
+    _.debounce((data) => {
+      diffSync(data);
+      // set caret back to local position
+      setCaretPostion();
+    }, 500),
+    []
+  );
+
   // set socket & get initial post data
   useEffect(() => {
     setSocket(io(ENDPOINT, { reconnect: true }));
@@ -98,20 +123,13 @@ const SocketPage = () => {
     }
   }, [socket]);
 
-  const syncMessage = useRef(
-    _.debounce((data) => {
-      setInput(data.msg);
-      // set caret back to local position
-      setCaretPostion();
-    }, 600)
-  ).current;
-
   // listening on broadcast message
   useEffect(() => {
     if (socket) {
       socket.on("post", (data) => {
         if (data.room === roomId) {
-          syncMessage(data);
+          syncMessage(data, input);
+          setUsers(data.numOfUser);
           dispatch({
             type: "UPDATE_NUMBER_OF_USERS",
             payload: {
@@ -127,6 +145,10 @@ const SocketPage = () => {
     }
   }, [socket]);
 
+  useEffect(() => {
+    prevInputRef.current = input;
+  }, [input]);
+
   return (
     <Container>
       <EditorContainer onKeyPress={handleKeyPress} onClick={handleClick}>
@@ -141,7 +163,7 @@ const SocketPage = () => {
           language="en"
         />
       </EditorContainer>
-      <Navbar style={{ postion: "relative", zIndex: 1 }} />
+      <Navbar style={{ postion: "relative", zIndex: 1 }} users={users} />
       <LoadingMask />
     </Container>
   );
