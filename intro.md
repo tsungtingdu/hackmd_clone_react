@@ -83,7 +83,7 @@ My cat
 
 假設 A 的訊息搶先一步進入 server，存檔之後並透過 socket broadcast 出來，A 的確可以看到自己的畫面為 `cat!`，但對 B 來說就很奇怪了，因為 B 的訊在送進 server 之前，就會先收到來自 server 的更新訊息 `cat!`，並更新畫面。緊接著，當 B 的訊息也進入 server 並 broadcast 後，A 的畫面會變成 `My cat`，而不是原先的 `cat!`，也就是說，A 的編輯遺失了，或者說，該文件被 B 版本的編輯給覆蓋掉了。
 
-若要同時考慮並接納來自多方的編輯，而非單存的版本前後覆寫，就需要使用 "[Differential Synchronization](https://neil.fraser.name/writing/sync/)" 做法。這個方法在 2009 年由 Google 軟體工程師 Neil Fraser 所發表，也是當今線上即時共筆應用程式的基礎。理論不難理解，但實作上有一定的挑戰，好在 Google 提供了 [diff-match-patch](https://www.npmjs.com/package/diff-match-patch) 套件，讓大家有機會快速實作。
+若要同時考慮並接納來自多方的編輯，而非單純的版本前後覆寫，就需要使用 "[Differential Synchronization](https://neil.fraser.name/writing/sync/)" 做法。這個方法在 2009 年由 Google 軟體工程師 Neil Fraser 所發表，也是當今線上即時共筆應用程式的基礎。理論不難理解，但實作上有一定的挑戰，好在 Google 提供了 [diff-match-patch](https://www.npmjs.com/package/diff-match-patch) 套件，讓大家有機會快速實作。
 
 在 HeyMD 的專案當中，實作步驟如下：
 
