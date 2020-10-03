@@ -99,7 +99,7 @@ const SocketPage = () => {
 
   const syncDoc = (diff, msg) => {
     // handle first socket msg
-    if (msg) {
+    if (msg || msg === "") {
       setInput(msg);
       prevSocketRef.current = msg;
     }
