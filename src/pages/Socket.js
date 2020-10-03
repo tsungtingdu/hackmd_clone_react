@@ -119,18 +119,18 @@ const SocketPage = () => {
 
         // relocate local caret
         let localCaret = Number(localStorage.getItem("caret"));
-        let diffs = patches[0];
+        let diffs = patches[0].diffs;
         if (localCaret >= Number(caret)) {
-          if (diffs[1] && diff[1][0] == 1) {
-            localStorage.setItem("caret", localCaret + diff[1][1].length);
+          if (diffs[1] && diffs[1][0] == 1) {
+            localStorage.setItem("caret", localCaret + diffs[1][1].length);
           }
-          if (diffs[1] && diff[1][0] == -1) {
-            localStorage.setItem("caret", localCaret - diff[1][1].length);
+          if (diffs[1] && diffs[1][0] == -1) {
+            localStorage.setItem("caret", localCaret - diffs[1][1].length);
           }
         }
+        setCaretPostion();
       }
     }
-    setCaretPostion();
   };
 
   // set socket & get initial post data
