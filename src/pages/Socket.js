@@ -80,9 +80,11 @@ const SocketPage = () => {
     const prevSocket = prevSocketRef.current;
     const dmp = new DiffMatchPatch();
     const patches = dmp.patch_make(prevSocket, e);
+    let caret = localStorage.getItem("caret");
     const diff = {
       patches,
       userId: currentUserId,
+      caret,
     };
     socket.emit("post", roomId, diff);
     prevSocketRef.current = e;
@@ -106,15 +108,29 @@ const SocketPage = () => {
     // handle new edit from others
     if (diff) {
       const currentUserId = Number(localStorage.getItem("HEYMD_USERID"));
-      const { patches, userId } = diff;
+      const { patches, userId, caret } = diff;
+
       if (currentUserId !== userId) {
         const prevSocket = prevSocketRef.current;
         const dmp = new DiffMatchPatch();
         let newContent = dmp.patch_apply(patches, prevSocket);
         setInput(newContent[0]);
         prevSocketRef.current = newContent[0];
+
+        // relocate local caret
+        let localCaret = Number(localStorage.getItem("caret"));
+        let diffs = patches[0];
+        if (localCaret >= Number(caret)) {
+          if (diffs[1] && diff[1][0] == 1) {
+            localStorage.setItem("caret", localCaret + diff[1][1].length);
+          }
+          if (diffs[1] && diff[1][0] == -1) {
+            localStorage.setItem("caret", localCaret - diff[1][1].length);
+          }
+        }
       }
     }
+    setCaretPostion();
   };
 
   // set socket & get initial post data
