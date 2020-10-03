@@ -20,6 +20,8 @@ you can sign up your own account as well.
 
 ### Done
 
+Progress before 09/17
+
 - ✅ user can sign up with email
 - ✅ user can sign in with email
 - ✅ user can create a new post
@@ -28,16 +30,26 @@ you can sign up your own account as well.
 - ✅ user can see all posts that he/she created, with differnt sorting choices and layouts
 - ✅ post can be auto saved when editing
 - ✅ user can search posts by keywords
+
+Progress after 09/17
+
 - ✅ user can publish a post and share with non-login user
-- ✅ user can add other user as collaborator with different authority
-  - 🚧 viewer: view only
+- ✅ user can add other user as
   - ✅ collaborator: view and edit
-  - ✅ owner: view, edit, and delete
-- ✅ multiple users can edit a post at the same time
-- ✅ error handling and error message for users
+- ✅ multiple users can edit a post at the same time. built with
+  - ✅ socket.io (for multiple users collaboration)
+  - ✅ diff-match-patch (for doc differential synchronization)
+  - ✅ Web API (for locking caret)
+    - selectionStart
+    - setSelectionRange
+- ✅ create notification and error message for users
 
 ### In progress
 
+- ✅ user can add other user as collaborator with different authority
+  - 🚧 viewer: view only
+  - ✅ collaborator: view and edit
+  - 🚧 owner: view, edit, and delete
 - 🚧 user can edit the post offline, then save it when back to online
 
 ### Optimization
