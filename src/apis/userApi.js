@@ -66,6 +66,7 @@ const signOutApi = async () => {
 
 const setToken = async (data) => {
   try {
+    localStorage.setItem("HEYMD_USERID", data.user.id);
     return localStorage.setItem("HEYMD_TOKEN", data.token);
   } catch (err) {}
 };
@@ -78,6 +79,7 @@ const getToken = async () => {
 
 const removeToken = async () => {
   localStorage.removeItem("HEYMD_TOKEN");
+  localStorage.removeItem("HEYMD_USERID");
 };
 
 export {

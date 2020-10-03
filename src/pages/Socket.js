@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import _ from "lodash";
 import Editor from "for-editor";
 import Navbar from "../components/Navbar";
 import LoadingMask from "../LoadingMask";
@@ -41,14 +40,20 @@ const placeholder = "# Put your note title here";
 const SocketPage = () => {
   const [socket, setSocket] = useState(null);
   const [users, setUsers] = useState(1);
+  const dispatch = useDispatch();
+
+  // get current user id
+  const currentUser = useSelector((state) => state.user);
+  const currentUserId = currentUser?.user?.id;
+
   // socket, create room id
   const location = useLocation();
   let roomId = location.pathname.split("/post/");
   roomId = Number(roomId[roomId.length - 1]);
 
   const [input, setInput] = useState();
-  const prevInputRef = useRef();
-  const dispatch = useDispatch();
+  // const prevInputRef = useRef();
+  const prevSocketRef = useRef();
 
   const getCaretPostion = () => {
     const myElement = document.querySelector("textarea");
@@ -70,8 +75,17 @@ const SocketPage = () => {
     // get and set local real-time caret position
     getCaretPostion();
     setCaretPostion();
+
     // socket, emit message
-    socket.emit("post", roomId, e);
+    const prevSocket = prevSocketRef.current;
+    const dmp = new DiffMatchPatch();
+    const patches = dmp.patch_make(prevSocket, e);
+    const diff = {
+      patches,
+      userId: currentUserId,
+    };
+    socket.emit("post", roomId, diff);
+    prevSocketRef.current = e;
   };
 
   const handleKeyPress = (e) => {
@@ -83,27 +97,25 @@ const SocketPage = () => {
     getCaretPostion();
   };
 
-  const diffSync = (data) => {
-    const prevInput = prevInputRef.current;
-    let prevContent = data.msg;
-    if (prevInput) {
-      const dmp = new DiffMatchPatch();
-      let patches = dmp.patch_make(prevInput, prevContent);
-      let newContent = dmp.patch_apply(patches, prevInput);
-      setInput(newContent[0]);
-    } else {
-      setInput(prevContent);
+  const syncDoc = (diff, msg) => {
+    // handle first socket msg
+    if (msg) {
+      setInput(msg);
+      prevSocketRef.current = msg;
+    }
+    // handle new edit from others
+    if (diff) {
+      const currentUserId = Number(localStorage.getItem("HEYMD_USERID"));
+      const { patches, userId } = diff;
+      if (currentUserId !== userId) {
+        const prevSocket = prevSocketRef.current;
+        const dmp = new DiffMatchPatch();
+        let newContent = dmp.patch_apply(patches, prevSocket);
+        setInput(newContent[0]);
+        prevSocketRef.current = newContent[0];
+      }
     }
   };
-
-  const syncMessage = useCallback(
-    _.debounce((data) => {
-      diffSync(data);
-      // set caret back to local position
-      setCaretPostion();
-    }, 500),
-    []
-  );
 
   // set socket & get initial post data
   useEffect(() => {
@@ -127,9 +139,10 @@ const SocketPage = () => {
   useEffect(() => {
     if (socket) {
       socket.on("post", (data) => {
-        if (data.room === roomId) {
-          syncMessage(data, input);
-          setUsers(data.numOfUser);
+        const { room, diff, numOfUser, msg } = data;
+        if (room === roomId) {
+          syncDoc(diff, msg);
+          setUsers(numOfUser);
           dispatch({
             type: "UPDATE_NUMBER_OF_USERS",
             payload: {
@@ -144,10 +157,6 @@ const SocketPage = () => {
       };
     }
   }, [socket]);
-
-  useEffect(() => {
-    prevInputRef.current = input;
-  }, [input]);
 
   return (
     <Container>
