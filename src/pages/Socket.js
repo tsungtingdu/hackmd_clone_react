@@ -22,8 +22,8 @@ const toolbar = {
   code: true,
   preview: true,
   expand: false,
-  undo: true,
-  redo: true,
+  undo: false,
+  redo: false,
   save: false,
   subfield: true,
 };
