@@ -116,10 +116,10 @@ const ListCardsContainer = (props) => {
                 }}
               >
                 <div className="title">{i.Post.title}</div>
-                <div className="viewMode tooltip">
+                {/* <div className="viewMode tooltip">
                   <i className="far fa-eye" />
                   <span className="tooltiptext">Open in view mode</span>
-                </div>
+                </div> */}
                 <div className="changeTime">
                   <i className="fas fa-history" />
                   changed&nbsp;

@@ -143,10 +143,10 @@ const GridCardsContainer = (props) => {
                   changed&nbsp;
                   <Moment fromNow>{i.Post.updatedAt}</Moment>
                 </div>
-                <div className="viewMode tooltip">
+                {/* <div className="viewMode tooltip">
                   <i className="far fa-eye " />
                   <span className="tooltiptext">Open in view mode</span>
-                </div>
+                </div> */}
               </div>
             </GridCard>
           ))}
