@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Editor from "for-editor";
 import Navbar from "../components/Navbar";
 import LoadingMask from "../LoadingMask";
@@ -47,9 +47,8 @@ const SocketPage = () => {
   const currentUserId = currentUser?.user?.id;
 
   // socket, create room id
-  const location = useLocation();
-  let roomId = location.pathname.split("/post/");
-  roomId = Number(roomId[roomId.length - 1]);
+  let { id } = useParams();
+  const postId = Number(id);
 
   const [input, setInput] = useState();
   // const prevInputRef = useRef();
@@ -71,7 +70,7 @@ const SocketPage = () => {
 
   const handleChange = (e) => {
     setInput(e);
-    saveToLocal({ id: roomId, content: input });
+    saveToLocal({ id: postId, content: input });
     // get and set local real-time caret position
     getCaretPostion();
     setCaretPostion();
@@ -86,7 +85,7 @@ const SocketPage = () => {
       userId: currentUserId,
       caret,
     };
-    socket.emit("post", roomId, diff);
+    socket.emit("post", postId, diff);
     prevSocketRef.current = e;
   };
 
@@ -121,10 +120,10 @@ const SocketPage = () => {
         let localCaret = Number(localStorage.getItem("caret"));
         let diffs = patches[0].diffs;
         if (localCaret >= Number(caret)) {
-          if (diffs[1] && diffs[1][0] == 1) {
+          if (diffs[1] && diffs[1][0] === 1) {
             localStorage.setItem("caret", localCaret + diffs[1][1].length);
           }
-          if (diffs[1] && diffs[1][0] == -1) {
+          if (diffs[1] && diffs[1][0] === -1) {
             localStorage.setItem("caret", localCaret - diffs[1][1].length);
           }
         }
@@ -139,15 +138,15 @@ const SocketPage = () => {
     dispatch({
       type: "GET_POST_REQUEST",
       payload: {
-        id: roomId,
+        id: postId,
       },
     });
-  }, []);
+  }, [postId]);
 
   // join a new room
   useEffect(() => {
     if (socket) {
-      socket.emit("join", roomId);
+      socket.emit("join", postId);
     }
   }, [socket]);
 
@@ -156,7 +155,7 @@ const SocketPage = () => {
     if (socket) {
       socket.on("post", (data) => {
         const { room, diff, numOfUser, msg } = data;
-        if (room === roomId) {
+        if (room === postId) {
           syncDoc(diff, msg);
           setUsers(numOfUser);
           dispatch({
